@@ -1,10 +1,10 @@
 {
-  "name": "asistente_rb",
+  "name": "proyecto_prueba",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js",
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,13 +12,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@supabase/supabase-js": "^2.50.3",
     "dotenv": "^17.1.0",
     "express": "^5.1.0",
-    "openai": "^5.8.2",
-    "twilio": "^5.7.2"
-  },
-  "devDependencies": {
     "nodemon": "^3.1.10"
   }
 }
