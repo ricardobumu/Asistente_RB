@@ -1,13 +1,29 @@
+# =================================
+# CONFIGURACIÓN RAILWAY - RICARDO BURITICÁ
+# =================================
+# Proyecto: Asistente RB
+# URL: https://bot.ricardoburitica.eu
+# ID: 2806399e-7537-46ce-acc7-fa043193e2a9
+
 [build]
 builder = "NIXPACKS"
-buildCommand = "npm install"
+buildCommand = "npm ci --only=production"
+watchPatterns = ["**/*.js", "**/*.json", "**/*.html"]
 
 [deploy]
 startCommand = "npm start"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
-restartPolicyMaxRetries = 3
+restartPolicyMaxRetries = 5
 
 [environments.production]
-variables = { NODE_ENV = "production" }
+variables = { 
+  NODE_ENV = "production",
+  PORT = "3000"
+}
+
+# Configuración de dominio personalizado
+[environments.production.domains]
+generate = false
+custom = ["bot.ricardoburitica.eu"]

@@ -69,8 +69,17 @@ const env = {
   CALENDLY_CLIENT_SECRET: process.env.CALENDLY_CLIENT_SECRET,
   CALENDLY_USER_URI: process.env.CALENDLY_USER_URI,
   CALENDLY_WEBHOOK_URI: process.env.CALENDLY_WEBHOOK_URI,
+  // Google Calendar OAuth
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
+
+  // Google Calendar Service Account (fallback)
   GOOGLE_CALENDAR_CREDENTIALS: process.env.GOOGLE_CALENDAR_CREDENTIALS,
-  GOOGLE_CALENDAR_ID: process.env.GOOGLE_CALENDAR_ID,
+  GOOGLE_CALENDAR_ID: process.env.GOOGLE_CALENDAR_ID || "primary",
+  GOOGLE_CALENDAR_TIMEZONE:
+    process.env.GOOGLE_CALENDAR_TIMEZONE || "Europe/Madrid",
+  GOOGLE_CALENDAR_ENABLED: process.env.GOOGLE_CALENDAR_ENABLED === "true",
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   OPENAI_MODEL: process.env.OPENAI_MODEL || "gpt-4-turbo-preview",
   OPENAI_MAX_TOKENS: parseInt(process.env.OPENAI_MAX_TOKENS) || 1000,
@@ -104,7 +113,10 @@ logger.info("Configuración cargada", {
   hasTwilioConfig: !!(env.TWILIO_ACCOUNT_SID && env.TWILIO_AUTH_TOKEN),
   hasCalendlyConfig: !!(env.CALENDLY_ACCESS_TOKEN && env.CALENDLY_USER_URI),
   hasGoogleCalendarConfig: !!(
-    env.GOOGLE_CALENDAR_CREDENTIALS && env.GOOGLE_CALENDAR_ID
+    (env.GOOGLE_CLIENT_ID &&
+      env.GOOGLE_CLIENT_SECRET &&
+      env.GOOGLE_REDIRECT_URI) ||
+    (env.GOOGLE_CALENDAR_CREDENTIALS && env.GOOGLE_CALENDAR_ID)
   ),
   hasOpenAIConfig: !!env.OPENAI_API_KEY,
   hasJWTConfig: !!(env.JWT_SECRET && env.JWT_REFRESH_SECRET),

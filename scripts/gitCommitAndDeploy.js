@@ -39,22 +39,39 @@ async function gitCommitAndDeploy() {
     runCommand("git add .", "Agregando todos los archivos");
 
     // 3. Crear commit profesional
-    const commitMessage = `feat: Configuración completa para producción
+    const commitMessage = `🚀 DEPLOY COMPLETO - Sistema Asistente RB v1.0.0
 
-✅ Variables de entorno actualizadas
-✅ Webhook de Calendly configurado
-✅ Credenciales de admin mejoradas
-✅ CORS configurado para producción
-✅ Scripts de deployment añadidos
+✅ FUNCIONALIDADES IMPLEMENTADAS:
+- Portal Cliente completo con 21 servicios categorizados
+- Asistente WhatsApp autónomo con IA (OpenAI GPT-4)
+- Dashboard administrativo con autenticación
+- API REST completa para servicios y reservas
+- Sistema de notificaciones (WhatsApp, Email, SMS)
+- Integración completa con Supabase
+- Webhooks de Calendly configurados
+- Seguridad avanzada (JWT, Rate Limiting, CORS)
 
-- Configurado CALENDLY_WEBHOOK_URI para Railway
-- Mejoradas credenciales de administrador
-- Actualizado ALLOWED_ORIGINS para producción
-- Agregados scripts de verificación y deployment
-- Preparado para deployment en Railway
+🔧 CONFIGURACIÓN RAILWAY:
+- Variables de entorno configuradas
+- Dominio personalizado: bot.ricardoburitica.eu
+- Health checks y monitoring activos
+- SSL/HTTPS automático
 
-Fixes: #webhook-configuration
-Ready for: Production deployment`;
+📊 ARQUITECTURA:
+- Backend: Node.js + Express
+- Base de Datos: Supabase (PostgreSQL)
+- IA: OpenAI GPT-4 Turbo
+- Mensajería: Twilio WhatsApp
+- Scheduling: Calendly
+- Deploy: Railway
+
+🌐 URLs ACTIVAS:
+- Portal: https://bot.ricardoburitica.eu/portal
+- Admin: https://bot.ricardoburitica.eu/admin
+- API: https://bot.ricardoburitica.eu/api/servicios
+- Health: https://bot.ricardoburitica.eu/health
+
+Estado: PRODUCCIÓN LISTA ✅`;
 
     console.log("\n💬 Creando commit...");
     runCommand(

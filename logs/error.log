@@ -1,0 +1,21 @@
+{"timestamp":"2025-07-08T18:31:04.740Z","level":"ERROR","message":"Error creando servicio Hidratación Capilar (Epres + Bio-Mimético)","metadata":{}}
+{"timestamp":"2025-07-08T18:31:04.980Z","level":"ERROR","message":"Error creando servicio Asesoría de Belleza - Primera Visita","metadata":{}}
+{"timestamp":"2025-07-08T18:31:05.133Z","level":"ERROR","message":"Error creando servicio Corte Mujer Sin Lavado","metadata":{}}
+{"timestamp":"2025-07-08T18:31:05.352Z","level":"ERROR","message":"Error creando servicio Corte Hombre","metadata":{}}
+{"timestamp":"2025-07-08T18:31:05.508Z","level":"ERROR","message":"Error creando servicio Corte Underground","metadata":{}}
+{"timestamp":"2025-07-08T18:31:05.670Z","level":"ERROR","message":"Error creando servicio Menú Corte Mujer","metadata":{}}
+{"timestamp":"2025-07-08T18:31:05.837Z","level":"ERROR","message":"Error creando servicio Corte Natural Curly","metadata":{}}
+{"timestamp":"2025-07-08T18:31:05.995Z","level":"ERROR","message":"Error creando servicio Menú Raíz + Secar","metadata":{}}
+{"timestamp":"2025-07-08T18:31:06.145Z","level":"ERROR","message":"Error creando servicio Menú Raíz + Baño","metadata":{}}
+{"timestamp":"2025-07-08T18:31:06.299Z","level":"ERROR","message":"Error creando servicio Menú Raíz + Cortar","metadata":{}}
+{"timestamp":"2025-07-08T18:31:06.449Z","level":"ERROR","message":"Error creando servicio Menú Raíz + Baño + Cortar","metadata":{}}
+{"timestamp":"2025-07-08T18:31:06.633Z","level":"ERROR","message":"Error creando servicio Iluminaciones Localizadas","metadata":{}}
+{"timestamp":"2025-07-08T18:31:06.791Z","level":"ERROR","message":"Error creando servicio Iluminaciones Full Blond","metadata":{}}
+{"timestamp":"2025-07-08T18:31:06.984Z","level":"ERROR","message":"Error creando servicio Enzimoterapia - Alisado Progresivo","metadata":{}}
+{"timestamp":"2025-07-08T18:31:07.140Z","level":"ERROR","message":"Error creando servicio Queratina Anti-frizz","metadata":{}}
+{"timestamp":"2025-07-08T18:31:07.229Z","level":"ERROR","message":"Error obteniendo servicios por categoría","metadata":{"message":"relation \"public.services\" does not exist","category":"tratamientos_capilares","duration":"84ms"}}
+{"timestamp":"2025-07-08T18:31:07.397Z","level":"ERROR","message":"Error obteniendo servicios por categoría","metadata":{"message":"relation \"public.services\" does not exist","category":"cortes","duration":"166ms"}}
+{"timestamp":"2025-07-08T18:31:07.478Z","level":"ERROR","message":"Error obteniendo servicios por categoría","metadata":{"message":"relation \"public.services\" does not exist","category":"coloracion","duration":"80ms"}}
+{"timestamp":"2025-07-08T18:31:07.560Z","level":"ERROR","message":"Error obteniendo servicios por categoría","metadata":{"message":"relation \"public.services\" does not exist","category":"asesoria","duration":"81ms"}}
+{"timestamp":"2025-07-08T18:31:07.651Z","level":"ERROR","message":"Error obteniendo servicios por categoría","metadata":{"message":"relation \"public.services\" does not exist","category":"especializados","duration":"89ms"}}
+{"timestamp":"2025-07-08T20:44:36.576Z","level":"ERROR","message":"Error en migración de autenticación","metadata":{"message":"Error verificando columnas: relation \"public.information_schema.columns\" does not exist","stack":"Error: Error verificando columnas: relation \"public.information_schema.columns\" does not exist\n    at migrateClientAuth (c:\\Users\\ricar\\Asistente_RB\\scripts\\migrateClientAuth.js:125:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"}}

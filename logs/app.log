@@ -1,0 +1,680 @@
+{"timestamp":"2025-07-08T17:28:10.717Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:28:10.722Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:28:10.740Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:28:10.743Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:28:10.736Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:28:10.755Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:28:10.768Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:28:10.772Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:28:10.770Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:28:10.785Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:28:11.540Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:28:11.560Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:28:11.565Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":21072}}
+{"timestamp":"2025-07-08T17:28:11.593Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":7888}}
+{"timestamp":"2025-07-08T17:28:11.612Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:28:11.622Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:28:11.624Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":4780}}
+{"timestamp":"2025-07-08T17:28:11.631Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":24208}}
+{"timestamp":"2025-07-08T17:28:11.640Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:28:11.647Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":7868}}
+{"timestamp":"2025-07-08T17:31:38.285Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:38.288Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:38.295Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:38.298Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:38.299Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:38.300Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:38.302Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:38.303Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:38.774Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:31:38.782Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":17224}}
+{"timestamp":"2025-07-08T17:31:38.821Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:38.844Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:38.845Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:31:38.862Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:31:38.870Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":756}}
+{"timestamp":"2025-07-08T17:31:38.876Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":12576}}
+{"timestamp":"2025-07-08T17:31:38.894Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:31:38.924Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":2968}}
+{"timestamp":"2025-07-08T17:31:39.246Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:39.250Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:39.385Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:39.388Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:39.434Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:39.439Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:39.438Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:39.451Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:39.455Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:39.446Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:39.927Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:31:39.969Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":8740}}
+{"timestamp":"2025-07-08T17:31:40.118Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:31:40.821Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:40.823Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:40.834Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:40.837Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:40.838Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:40.844Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:40.864Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:40.849Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:40.888Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:40.892Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:41.393Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:31:41.400Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:31:41.403Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":15576}}
+{"timestamp":"2025-07-08T17:31:41.410Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":9588}}
+{"timestamp":"2025-07-08T17:31:41.414Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:31:41.423Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":16796}}
+{"timestamp":"2025-07-08T17:31:41.431Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:31:41.437Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:31:41.440Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":10836}}
+{"timestamp":"2025-07-08T17:31:41.446Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":16440}}
+{"timestamp":"2025-07-08T17:31:56.009Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:31:56.011Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:31:56.228Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:31:56.234Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":2220}}
+{"timestamp":"2025-07-08T17:35:52.999Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:53.012Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:53.008Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:53.015Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:53.027Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:53.032Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:53.032Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:53.042Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:53.480Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:53.499Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:53.593Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:53.615Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:53.738Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:53.743Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:53.762Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:53.767Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:53.789Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:54.441Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:54.445Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:54.445Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:54.449Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:54.457Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:54.470Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:54.658Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:54.672Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:55.764Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:55.839Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:55.859Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:55.889Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:55.917Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:55.939Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:56.364Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:56.367Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:56.369Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:56.378Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:56.391Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:56.396Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:56.394Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:56.403Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:56.423Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:35:56.428Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:35:56.818Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:35:56.826Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":18540}}
+{"timestamp":"2025-07-08T17:35:56.852Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:35:56.862Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":24228}}
+{"timestamp":"2025-07-08T17:35:56.875Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:35:56.885Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":23680}}
+{"timestamp":"2025-07-08T17:35:56.891Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:35:56.898Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":18700}}
+{"timestamp":"2025-07-08T17:35:56.906Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:35:56.912Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":25212}}
+{"timestamp":"2025-07-08T17:47:36.756Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:36.762Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:36.766Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:36.769Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:36.785Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:36.787Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:36.812Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:36.817Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:38.112Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:38.114Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:38.115Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:38.117Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:38.195Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:38.199Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:38.201Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:38.205Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:38.213Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:38.216Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:38.563Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:47:38.574Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":22660}}
+{"timestamp":"2025-07-08T17:47:38.590Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:47:38.600Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":24164}}
+{"timestamp":"2025-07-08T17:47:38.678Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:47:38.678Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:47:38.686Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":23376}}
+{"timestamp":"2025-07-08T17:47:38.690Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":22152}}
+{"timestamp":"2025-07-08T17:47:38.692Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:47:38.703Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":7320}}
+{"timestamp":"2025-07-08T17:47:49.346Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:49.346Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:49.349Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:49.351Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:49.362Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:49.364Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:49.377Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:49.379Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:49.391Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:47:49.394Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:47:49.834Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:47:49.841Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:47:49.845Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":15216}}
+{"timestamp":"2025-07-08T17:47:49.860Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":22972}}
+{"timestamp":"2025-07-08T17:47:49.862Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:47:49.873Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":16440}}
+{"timestamp":"2025-07-08T17:47:49.875Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:47:49.880Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:47:49.885Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":13892}}
+{"timestamp":"2025-07-08T17:47:49.890Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":8500}}
+{"timestamp":"2025-07-08T17:48:59.149Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:48:59.152Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:48:59.369Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:48:59.374Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":19956}}
+{"timestamp":"2025-07-08T17:55:25.280Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:25.283Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:25.358Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:25.360Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:25.424Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:25.465Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:25.579Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:25.621Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:26.021Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:26.029Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:26.042Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:26.050Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:26.076Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:26.079Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:26.078Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:26.085Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:26.102Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:26.109Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:26.549Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:55:26.560Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":19644}}
+{"timestamp":"2025-07-08T17:55:26.589Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:55:26.592Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:55:26.598Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":14652}}
+{"timestamp":"2025-07-08T17:55:26.602Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":24160}}
+{"timestamp":"2025-07-08T17:55:26.615Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:55:26.626Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":17232}}
+{"timestamp":"2025-07-08T17:55:26.665Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:55:26.674Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":21316}}
+{"timestamp":"2025-07-08T17:55:37.766Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:37.768Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:37.768Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:37.771Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:37.776Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:37.779Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:37.787Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:37.790Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:37.811Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:37.814Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:55:38.288Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:55:38.298Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":20076}}
+{"timestamp":"2025-07-08T17:55:38.333Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:55:38.346Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":8932}}
+{"timestamp":"2025-07-08T17:55:38.345Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:55:38.353Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:55:38.355Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":5304}}
+{"timestamp":"2025-07-08T17:55:38.362Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:55:38.363Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":23052}}
+{"timestamp":"2025-07-08T17:55:38.374Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":23772}}
+{"timestamp":"2025-07-08T17:55:59.818Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T17:55:59.820Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T17:56:00.048Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T17:56:00.054Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":11156}}
+{"timestamp":"2025-07-08T18:05:32.078Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:32.080Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:32.079Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:32.082Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:32.083Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:32.087Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:32.084Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:32.091Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:33.171Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:33.174Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:33.182Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:33.187Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:33.194Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:33.197Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:33.207Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:33.210Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:33.212Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:33.215Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:33.659Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:05:33.680Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":18884}}
+{"timestamp":"2025-07-08T18:05:33.708Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:05:33.719Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":9528}}
+{"timestamp":"2025-07-08T18:05:33.719Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:05:33.731Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":10384}}
+{"timestamp":"2025-07-08T18:05:33.732Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:05:33.734Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:05:33.743Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":15088}}
+{"timestamp":"2025-07-08T18:05:33.747Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":3612}}
+{"timestamp":"2025-07-08T18:05:42.054Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:42.057Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:42.062Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:42.065Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:42.067Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:42.070Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:42.082Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:42.085Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:42.111Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:05:42.118Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:05:42.580Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:05:42.584Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:05:42.595Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":21944}}
+{"timestamp":"2025-07-08T18:05:42.599Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":18888}}
+{"timestamp":"2025-07-08T18:05:42.612Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:05:42.623Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":22540}}
+{"timestamp":"2025-07-08T18:05:42.673Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:05:42.683Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":16660}}
+{"timestamp":"2025-07-08T18:05:42.688Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:05:42.699Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":22832}}
+{"timestamp":"2025-07-08T18:06:16.890Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:06:16.892Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:06:17.116Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:06:17.122Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":23284}}
+{"timestamp":"2025-07-08T18:13:44.319Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:44.319Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:44.320Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:44.321Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:44.323Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:44.325Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:44.335Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:44.337Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:45.399Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:45.401Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:45.401Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:45.403Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:45.408Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:45.411Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:45.422Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:45.425Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:45.469Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:45.472Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:45.877Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:13:45.896Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:13:45.900Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:13:45.901Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":15904}}
+{"timestamp":"2025-07-08T18:13:45.905Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":18644}}
+{"timestamp":"2025-07-08T18:13:45.919Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":25152}}
+{"timestamp":"2025-07-08T18:13:45.927Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:13:45.937Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":14640}}
+{"timestamp":"2025-07-08T18:13:45.974Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:13:45.983Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":19684}}
+{"timestamp":"2025-07-08T18:13:53.907Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:53.912Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:53.925Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:53.928Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:53.944Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:53.946Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:53.947Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:53.957Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:53.980Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:13:53.983Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:13:54.363Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:13:54.364Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:13:54.380Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":7212}}
+{"timestamp":"2025-07-08T18:13:54.395Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":8500}}
+{"timestamp":"2025-07-08T18:13:54.412Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:13:54.425Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:13:54.436Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:13:54.459Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":20336}}
+{"timestamp":"2025-07-08T18:13:54.469Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":24752}}
+{"timestamp":"2025-07-08T18:13:54.557Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":5964}}
+{"timestamp":"2025-07-08T18:14:12.267Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:14:12.269Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:14:12.490Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:14:12.494Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":13304}}
+{"timestamp":"2025-07-08T18:28:48.434Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:28:48.438Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:28:48.452Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:28:48.455Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:28:48.453Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:28:48.460Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:28:48.472Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:28:48.480Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:28:48.482Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:28:48.477Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:28:48.930Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:28:48.935Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:28:48.942Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:28:48.943Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":25100}}
+{"timestamp":"2025-07-08T18:28:48.947Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":22004}}
+{"timestamp":"2025-07-08T18:28:48.949Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:28:48.952Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":19684}}
+{"timestamp":"2025-07-08T18:28:48.960Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":20972}}
+{"timestamp":"2025-07-08T18:28:48.965Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:28:48.976Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":15688}}
+{"timestamp":"2025-07-08T18:28:57.590Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:28:57.594Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:28:57.930Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:28:57.930Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:28:57.933Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:28:57.933Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:28:57.953Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:28:57.956Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:28:57.960Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:28:57.963Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:28:57.963Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:28:57.966Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:28:58.377Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:28:58.384Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:28:58.391Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":2880}}
+{"timestamp":"2025-07-08T18:28:58.394Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":15628}}
+{"timestamp":"2025-07-08T18:28:58.411Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:28:58.417Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:28:58.421Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":15404}}
+{"timestamp":"2025-07-08T18:28:58.427Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":16124}}
+{"timestamp":"2025-07-08T18:28:58.441Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:28:58.460Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":5104}}
+{"timestamp":"2025-07-08T18:29:15.029Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:29:15.301Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:29:15.305Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:29:15.314Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:29:15.319Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:29:15.321Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:29:15.325Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:29:15.344Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:29:15.347Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:29:15.353Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:29:15.356Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:29:15.771Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:29:15.784Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":19860}}
+{"timestamp":"2025-07-08T18:29:15.794Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:29:15.806Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":6224}}
+{"timestamp":"2025-07-08T18:29:15.810Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:29:15.820Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":19176}}
+{"timestamp":"2025-07-08T18:29:15.826Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:29:15.835Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":10836}}
+{"timestamp":"2025-07-08T18:29:15.861Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:29:15.871Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":14940}}
+{"timestamp":"2025-07-08T18:30:23.028Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:30:23.031Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:30:23.037Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:30:23.037Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:30:23.039Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:30:23.039Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:30:23.050Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:30:23.055Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:30:23.087Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:30:23.090Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:30:23.501Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:30:23.509Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:30:23.511Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":3600}}
+{"timestamp":"2025-07-08T18:30:23.518Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:30:23.520Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":19436}}
+{"timestamp":"2025-07-08T18:30:23.526Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":25292}}
+{"timestamp":"2025-07-08T18:30:23.554Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:30:23.563Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":20368}}
+{"timestamp":"2025-07-08T18:30:23.569Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:30:23.577Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":25200}}
+{"timestamp":"2025-07-08T18:30:53.096Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:30:53.099Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:30:53.103Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:30:53.105Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:30:53.105Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:30:53.108Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:30:53.119Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:30:53.122Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:30:53.358Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:30:53.361Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:30:53.488Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:30:53.499Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":2692}}
+{"timestamp":"2025-07-08T18:30:53.502Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:30:53.510Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":23952}}
+{"timestamp":"2025-07-08T18:30:53.517Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:30:53.524Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":10888}}
+{"timestamp":"2025-07-08T18:30:53.545Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:30:53.553Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":25524}}
+{"timestamp":"2025-07-08T18:30:53.713Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:30:53.722Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":15688}}
+{"timestamp":"2025-07-08T18:31:03.999Z","level":"INFO","message":"ServiceModel inicializado para Ricardo Buriticá Beauty Consulting","metadata":{"totalServices":15,"categories":5,"philosophy":"Peluquería Consciente"}}
+{"timestamp":"2025-07-08T18:31:04.003Z","level":"INFO","message":"Inicializando servicios de Ricardo Buriticá Beauty Consulting","metadata":{}}
+{"timestamp":"2025-07-08T18:31:07.141Z","level":"INFO","message":"Inicialización de servicios completada","metadata":{"servicesCreated":0,"totalServices":15,"duration":"3138ms"}}
+{"timestamp":"2025-07-08T18:33:14.313Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:33:14.327Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:33:14.326Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:33:14.340Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:33:14.362Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:33:14.371Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:33:14.384Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:33:14.387Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:33:14.417Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:33:14.419Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:33:14.855Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:33:14.866Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":22848}}
+{"timestamp":"2025-07-08T18:33:14.875Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:33:14.884Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":4792}}
+{"timestamp":"2025-07-08T18:33:14.949Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:33:14.951Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:33:14.959Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":17796}}
+{"timestamp":"2025-07-08T18:33:14.959Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":13216}}
+{"timestamp":"2025-07-08T18:33:14.975Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:33:14.984Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":11492}}
+{"timestamp":"2025-07-08T18:34:09.172Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:34:09.173Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:34:09.175Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:34:09.175Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:34:09.179Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:34:09.175Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:34:09.193Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:34:09.202Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:34:09.203Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:34:09.207Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:34:09.645Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:34:09.653Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":8164}}
+{"timestamp":"2025-07-08T18:34:09.656Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:34:09.661Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:34:09.671Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":23576}}
+{"timestamp":"2025-07-08T18:34:09.673Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:34:09.674Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":15848}}
+{"timestamp":"2025-07-08T18:34:09.684Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":15880}}
+{"timestamp":"2025-07-08T18:34:09.700Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:34:09.708Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":12276}}
+{"timestamp":"2025-07-08T18:36:46.636Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:36:46.641Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:36:46.643Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:36:46.646Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:36:46.663Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:36:46.665Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:36:46.673Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:36:46.677Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:36:46.929Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:36:46.932Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:36:47.031Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:36:47.048Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":14420}}
+{"timestamp":"2025-07-08T18:36:47.054Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:36:47.063Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":19668}}
+{"timestamp":"2025-07-08T18:36:47.070Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:36:47.079Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":10340}}
+{"timestamp":"2025-07-08T18:36:47.099Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:36:47.106Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":22940}}
+{"timestamp":"2025-07-08T18:36:47.321Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:36:47.330Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":21004}}
+{"timestamp":"2025-07-08T18:40:51.605Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:40:51.607Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:40:51.614Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:40:51.619Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:40:51.634Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:40:51.639Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:40:51.653Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:40:51.655Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:40:51.656Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:40:51.661Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:40:52.113Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:40:52.139Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:40:52.138Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":7868}}
+{"timestamp":"2025-07-08T18:40:52.141Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:40:52.149Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":8060}}
+{"timestamp":"2025-07-08T18:40:52.155Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":14896}}
+{"timestamp":"2025-07-08T18:40:52.165Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:40:52.176Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":20696}}
+{"timestamp":"2025-07-08T18:40:52.187Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:40:52.196Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":20088}}
+{"timestamp":"2025-07-08T18:42:30.095Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:42:30.098Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:42:30.116Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:42:30.119Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:42:30.118Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:42:30.118Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:42:30.121Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:42:30.122Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:42:30.244Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:42:30.247Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:42:30.535Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:42:30.546Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":3048}}
+{"timestamp":"2025-07-08T18:42:30.546Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:42:30.556Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":8132}}
+{"timestamp":"2025-07-08T18:42:30.561Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:42:30.568Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":10456}}
+{"timestamp":"2025-07-08T18:42:30.589Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:42:30.598Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":9332}}
+{"timestamp":"2025-07-08T18:42:30.697Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:42:30.707Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":18888}}
+{"timestamp":"2025-07-08T18:42:39.329Z","level":"INFO","message":"ServiceModel inicializado para Ricardo Buriticá Beauty Consulting","metadata":{"totalServices":15,"categories":5,"philosophy":"Peluquería Consciente"}}
+{"timestamp":"2025-07-08T18:43:11.209Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:43:11.215Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:43:11.222Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:43:11.226Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:43:11.224Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:43:11.251Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:43:11.273Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:43:11.276Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:43:11.573Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:43:11.576Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:43:11.757Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:43:11.762Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:43:11.771Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":2084}}
+{"timestamp":"2025-07-08T18:43:11.771Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":6568}}
+{"timestamp":"2025-07-08T18:43:11.784Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:43:11.793Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":18580}}
+{"timestamp":"2025-07-08T18:43:11.819Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:43:11.828Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":24084}}
+{"timestamp":"2025-07-08T18:43:11.993Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:43:12.000Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":22036}}
+{"timestamp":"2025-07-08T18:43:22.324Z","level":"INFO","message":"ServiceModel inicializado para Ricardo Buriticá Beauty Consulting","metadata":{"totalServices":15,"categories":5,"philosophy":"Peluquería Consciente"}}
+{"timestamp":"2025-07-08T18:43:22.327Z","level":"INFO","message":"Inicializando servicios de Ricardo Buriticá Beauty Consulting","metadata":{}}
+{"timestamp":"2025-07-08T18:43:23.146Z","level":"INFO","message":"Servicio creado: Hidratación Capilar (Epres + Bio-Mimético)","metadata":{"id":"1d77fc2e-9eb5-41b0-b640-5d0836488a51","price":66,"duration":90}}
+{"timestamp":"2025-07-08T18:43:23.287Z","level":"INFO","message":"Servicio ya existe: Asesoría de Belleza - Primera Visita","metadata":{}}
+{"timestamp":"2025-07-08T18:43:23.518Z","level":"INFO","message":"Servicio ya existe: Corte Mujer Sin Lavado","metadata":{}}
+{"timestamp":"2025-07-08T18:43:23.662Z","level":"INFO","message":"Servicio ya existe: Corte Hombre","metadata":{}}
+{"timestamp":"2025-07-08T18:43:23.809Z","level":"INFO","message":"Servicio ya existe: Corte Underground","metadata":{}}
+{"timestamp":"2025-07-08T18:43:24.099Z","level":"INFO","message":"Servicio creado: Menú Corte Mujer","metadata":{"id":"97e0d1e5-9f01-46e3-a300-3c6da2ba4509","price":71,"duration":120}}
+{"timestamp":"2025-07-08T18:43:24.241Z","level":"INFO","message":"Servicio ya existe: Corte Natural Curly","metadata":{}}
+{"timestamp":"2025-07-08T18:43:24.537Z","level":"INFO","message":"Servicio creado: Menú Raíz + Secar","metadata":{"id":"baf2e4c6-90d0-4418-9ef3-7617b47b5daa","price":85,"duration":150}}
+{"timestamp":"2025-07-08T18:43:24.828Z","level":"INFO","message":"Servicio creado: Menú Raíz + Baño","metadata":{"id":"2d5d4beb-39d1-4fdf-a9e8-a93e78eeee5b","price":95,"duration":150}}
+{"timestamp":"2025-07-08T18:43:25.104Z","level":"INFO","message":"Servicio creado: Menú Raíz + Cortar","metadata":{"id":"491828ba-edee-431b-bfec-fdb434a17d30","price":105,"duration":150}}
+{"timestamp":"2025-07-08T18:43:25.419Z","level":"INFO","message":"Servicio creado: Menú Raíz + Baño + Cortar","metadata":{"id":"ab0af74b-eb45-4d7d-aa82-754b915fb16f","price":115,"duration":150}}
+{"timestamp":"2025-07-08T18:43:25.564Z","level":"INFO","message":"Servicio ya existe: Iluminaciones Localizadas","metadata":{}}
+{"timestamp":"2025-07-08T18:43:25.712Z","level":"INFO","message":"Servicio ya existe: Iluminaciones Full Blond","metadata":{}}
+{"timestamp":"2025-07-08T18:43:25.835Z","level":"INFO","message":"Servicio ya existe: Enzimoterapia - Alisado Progresivo","metadata":{}}
+{"timestamp":"2025-07-08T18:43:26.135Z","level":"INFO","message":"Servicio creado: Queratina Anti-frizz","metadata":{"id":"4ce7e627-0a02-412f-90ab-d7cbfa7c9d99","price":150,"duration":120}}
+{"timestamp":"2025-07-08T18:43:26.136Z","level":"INFO","message":"Inicialización de servicios completada","metadata":{"servicesCreated":7,"totalServices":15,"duration":"3809ms"}}
+{"timestamp":"2025-07-08T18:44:09.653Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:44:09.655Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:44:09.661Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:44:09.665Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:44:09.670Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:44:09.672Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:44:09.688Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:44:09.693Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:44:10.121Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:44:10.137Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:44:10.205Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:44:10.201Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:44:10.218Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":14876}}
+{"timestamp":"2025-07-08T18:44:10.229Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":6860}}
+{"timestamp":"2025-07-08T18:44:10.231Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:44:10.244Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":3196}}
+{"timestamp":"2025-07-08T18:44:10.291Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:44:10.300Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":3276}}
+{"timestamp":"2025-07-08T18:44:10.502Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:44:10.509Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":24344}}
+{"timestamp":"2025-07-08T18:44:23.295Z","level":"INFO","message":"ServiceModel inicializado para Ricardo Buriticá Beauty Consulting","metadata":{"totalServices":15,"categories":5,"philosophy":"Peluquería Consciente"}}
+{"timestamp":"2025-07-08T18:44:23.298Z","level":"INFO","message":"Inicializando servicios de Ricardo Buriticá Beauty Consulting","metadata":{}}
+{"timestamp":"2025-07-08T18:44:23.526Z","level":"INFO","message":"Servicio ya existe: Hidratación Capilar (Epres + Bio-Mimético)","metadata":{}}
+{"timestamp":"2025-07-08T18:44:23.601Z","level":"INFO","message":"Servicio ya existe: Asesoría de Belleza - Primera Visita","metadata":{}}
+{"timestamp":"2025-07-08T18:44:23.671Z","level":"INFO","message":"Servicio ya existe: Corte Mujer Sin Lavado","metadata":{}}
+{"timestamp":"2025-07-08T18:44:23.750Z","level":"INFO","message":"Servicio ya existe: Corte Hombre","metadata":{}}
+{"timestamp":"2025-07-08T18:44:23.828Z","level":"INFO","message":"Servicio ya existe: Corte Underground","metadata":{}}
+{"timestamp":"2025-07-08T18:44:23.903Z","level":"INFO","message":"Servicio ya existe: Menú Corte Mujer","metadata":{}}
+{"timestamp":"2025-07-08T18:44:24.052Z","level":"INFO","message":"Servicio ya existe: Corte Natural Curly","metadata":{}}
+{"timestamp":"2025-07-08T18:44:24.191Z","level":"INFO","message":"Servicio ya existe: Menú Raíz + Secar","metadata":{}}
+{"timestamp":"2025-07-08T18:44:24.270Z","level":"INFO","message":"Servicio ya existe: Menú Raíz + Baño","metadata":{}}
+{"timestamp":"2025-07-08T18:44:24.341Z","level":"INFO","message":"Servicio ya existe: Menú Raíz + Cortar","metadata":{}}
+{"timestamp":"2025-07-08T18:44:24.417Z","level":"INFO","message":"Servicio ya existe: Menú Raíz + Baño + Cortar","metadata":{}}
+{"timestamp":"2025-07-08T18:44:24.487Z","level":"INFO","message":"Servicio ya existe: Iluminaciones Localizadas","metadata":{}}
+{"timestamp":"2025-07-08T18:44:24.559Z","level":"INFO","message":"Servicio ya existe: Iluminaciones Full Blond","metadata":{}}
+{"timestamp":"2025-07-08T18:44:24.634Z","level":"INFO","message":"Servicio ya existe: Enzimoterapia - Alisado Progresivo","metadata":{}}
+{"timestamp":"2025-07-08T18:44:24.713Z","level":"INFO","message":"Servicio ya existe: Queratina Anti-frizz","metadata":{}}
+{"timestamp":"2025-07-08T18:44:24.714Z","level":"INFO","message":"Inicialización de servicios completada","metadata":{"servicesCreated":0,"totalServices":15,"duration":"1416ms"}}
+{"timestamp":"2025-07-08T18:46:06.820Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:46:06.823Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:46:06.831Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:46:06.834Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:46:06.844Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:46:06.846Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:46:06.866Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:46:06.870Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:46:06.914Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T18:46:06.917Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T18:46:07.276Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:46:07.276Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:46:07.281Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:46:07.284Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:46:07.291Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":24800}}
+{"timestamp":"2025-07-08T18:46:07.290Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":8424}}
+{"timestamp":"2025-07-08T18:46:07.293Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":4580}}
+{"timestamp":"2025-07-08T18:46:07.297Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":23980}}
+{"timestamp":"2025-07-08T18:46:07.349Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-08T18:46:07.358Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":23696}}
+{"timestamp":"2025-07-08T20:45:21.019Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T20:45:21.024Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T20:45:21.775Z","level":"INFO","message":"UserModel inicializado","metadata":{"table":"users","validRoles":8,"roleHierarchy":8,"validStatuses":4}}
+{"timestamp":"2025-07-08T20:47:19.912Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-08T20:47:19.918Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-08T20:47:20.423Z","level":"INFO","message":"UserModel inicializado","metadata":{"table":"users","validRoles":8,"roleHierarchy":8,"validStatuses":4}}
+{"timestamp":"2025-07-08T20:47:20.427Z","level":"INFO","message":"AuthController inicializado","metadata":{"tokenExpiry":"15m","refreshTokenExpiry":"7d"}}
+{"timestamp":"2025-07-08T20:47:20.434Z","level":"INFO","message":"ClientController inicializado","metadata":{}}
+{"timestamp":"2025-07-09T07:11:58.876Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-09T07:11:58.880Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-09T07:11:59.639Z","level":"INFO","message":"UserModel inicializado","metadata":{"table":"users","validRoles":8,"roleHierarchy":8,"validStatuses":4}}
+{"timestamp":"2025-07-09T07:11:59.644Z","level":"INFO","message":"AuthController inicializado","metadata":{"tokenExpiry":"15m","refreshTokenExpiry":"7d"}}
+{"timestamp":"2025-07-09T07:11:59.651Z","level":"INFO","message":"ClientController inicializado","metadata":{}}
+{"timestamp":"2025-07-09T07:11:59.657Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-09T07:11:59.683Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":18212}}
+{"timestamp":"2025-07-09T07:21:52.023Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-09T07:21:52.026Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-09T07:21:52.516Z","level":"INFO","message":"UserModel inicializado","metadata":{"table":"users","validRoles":8,"roleHierarchy":8,"validStatuses":4}}
+{"timestamp":"2025-07-09T07:21:52.519Z","level":"INFO","message":"TokenBlacklist inicializado","metadata":{"cleanupInterval":3600000}}
+{"timestamp":"2025-07-09T07:21:52.522Z","level":"INFO","message":"AuthController inicializado","metadata":{"tokenExpiry":"15m","refreshTokenExpiry":"7d"}}
+{"timestamp":"2025-07-09T07:21:52.527Z","level":"INFO","message":"ClientController inicializado","metadata":{}}
+{"timestamp":"2025-07-09T07:21:52.536Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-09T07:21:52.552Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":3032}}
+{"timestamp":"2025-07-09T11:05:06.719Z","level":"INFO","message":"AdaptedServiceModel inicializado","metadata":{"table":"servicios","fields":11}}
+{"timestamp":"2025-07-09T11:07:07.122Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{}}
+{"timestamp":"2025-07-09T11:07:07.126Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asistente RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasOpenAIConfig":true}}
+{"timestamp":"2025-07-09T11:07:08.094Z","level":"INFO","message":"UserModel inicializado","metadata":{"table":"users","validRoles":8,"roleHierarchy":8,"validStatuses":4}}
+{"timestamp":"2025-07-09T11:07:08.102Z","level":"INFO","message":"ClientModel inicializado","metadata":{"table":"clientes"}}
+{"timestamp":"2025-07-09T11:07:08.107Z","level":"INFO","message":"TokenBlacklist inicializado","metadata":{"cleanupInterval":3600000}}
+{"timestamp":"2025-07-09T11:07:08.119Z","level":"INFO","message":"AuthController inicializado","metadata":{"tokenExpiry":"15m","refreshTokenExpiry":"7d"}}
+{"timestamp":"2025-07-09T11:07:08.135Z","level":"INFO","message":"ClientController inicializado","metadata":{}}
+{"timestamp":"2025-07-09T11:07:08.153Z","level":"INFO","message":"AdaptedServiceModel inicializado","metadata":{"table":"servicios","fields":11}}
+{"timestamp":"2025-07-09T11:07:08.165Z","level":"INFO","message":"Iniciando Asistente RB v1.0.0","metadata":{"environment":"development","port":3000}}
+{"timestamp":"2025-07-09T11:07:08.210Z","level":"INFO","message":"🚀 Servidor iniciado exitosamente","metadata":{"port":3000,"environment":"development","url":"http://localhost:3000","pid":10428}}
+{"timestamp":"2025-07-10T06:12:55.655Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{},"logId":"4b6b431896db7f89","service":"asistente-rb-autonomo","environment":"development"}
+{"timestamp":"2025-07-10T06:12:55.663Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asi*** RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasGoogleCalendarConfig":true,"hasOpenAIConfig":true,"hasJWTConfig":"[REDACTED]","hasAdminConfig":true},"logId":"bc7ffb98b430c66d","service":"asistente-rb-autonomo","environment":"development"}
+{"timestamp":"2025-07-10T06:13:54.527Z","level":"INFO","message":"Variables de entorno validadas correctamente","metadata":{},"logId":"3655c8e489430d7f","service":"asistente-rb-autonomo","environment":"development"}
+{"timestamp":"2025-07-10T06:13:54.531Z","level":"INFO","message":"Configuración cargada","metadata":{"NODE_ENV":"development","PORT":3000,"APP_NAME":"Asi*** RB","hasSupabaseConfig":true,"hasTwilioConfig":true,"hasCalendlyConfig":true,"hasGoogleCalendarConfig":true,"hasOpenAIConfig":true,"hasJWTConfig":"[REDACTED]","hasAdminConfig":true},"logId":"3b88966433bd606d","service":"asistente-rb-autonomo","environment":"development"}
+{"timestamp":"2025-07-10T06:13:58.206Z","level":"INFO","message":"Google Calendar OAuth client initialized successfully","metadata":{},"logId":"59bff76921866f7f","service":"asistente-rb-autonomo","environment":"development"}
+{"timestamp":"2025-07-10T06:13:58.231Z","level":"INFO","message":"UserModel inicializado","metadata":{"table":"users","validRoles":8,"roleHierarchy":8,"validStatuses":4},"logId":"815b677dd97d10d6","service":"asistente-rb-autonomo","environment":"development"}
+{"timestamp":"2025-07-10T06:13:58.235Z","level":"INFO","message":"ClientModel inicializado","metadata":{"table":"clientes"},"logId":"9e61efd5c8333f25","service":"asistente-rb-autonomo","environment":"development"}
+{"timestamp":"2025-07-10T06:13:58.239Z","level":"INFO","message":"TokenBlacklist inicializado","metadata":{"cleanupInterval":3600000},"logId":"b35cc3b56af73d6e","service":"asistente-rb-autonomo","environment":"development"}
+{"timestamp":"2025-07-10T06:13:58.292Z","level":"INFO","message":"AuthController inicializado","metadata":{"tokenExpiry":"15m***15m","refreshTokenExpiry":"7d***7d"},"logId":"e3d6bfc8a900165d","service":"asistente-rb-autonomo","environment":"development"}

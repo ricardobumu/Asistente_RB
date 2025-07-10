@@ -22,6 +22,7 @@ const supabase = require("./integrations/supabaseClient");
 const twilioClient = require("./integrations/twilioClient");
 const calendlyClient = require("./integrations/calendlyClient");
 const openaiClient = require("./integrations/openaiClient");
+const googleCalendarClient = require("./integrations/googleCalendarClient");
 
 // Importar API router
 const apiRouter = require("./api");
@@ -31,6 +32,8 @@ const autonomousWhatsAppRoutes = require("./routes/autonomousWhatsAppRoutes");
 const bookingWidgetRoutes = require("./routes/bookingWidgetRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const calendlyWebhookRoutes = require("./routes/calendlyWebhookRoutes");
+const clientPortalRoutes = require("./routes/clientPortalRoutes");
+const googleCalendarRoutes = require("./routes/googleCalendarRoutes");
 
 // Inicializar manejadores de errores globales
 ErrorHandler.initialize();
@@ -120,11 +123,16 @@ app.locals.supabase = supabase;
 app.locals.twilioClient = twilioClient;
 app.locals.calendlyClient = calendlyClient;
 app.locals.openaiClient = openaiClient;
+app.locals.googleCalendarClient = googleCalendarClient;
 
 // ===== MONTAJE DE RUTAS CON SEGURIDAD =====
 
 // 1. API general con rate limiting moderado
 app.use("/api", rateLimiters.general, apiRouter);
+
+// 1.1. API específica para servicios del portal cliente
+const serviciosRouter = require("./api/servicios");
+app.use("/api/servicios", rateLimiters.general, serviciosRouter);
 
 // 2. WhatsApp autónomo con validación de Twilio y rate limiting específico
 app.use(
@@ -160,6 +168,12 @@ app.use("/admin", rateLimiters.admin, adminRoutes);
 // 5. Webhooks de Calendly con rate limiting específico
 app.use("/api/calendly", rateLimiters.general, calendlyWebhookRoutes);
 
+// 6. Portal del Cliente con rate limiting moderado
+app.use("/client", rateLimiters.general, clientPortalRoutes);
+
+// 7. Google Calendar con rate limiting específico
+app.use("/api/google", rateLimiters.general, googleCalendarRoutes);
+
 // ===== ARCHIVOS ESTÁTICOS =====
 
 // Importar path para archivos estáticos
@@ -179,6 +193,24 @@ app.get("/admin", (req, res) => {
 // Ruta para login del dashboard
 app.get("/admin/login.html", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/admin/login.html"));
+});
+
+// ===== PORTAL CLIENTE =====
+
+// Servir archivos estáticos del portal cliente
+app.use(
+  "/portal/static",
+  express.static(path.join(__dirname, "../public/client"))
+);
+
+// Ruta principal del portal cliente
+app.get("/portal", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/client/ricardo-portal.html"));
+});
+
+// Ruta alternativa para compatibilidad
+app.get("/client", (req, res) => {
+  res.redirect("/portal");
 });
 
 // ===== RUTAS DE SISTEMA =====

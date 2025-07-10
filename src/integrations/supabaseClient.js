@@ -12,4 +12,6 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// Exportar tanto como objeto como directamente para compatibilidad
 module.exports = supabaseClient;
+module.exports.supabaseClient = supabaseClient;

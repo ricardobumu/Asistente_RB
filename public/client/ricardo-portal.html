@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal Cliente - Ricardo Buriticá | Especialista en Belleza</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "ricardo-gold": "#8d7c69",
+              "ricardo-gold-light": "#a69485",
+              "ricardo-gold-dark": "#6b5a4a",
+              "ricardo-cream": "#f8f6f3",
+              "ricardo-dark": "#2c2825",
+            },
+            fontFamily: {
+              serif: ["Playfair Display", "serif"],
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      .gradient-gold {
+        background: linear-gradient(
+          135deg,
+          #8d7c69 0%,
+          #a69485 50%,
+          #8d7c69 100%
+        );
+      }
+      .service-card {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(10px);
+      }
+      .service-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 25px 50px rgba(141, 124, 105, 0.3);
+      }
+      .booking-slot {
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+      .booking-slot:hover {
+        border-color: #8d7c69;
+        background: rgba(141, 124, 105, 0.1);
+      }
+      .booking-slot.selected {
+        background: #8d7c69;
+        color: white;
+        border-color: #6b5a4a;
+      }
+      .luxury-shadow {
+        box-shadow: 0 20px 40px rgba(141, 124, 105, 0.15);
+      }
+      .text-gradient {
+        background: linear-gradient(135deg, #8d7c69, #6b5a4a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .btn-gold {
+        background: linear-gradient(135deg, #8d7c69, #a69485);
+        transition: all 0.3s ease;
+      }
+      .btn-gold:hover {
+        background: linear-gradient(135deg, #6b5a4a, #8d7c69);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(141, 124, 105, 0.4);
+      }
+      .category-badge {
+        background: rgba(141, 124, 105, 0.1);
+        color: #6b5a4a;
+        border: 1px solid rgba(141, 124, 105, 0.3);
+      }
+      .category-filter.active {
+        background: #8d7c69 !important;
+        color: white !important;
+      }
+    </style>
+  </head>
+  <body class="bg-ricardo-cream font-sans">
+    <!-- Header Elegante -->
+    <header class="gradient-gold text-white relative overflow-hidden">
+      <div class="absolute inset-0 bg-black opacity-10"></div>
+      <div class="container mx-auto px-6 py-12 relative z-10">
+        <div class="text-center">
+          <h1 class="font-serif text-5xl md:text-6xl font-bold mb-4">
+            Ricardo Buriticá
+          </h1>
+          <p class="text-xl md:text-2xl font-light mb-2 opacity-90">
+            Especialista en Servicios de Belleza
+          </p>
+          <div
+            class="flex items-center justify-center space-x-6 text-sm opacity-80"
+          >
+            <div class="flex items-center">
+              <i class="fas fa-map-marker-alt mr-2"></i>
+              Barcelona, España
+            </div>
+            <div class="flex items-center">
+              <i class="fab fa-whatsapp mr-2"></i>
+              WhatsApp Disponible 24/7
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-30"
+      ></div>
+    </header>
+
+    <!-- Navigation Elegante -->
+    <nav class="bg-white luxury-shadow sticky top-0 z-50">
+      <div class="container mx-auto px-6">
+        <div class="flex justify-center space-x-12">
+          <button
+            class="nav-btn active py-6 px-4 border-b-3 border-ricardo-gold text-ricardo-gold font-medium transition-all duration-300"
+            data-section="services"
+          >
+            <i class="fas fa-spa mr-2"></i>Nuestros Servicios
+          </button>
+          <button
+            class="nav-btn py-6 px-4 border-b-3 border-transparent text-gray-600 hover:text-ricardo-gold font-medium transition-all duration-300"
+            data-section="booking"
+          >
+            <i class="fas fa-calendar-plus mr-2"></i>Reservar Cita
+          </button>
+          <button
+            class="nav-btn py-6 px-4 border-b-3 border-transparent text-gray-600 hover:text-ricardo-gold font-medium transition-all duration-300"
+            data-section="my-bookings"
+          >
+            <i class="fas fa-calendar-check mr-2"></i>Mis Citas
+          </button>
+          <button
+            class="nav-btn py-6 px-4 border-b-3 border-transparent text-gray-600 hover:text-ricardo-gold font-medium transition-all duration-300"
+            data-section="contact"
+          >
+            <i class="fas fa-phone mr-2"></i>Contacto
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+      <!-- Services Section -->
+      <section id="services-section" class="section active">
+        <div class="text-center mb-16">
+          <h2
+            class="font-serif text-4xl md:text-5xl font-bold text-ricardo-dark mb-6"
+          >
+            Servicios <span class="text-gradient">Profesionales</span>
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Descubre nuestra amplia gama de servicios de belleza, diseñados para
+            realzar tu estilo único con la máxima calidad y profesionalismo.
+          </p>
+        </div>
+
+        <!-- Filtros por Categoría -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+          <button
+            class="category-filter active px-6 py-3 rounded-full category-badge font-medium transition-all duration-300"
+            data-category="all"
+          >
+            Todos los Servicios
+          </button>
+          <button
+            class="category-filter px-6 py-3 rounded-full category-badge font-medium transition-all duration-300"
+            data-category="ASESORÍA"
+          >
+            Asesoría
+          </button>
+          <button
+            class="category-filter px-6 py-3 rounded-full category-badge font-medium transition-all duration-300"
+            data-category="COLORACIÓN"
+          >
+            Coloración
+          </button>
+          <button
+            class="category-filter px-6 py-3 rounded-full category-badge font-medium transition-all duration-300"
+            data-category="CORTE"
+          >
+            Cortes
+          </button>
+          <button
+            class="category-filter px-6 py-3 rounded-full category-badge font-medium transition-all duration-300"
+            data-category="TRATAMIENTO"
+          >
+            Tratamientos
+          </button>
+        </div>
+
+        <div
+          class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          id="services-grid"
+        >
+          <!-- Services will be loaded dynamically -->
+        </div>
+      </section>
+
+      <!-- Booking Section -->
+      <section id="booking-section" class="section hidden">
+        <div class="max-w-5xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="font-serif text-4xl font-bold text-ricardo-dark mb-4">
+              Reservar <span class="text-gradient">tu Cita</span>
+            </h2>
+            <p class="text-xl text-gray-600">
+              Proceso simple y elegante para agendar tu próxima sesión de
+              belleza
+            </p>
+          </div>
+
+          <!-- Booking Form -->
+          <div class="bg-white rounded-2xl luxury-shadow p-8 md:p-12">
+            <form id="booking-form" class="space-y-8">
+              <!-- Step Indicator -->
+              <div class="flex justify-center mb-12">
+                <div class="flex items-center space-x-4">
+                  <div
+                    class="step-indicator active flex items-center justify-center w-10 h-10 rounded-full bg-ricardo-gold text-white font-semibold"
+                  >
+                    1
+                  </div>
+                  <div class="w-16 h-1 bg-gray-200 step-line"></div>
+                  <div
+                    class="step-indicator flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-500 font-semibold"
+                  >
+                    2
+                  </div>
+                  <div class="w-16 h-1 bg-gray-200 step-line"></div>
+                  <div
+                    class="step-indicator flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-500 font-semibold"
+                  >
+                    3
+                  </div>
+                  <div class="w-16 h-1 bg-gray-200 step-line"></div>
+                  <div
+                    class="step-indicator flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-500 font-semibold"
+                  >
+                    4
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 1: Service Selection -->
+              <div class="booking-step" id="step-service">
+                <h3
+                  class="font-serif text-2xl font-semibold mb-6 text-ricardo-dark"
+                >
+                  Selecciona tu Servicio
+                </h3>
+                <div class="grid md:grid-cols-2 gap-6" id="service-selection">
+                  <!-- Services for selection -->
+                </div>
+              </div>
+
+              <!-- Step 2: Date & Time -->
+              <div class="booking-step hidden" id="step-datetime">
+                <h3
+                  class="font-serif text-2xl font-semibold mb-6 text-ricardo-dark"
+                >
+                  Elige Fecha y Hora
+                </h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <label
+                      class="block text-sm font-semibold text-ricardo-dark mb-3"
+                      >Fecha Preferida</label
+                    >
+                    <input
+                      type="date"
+                      id="booking-date"
+                      class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-ricardo-gold focus:border-transparent transition-all duration-300"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      class="block text-sm font-semibold text-ricardo-dark mb-3"
+                      >Horarios Disponibles</label
+                    >
+                    <div
+                      id="available-slots"
+                      class="grid grid-cols-3 gap-3 max-h-64 overflow-y-auto"
+                    >
+                      <!-- Available slots will be loaded -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 3: Personal Info -->
+              <div class="booking-step hidden" id="step-info">
+                <h3
+                  class="font-serif text-2xl font-semibold mb-6 text-ricardo-dark"
+                >
+                  Tus Datos
+                </h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label
+                      class="block text-sm font-semibold text-ricardo-dark mb-3"
+                      >Nombre Completo *</label
+                    >
+                    <input
+                      type="text"
+                      id="client-name"
+                      required
+                      class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-ricardo-gold focus:border-transparent transition-all duration-300"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      class="block text-sm font-semibold text-ricardo-dark mb-3"
+                      >Teléfono *</label
+                    >
+                    <input
+                      type="tel"
+                      id="client-phone"
+                      required
+                      class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-ricardo-gold focus:border-transparent transition-all duration-300"
+                    />
+                  </div>
+                  <div class="md:col-span-2">
+                    <label
+                      class="block text-sm font-semibold text-ricardo-dark mb-3"
+                      >Email (Opcional)</label
+                    >
+                    <input
+                      type="email"
+                      id="client-email"
+                      class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-ricardo-gold focus:border-transparent transition-all duration-300"
+                    />
+                  </div>
+                  <div class="md:col-span-2">
+                    <label
+                      class="block text-sm font-semibold text-ricardo-dark mb-3"
+                      >Comentarios Especiales</label
+                    >
+                    <textarea
+                      id="booking-notes"
+                      rows="4"
+                      class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-ricardo-gold focus:border-transparent transition-all duration-300"
+                      placeholder="Alguna preferencia especial o información que debamos conocer..."
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 4: Confirmation -->
+              <div class="booking-step hidden" id="step-confirm">
+                <h3
+                  class="font-serif text-2xl font-semibold mb-6 text-ricardo-dark"
+                >
+                  Confirmar Reserva
+                </h3>
+                <div class="bg-ricardo-cream p-8 rounded-xl">
+                  <div id="booking-summary">
+                    <!-- Booking summary will be shown here -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Navigation Buttons -->
+              <div class="flex justify-between pt-8">
+                <button
+                  type="button"
+                  id="prev-step"
+                  class="hidden px-8 py-4 bg-gray-300 text-gray-700 rounded-xl hover:bg-gray-400 transition-all duration-300 font-medium"
+                >
+                  <i class="fas fa-arrow-left mr-2"></i>Anterior
+                </button>
+                <button
+                  type="button"
+                  id="next-step"
+                  class="px-8 py-4 btn-gold text-white rounded-xl font-medium"
+                >
+                  Siguiente <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+                <button
+                  type="submit"
+                  id="confirm-booking"
+                  class="hidden px-8 py-4 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all duration-300 font-medium"
+                >
+                  <i class="fas fa-check mr-2"></i>Confirmar Reserva
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- My Bookings Section -->
+      <section id="my-bookings-section" class="section hidden">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="font-serif text-4xl font-bold text-ricardo-dark mb-4">
+              Mis <span class="text-gradient">Citas</span>
+            </h2>
+            <p class="text-xl text-gray-600">
+              Consulta y gestiona tus reservas de forma sencilla
+            </p>
+          </div>
+
+          <!-- Phone Input for Booking Lookup -->
+          <div class="bg-white rounded-2xl luxury-shadow p-8 mb-8">
+            <div class="flex gap-4">
+              <input
+                type="tel"
+                id="lookup-phone"
+                placeholder="Introduce tu número de teléfono"
+                class="flex-1 p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-ricardo-gold focus:border-transparent transition-all duration-300"
+              />
+              <button
+                id="lookup-bookings"
+                class="px-8 py-4 btn-gold text-white rounded-xl font-medium"
+              >
+                <i class="fas fa-search mr-2"></i>Buscar
+              </button>
+            </div>
+          </div>
+
+          <!-- Bookings List -->
+          <div id="bookings-list">
+            <!-- Bookings will be loaded here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact-section" class="section hidden">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="font-serif text-4xl font-bold text-ricardo-dark mb-4">
+              <span class="text-gradient">Contacto</span>
+            </h2>
+            <p class="text-xl text-gray-600">
+              Estamos aquí para atenderte con la máxima dedicación
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-12">
+            <!-- Contact Info -->
+            <div class="bg-white rounded-2xl luxury-shadow p-8">
+              <h3
+                class="font-serif text-2xl font-semibold mb-8 text-ricardo-dark"
+              >
+                Información de Contacto
+              </h3>
+              <div class="space-y-6">
+                <div class="flex items-center">
+                  <div
+                    class="w-12 h-12 bg-ricardo-gold bg-opacity-10 rounded-full flex items-center justify-center mr-4"
+                  >
+                    <i
+                      class="fas fa-map-marker-alt text-ricardo-gold text-lg"
+                    ></i>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-ricardo-dark">Ubicación</p>
+                    <p class="text-gray-600">Barcelona, España</p>
+                  </div>
+                </div>
+                <div class="flex items-center">
+                  <div
+                    class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4"
+                  >
+                    <i class="fab fa-whatsapp text-green-600 text-lg"></i>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-ricardo-dark">WhatsApp</p>
+                    <p class="text-gray-600">Asistente Virtual 24/7</p>
+                  </div>
+                </div>
+                <div class="flex items-center">
+                  <div
+                    class="w-12 h-12 bg-ricardo-gold bg-opacity-10 rounded-full flex items-center justify-center mr-4"
+                  >
+                    <i class="fas fa-clock text-ricardo-gold text-lg"></i>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-ricardo-dark">Horarios</p>
+                    <p class="text-gray-600">Lun - Vie: 9:00 - 18:00</p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="mt-10 p-6 bg-gradient-to-r from-ricardo-gold to-ricardo-gold-light rounded-xl text-white"
+              >
+                <h4 class="font-serif text-xl font-semibold mb-4">
+                  Reserva por WhatsApp
+                </h4>
+                <p class="mb-6 opacity-90">
+                  ¡También puedes reservar directamente por WhatsApp! Nuestro
+                  asistente virtual te ayudará las 24 horas.
+                </p>
+                <a
+                  href="https://wa.me/34XXXXXXXXX"
+                  target="_blank"
+                  class="inline-flex items-center px-6 py-3 bg-white text-ricardo-gold rounded-lg hover:bg-gray-100 transition-colors font-medium"
+                >
+                  <i class="fab fa-whatsapp mr-2"></i>Abrir WhatsApp
+                </a>
+              </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="bg-white rounded-2xl luxury-shadow p-8">
+              <h3
+                class="font-serif text-2xl font-semibold mb-8 text-ricardo-dark"
+              >
+                Envíanos un Mensaje
+              </h3>
+              <form id="contact-form" class="space-y-6">
+                <div>
+                  <label
+                    class="block text-sm font-semibold text-ricardo-dark mb-3"
+                    >Nombre</label
+                  >
+                  <input
+                    type="text"
+                    required
+                    class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-ricardo-gold focus:border-transparent transition-all duration-300"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-sm font-semibold text-ricardo-dark mb-3"
+                    >Email</label
+                  >
+                  <input
+                    type="email"
+                    required
+                    class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-ricardo-gold focus:border-transparent transition-all duration-300"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-sm font-semibold text-ricardo-dark mb-3"
+                    >Mensaje</label
+                  >
+                  <textarea
+                    rows="5"
+                    required
+                    class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-ricardo-gold focus:border-transparent transition-all duration-300"
+                  ></textarea>
+                </div>
+                <button
+                  type="submit"
+                  class="w-full px-8 py-4 btn-gold text-white rounded-xl font-medium"
+                >
+                  <i class="fas fa-paper-plane mr-2"></i>Enviar Mensaje
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Elegante -->
+    <footer class="bg-ricardo-dark text-white py-16 mt-20">
+      <div class="container mx-auto px-6 text-center">
+        <div class="mb-8">
+          <h3 class="font-serif text-3xl font-bold mb-4">Ricardo Buriticá</h3>
+          <p class="text-gray-300 text-lg">
+            Especialista en Servicios de Belleza
+          </p>
+        </div>
+        <div class="border-t border-gray-700 pt-8">
+          <p class="text-gray-400">
+            &copy; 2024 Ricardo Buriticá - Todos los derechos reservados
+          </p>
+          <p class="text-gray-500 mt-2">
+            Desarrollado con ❤️ para ofrecer la mejor experiencia de belleza
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Loading Modal -->
+    <div
+      id="loading-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+    >
+      <div class="bg-white rounded-2xl p-8 text-center luxury-shadow">
+        <div
+          class="animate-spin rounded-full h-16 w-16 border-b-4 border-ricardo-gold mx-auto mb-6"
+        ></div>
+        <p class="text-ricardo-dark font-medium">Procesando tu solicitud...</p>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div
+      id="success-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+    >
+      <div
+        class="bg-white rounded-2xl p-8 text-center max-w-md mx-4 luxury-shadow"
+      >
+        <div class="text-green-600 text-6xl mb-6">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3 class="font-serif text-2xl font-semibold mb-4 text-ricardo-dark">
+          ¡Reserva Confirmada!
+        </h3>
+        <p class="text-gray-600 mb-8" id="success-message"></p>
+        <button
+          id="close-success"
+          class="px-8 py-4 btn-gold text-white rounded-xl font-medium"
+        >
+          Perfecto
+        </button>
+      </div>
+    </div>
+
+    <script src="client-ricardo.js"></script>
+  </body>
+</html>

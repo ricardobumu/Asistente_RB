@@ -1,9 +1,9 @@
 // src/services/autonomousAssistant.js
 // Asistente Virtual Autónomo para reservas sin intervención humana
 
-const { openaiClient } = require("../integrations/openaiClient");
-const { calendlyClient } = require("../integrations/calendlyClient");
-const { twilioClient } = require("../integrations/twilioClient");
+const openaiClient = require("../integrations/openaiClient");
+const calendlyClient = require("../integrations/calendlyClient");
+const twilioClient = require("../integrations/twilioClient");
 const ClientService = require("./clientService");
 const ServiceService = require("./serviceService");
 const DatabaseAdapter = require("../adapters/databaseAdapter");
@@ -12,8 +12,8 @@ const logger = require("../utils/logger");
 class AutonomousAssistant {
   constructor() {
     this.conversations = new Map(); // Contexto de conversaciones activas
-    this.systemPrompt = this.buildSystemPrompt();
     this.services = null; // Cache de servicios
+    this.systemPrompt = null; // Se construirá después de cargar servicios
     this.initializeServices();
   }
 
@@ -25,6 +25,7 @@ class AutonomousAssistant {
       const result = await ServiceService.getActiveServices();
       if (result.success) {
         this.services = result.data;
+        this.systemPrompt = this.buildSystemPrompt(); // Construir prompt después de cargar servicios
         logger.info("Services cache initialized", {
           count: this.services.length,
         });
@@ -36,6 +37,7 @@ class AutonomousAssistant {
         error: error.message,
       });
       this.services = [];
+      this.systemPrompt = this.buildSystemPrompt(); // Construir con servicios vacíos
     }
   }
 
@@ -162,11 +164,31 @@ Si no puedes resolver algo automáticamente, indica: "Te conectaré con Ricardo 
   }
 
   /**
-   * Analiza mensaje usando OpenAI para extraer intención y entidades
+   * Analiza mensaje usando OpenAI con function calling avanzado
    */
   async analyzeMessage(message, context) {
     try {
-      const prompt = `Analiza este mensaje de WhatsApp y extrae la información para reservas:
+      // Usar el nuevo cliente con function calling
+      const analysis = await openaiClient.analyzeMessageWithFunctions(
+        message,
+        context
+      );
+
+      if (analysis.type === "function_call") {
+        // El mensaje requiere una acción específica
+        return await this.handleFunctionCall(analysis);
+      } else {
+        // Análisis tradicional de intención
+        return await openaiClient.analyzeIntent(message, context);
+      }
+    } catch (error) {
+      logger.error("Error analyzing message with functions", {
+        error: error.message,
+      });
+
+      // Fallback al método tradicional
+      try {
+        const prompt = `Analiza este mensaje de WhatsApp y extrae la información para reservas:
 
 MENSAJE: "${message}"
 CONTEXTO PREVIO: ${JSON.stringify(context.extractedData || {})}
@@ -188,30 +210,115 @@ Responde SOLO con JSON válido:
   "ready_to_book": true|false
 }`;
 
-      const response = await openaiClient.chat.completions.create({
-        model: "gpt-4-turbo-preview",
-        messages: [
+        const response = await openaiClient.chat(
+          [
+            {
+              role: "system",
+              content:
+                "Eres un analizador experto de intenciones para reservas de servicios de belleza.",
+            },
+            { role: "user", content: prompt },
+          ],
           {
-            role: "system",
-            content:
-              "Eres un analizador experto de intenciones para reservas de servicios de belleza.",
-          },
-          { role: "user", content: prompt },
-        ],
-        temperature: 0.1,
-        max_tokens: 400,
-      });
+            model: "gpt-4-turbo-preview",
+            temperature: 0.1,
+            max_tokens: 400,
+          }
+        );
 
-      return JSON.parse(response.choices[0].message.content);
+        return JSON.parse(response.choices[0].message.content);
+      } catch (fallbackError) {
+        logger.error("Fallback analysis also failed", {
+          error: fallbackError.message,
+        });
+        return {
+          intent: "general_inquiry",
+          confidence: 0.5,
+          entities: {},
+          missing_info: [],
+          urgency: "medium",
+          ready_to_book: false,
+        };
+      }
+    }
+  }
+
+  /**
+   * Maneja llamadas a funciones de OpenAI
+   */
+  async handleFunctionCall(analysis) {
+    const { function_name, arguments: args } = analysis;
+
+    try {
+      switch (function_name) {
+        case "check_availability":
+          const availability = await this.checkCalendlyAvailability(
+            args.service_name,
+            args.date,
+            args.time
+          );
+          return {
+            intent: "availability_inquiry",
+            confidence: 0.9,
+            entities: args,
+            missing_info: [],
+            urgency: "medium",
+            ready_to_book: availability.available,
+            function_result: availability,
+          };
+
+        case "create_booking":
+          return {
+            intent: "booking_request",
+            confidence: 0.95,
+            entities: args,
+            missing_info: [],
+            urgency: "high",
+            ready_to_book: true,
+            function_result: { action: "create_booking", data: args },
+          };
+
+        case "get_available_slots":
+          const slots = await this.getAvailableSlots(
+            args.service_name,
+            args.from_date,
+            args.days_ahead || 7
+          );
+          return {
+            intent: "availability_inquiry",
+            confidence: 0.9,
+            entities: args,
+            missing_info: [],
+            urgency: "medium",
+            ready_to_book: false,
+            function_result: slots,
+          };
+
+        default:
+          logger.warn("Unknown function call", { function_name });
+          return {
+            intent: "general_inquiry",
+            confidence: 0.5,
+            entities: {},
+            missing_info: [],
+            urgency: "medium",
+            ready_to_book: false,
+          };
+      }
     } catch (error) {
-      logger.error("Error analyzing message", { error: error.message });
+      logger.error("Error handling function call", {
+        error: error.message,
+        function_name,
+        arguments: args,
+      });
       return {
         intent: "general_inquiry",
-        confidence: 0.5,
+        confidence: 0.3,
         entities: {},
         missing_info: [],
         urgency: "medium",
         ready_to_book: false,
+        error: error.message,
       };
     }
   }
@@ -529,12 +636,14 @@ Para cambios, escríbeme con al menos 24h de antelación.
    * Maneja saludos
    */
   async handleGreeting(phoneNumber) {
-    const client = await ClientModel.findByPhone(phoneNumber);
-    const greeting = client
-      ? `¡Hola ${client.name}! 👋 Me alegra verte de nuevo.`
-      : "¡Hola! 👋 Soy tu asistente virtual para reservas.";
-
-    return `${greeting}
+    try {
+      const clientResult = await ClientService.findByPhone(phoneNumber);
+      const client = clientResult.success ? clientResult.data : null;
+      const greeting = client
+        ? `¡Hola ${client.first_name}! 👋 Me alegra verte de nuevo.`
+        : "¡Hola! 👋 Soy tu asistente virtual para reservas.";
+      
+      return `${greeting}
 
 Puedo ayudarte a reservar una cita automáticamente. Solo dime:
 
@@ -545,12 +654,21 @@ Puedo ayudarte a reservar una cita automáticamente. Solo dime:
 ¡Y yo me encargo del resto! 😊
 
 **Servicios disponibles:**
-• Corte de cabello (€25)
-• Coloración (€45)
-• Tratamiento capilar (€35)
-• Manicura (€20)
-• Pedicura (€25)`;
-  }
+${this.services ? this.services.map(s => `• ${s.name} (€${s.price})`).join('\n') : '• Cargando servicios...'}`;
+    } catch (error) {
+      logger.error("Error in handleGreeting", { error: error.message, phoneNumber });
+      return "¡Hola! 👋 Soy tu asistente virtual para reservas. ¿En qué puedo ayudarte?";
+    }
+
+    return `${greeting}
+
+Puedo ayudarte a reservar una cita automáticamente. Solo dime:
+
+🔹 Qué servicio necesitas
+🔹 Para qué fecha y hora
+🔹 Tu nombre
+
+
 
   /**
    * Envía mensaje por WhatsApp
@@ -559,7 +677,7 @@ Puedo ayudarte a reservar una cita automáticamente. Solo dime:
     try {
       await twilioClient.messages.create({
         from: process.env.TWILIO_WHATSAPP_NUMBER,
-        to: `whatsapp:${phoneNumber}`,
+        to: "whatsapp:" + phoneNumber,
         body: message,
       });
 
@@ -658,20 +776,177 @@ Puedo ayudarte a reservar una cita automáticamente. Solo dime:
    */
   async handleGeneralInquiry(message, context) {
     try {
-      const response = await openaiClient.chat.completions.create({
-        model: "gpt-4-turbo-preview",
-        messages: [
-          { role: "system", content: this.systemPrompt },
-          { role: "user", content: message },
-        ],
-        temperature: 0.7,
-        max_tokens: 300,
-      });
-
-      return response.choices[0].message.content;
+      const response = await openaiClient.generateResponse(
+        this.systemPrompt + "\n\nUsuario: " + message,
+        context
+      );
+      return response;
     } catch (error) {
       logger.error("Error handling general inquiry", { error: error.message });
       return "¿Podrías reformular tu consulta? Estoy aquí para ayudarte con reservas de servicios de belleza. 😊";
+    }
+  }
+
+  /**
+   * Maneja consultas de disponibilidad
+   */
+  async handleAvailabilityInquiry(analysis, context) {
+    try {
+      const { entities } = analysis;
+      
+      if (!entities.service) {
+        return "¿Para qué servicio quieres consultar disponibilidad? 🤔\n\n" + 
+               this.getServicesMenu();
+      }
+
+      if (!entities.date) {
+        return `Para consultar disponibilidad de ${entities.service}, ¿para qué fecha? 📅\n\nPuedes decir: 'mañana', 'el viernes', '15 de marzo', etc.`;
+      }
+
+      // Obtener slots disponibles
+      const slots = await this.getAvailableSlots(entities.service, entities.date, 7);
+      
+      if (!slots.success || slots.slots.length === 0) {
+        return `No tengo disponibilidad para ${entities.service} en esa fecha. 😔\n\n¿Te gustaría ver otras fechas disponibles?`;
+      }
+
+      let response = `📅 **Disponibilidad para ${entities.service}:**\n\n`;
+      
+      slots.slots.slice(0, 5).forEach((slot, index) => {
+        const date = new Date(slot.start_time).toLocaleDateString("es-ES");
+        const time = new Date(slot.start_time).toLocaleTimeString("es-ES", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        response += `${index + 1}. 📅 ${date} a las ⏰ ${time}\n`;
+      });
+
+      response += "\n¿Te interesa alguno de estos horarios? Solo dime el número o la fecha/hora que prefieres. 😊";
+      
+      return response;
+    } catch (error) {
+      logger.error("Error handling availability inquiry", { error: error.message });
+      return "Déjame consultar la disponibilidad y te respondo enseguida.";
+    }
+  }
+
+  /**
+   * Maneja modificaciones de reservas
+   */
+  async handleBookingModification(phoneNumber, analysis, context) {
+    try {
+      // Buscar reservas activas del cliente
+      const clientResult = await ClientService.findByPhone(phoneNumber);
+      if (!clientResult.success) {
+        return "No encuentro reservas asociadas a este número. ¿Podrías verificar tu información?";
+      }
+
+      const client = clientResult.data;
+      
+      // Obtener reservas activas
+      const { data: bookings } = await DatabaseAdapter.query(
+        "SELECT * FROM bookings WHERE client_id = ? AND status IN ('confirmed', 'pending') AND service_date >= NOW() ORDER BY service_date ASC",
+        [client.id]
+      );
+
+      if (!bookings || bookings.length === 0) {
+        return "No tienes reservas activas para modificar. ¿Quieres hacer una nueva reserva?";
+      }
+
+      let response = "📋 **Tus reservas activas:**\n\n";
+      
+      bookings.forEach((booking, index) => {
+        const date = new Date(booking.service_date).toLocaleDateString("es-ES");
+        const time = new Date(booking.service_date).toLocaleTimeString("es-ES", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        response += `${index + 1}. ${booking.service_name} - ${date} a las ${time}\n`;
+      });
+
+      response += "\n¿Cuál quieres modificar? Responde con el número.";
+      
+      // Guardar reservas en contexto para próxima interacción
+      context.extractedData.activeBookings = bookings;
+      
+      return response;
+    } catch (error) {
+      logger.error("Error handling booking modification", { error: error.message });
+      return "He tenido un problema consultando tus reservas. Te conectaré con Ricardo para ayudarte.";
+    }
+  }
+
+  /**
+   * Maneja información de servicios
+   */
+  async handleServiceInformation(analysis) {
+    try {
+      const { entities } = analysis;
+      
+      if (entities.service) {
+        // Buscar servicio específico
+        const service = this.services.find(s => 
+          s.name.toLowerCase().includes(entities.service.toLowerCase())
+        );
+        
+        if (service) {
+          return `💇‍♂️ **${service.name}**\n\n` +
+                 `💰 Precio: €${service.price}\n` +
+                 `⏱️ Duración: ${service.duration_minutes} minutos\n` +
+                 `📝 ${service.description || 'Servicio profesional de belleza'}\n\n` +
+                 `¿Te gustaría reservar este servicio? 😊`;
+        }
+      }
+      
+      // Mostrar todos los servicios
+      return this.getServicesMenu();
+    } catch (error) {
+      logger.error("Error handling service information", { error: error.message });
+      return "Déjame consultar la información de servicios y te respondo enseguida.";
+    }
+  }
+
+  /**
+   * Obtiene menú de servicios
+   */
+  getServicesMenu() {
+    if (!this.services || this.services.length === 0) {
+      return "🔄 Cargando servicios disponibles...";
+    }
+
+    let menu = "💇‍♂️ **Servicios disponibles:**\n\n";
+    
+    this.services.forEach(service => {
+      menu += `🔹 **${service.name}**\n`;
+      menu += `   💰 €${service.price} | ⏱️ ${service.duration_minutes}min\n`;
+      if (service.description) {
+        menu += `   📝 ${service.description}\n`;
+      }
+      menu += "\n";
+    });
+
+    menu += "¿Cuál te interesa? 😊";
+    
+    return menu;
+  }
+
+  /**
+   * Obtener slots disponibles (wrapper para calendlyClient)
+   */
+  async getAvailableSlots(serviceName, fromDate, daysAhead = 7) {
+    try {
+      return await calendlyClient.getAvailableSlots(serviceName, fromDate, daysAhead);
+    } catch (error) {
+      logger.error("Error getting available slots", { 
+        error: error.message,
+        serviceName,
+        fromDate 
+      });
+      return {
+        success: false,
+        error: error.message,
+        slots: []
+      };
     }
   }
 }
