@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Centro de Mando - Asistente Virtual Autónomo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .dashboard-card {
+        transition: all 0.3s ease;
+      }
+      .dashboard-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+      .status-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 8px;
+      }
+      .status-healthy {
+        background-color: #10b981;
+      }
+      .status-warning {
+        background-color: #f59e0b;
+      }
+      .status-error {
+        background-color: #ef4444;
+      }
+      .log-entry {
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+      }
+      .metric-value {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center">
+            <i class="fas fa-robot text-blue-600 text-2xl mr-3"></i>
+            <h1 class="text-2xl font-bold text-gray-900">Centro de Mando</h1>
+            <span
+              class="ml-3 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+            >
+              Asistente Virtual Autónomo
+            </span>
+          </div>
+          <div class="flex items-center space-x-4">
+            <div class="text-sm text-gray-500">
+              <span id="current-time"></span>
+            </div>
+            <button
+              id="refresh-btn"
+              class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <i class="fas fa-sync-alt mr-2"></i>Actualizar
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Dashboard Overview -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- System Health -->
+        <div class="dashboard-card bg-white rounded-lg shadow p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">
+                Estado del Sistema
+              </p>
+              <p class="text-2xl font-bold text-green-600" id="system-status">
+                Saludable
+              </p>
+            </div>
+            <div class="bg-green-100 p-3 rounded-full">
+              <i class="fas fa-heartbeat text-green-600 text-xl"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <p class="text-xs text-gray-500">
+              Uptime: <span id="system-uptime">-</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Messages Today -->
+        <div class="dashboard-card bg-white rounded-lg shadow p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Mensajes Hoy</p>
+              <p class="text-2xl font-bold text-blue-600" id="messages-today">
+                0
+              </p>
+            </div>
+            <div class="bg-blue-100 p-3 rounded-full">
+              <i class="fab fa-whatsapp text-blue-600 text-xl"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <p class="text-xs text-gray-500">
+              Último mensaje: <span id="last-message-time">-</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Bookings Today -->
+        <div class="dashboard-card bg-white rounded-lg shadow p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Reservas Hoy</p>
+              <p class="text-2xl font-bold text-purple-600" id="bookings-today">
+                0
+              </p>
+            </div>
+            <div class="bg-purple-100 p-3 rounded-full">
+              <i class="fas fa-calendar-check text-purple-600 text-xl"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <p class="text-xs text-gray-500">
+              Próxima cita: <span id="next-appointment">-</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Memory Usage -->
+        <div class="dashboard-card bg-white rounded-lg shadow p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Memoria</p>
+              <p class="text-2xl font-bold text-orange-600" id="memory-usage">
+                0 MB
+              </p>
+            </div>
+            <div class="bg-orange-100 p-3 rounded-full">
+              <i class="fas fa-memory text-orange-600 text-xl"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div
+                class="bg-orange-600 h-2 rounded-full"
+                id="memory-bar"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Integration Status -->
+      <div class="bg-white rounded-lg shadow mb-8">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900">
+            <i class="fas fa-plug mr-2"></i>Estado de Integraciones
+          </h2>
+        </div>
+        <div class="p-6">
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+            id="integrations-status"
+          >
+            <!-- Se llena dinámicamente -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="bg-white rounded-lg shadow">
+        <div class="border-b border-gray-200">
+          <nav class="-mb-px flex space-x-8 px-6" id="tab-navigation">
+            <button
+              class="tab-btn active py-4 px-1 border-b-2 border-blue-500 font-medium text-sm text-blue-600"
+              data-tab="logs"
+            >
+              <i class="fas fa-file-alt mr-2"></i>Logs del Sistema
+            </button>
+            <button
+              class="tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700"
+              data-tab="messages"
+            >
+              <i class="fab fa-whatsapp mr-2"></i>Mensajes Bot
+            </button>
+            <button
+              class="tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700"
+              data-tab="bookings"
+            >
+              <i class="fas fa-calendar mr-2"></i>Reservas
+            </button>
+            <button
+              class="tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700"
+              data-tab="openai"
+            >
+              <i class="fas fa-brain mr-2"></i>OpenAI
+            </button>
+            <button
+              class="tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700"
+              data-tab="twilio"
+            >
+              <i class="fas fa-phone mr-2"></i>Twilio
+            </button>
+            <button
+              class="tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700"
+              data-tab="users"
+            >
+              <i class="fas fa-users mr-2"></i>Usuarios
+            </button>
+            <button
+              class="tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700"
+              data-tab="security"
+            >
+              <i class="fas fa-shield-alt mr-2"></i>Seguridad
+            </button>
+          </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="p-6">
+          <!-- Logs Tab -->
+          <div id="logs-tab" class="tab-content">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold">Logs del Sistema</h3>
+              <div class="flex space-x-2">
+                <select
+                  id="log-type"
+                  class="border border-gray-300 rounded px-3 py-1 text-sm"
+                >
+                  <option value="app">Aplicación</option>
+                  <option value="error">Errores</option>
+                  <option value="security">Seguridad</option>
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="performance">Performance</option>
+                </select>
+                <select
+                  id="log-level"
+                  class="border border-gray-300 rounded px-3 py-1 text-sm"
+                >
+                  <option value="all">Todos</option>
+                  <option value="ERROR">Error</option>
+                  <option value="WARN">Warning</option>
+                  <option value="INFO">Info</option>
+                </select>
+                <button
+                  id="export-logs"
+                  class="bg-gray-600 text-white px-3 py-1 rounded text-sm hover:bg-gray-700"
+                >
+                  <i class="fas fa-download mr-1"></i>Exportar
+                </button>
+              </div>
+            </div>
+            <div
+              class="bg-gray-900 text-green-400 p-4 rounded-lg h-96 overflow-y-auto"
+              id="logs-container"
+            >
+              <div class="text-center text-gray-500">Cargando logs...</div>
+            </div>
+          </div>
+
+          <!-- Messages Tab -->
+          <div id="messages-tab" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold">Mensajes del Bot</h3>
+              <div class="flex space-x-2">
+                <input
+                  type="text"
+                  id="phone-filter"
+                  placeholder="Filtrar por teléfono"
+                  class="border border-gray-300 rounded px-3 py-1 text-sm"
+                />
+                <select
+                  id="message-status"
+                  class="border border-gray-300 rounded px-3 py-1 text-sm"
+                >
+                  <option value="all">Todos</option>
+                  <option value="sent">Enviados</option>
+                  <option value="delivered">Entregados</option>
+                  <option value="read">Leídos</option>
+                  <option value="failed">Fallidos</option>
+                </select>
+              </div>
+            </div>
+            <div class="space-y-4" id="messages-container">
+              <div class="text-center text-gray-500">Cargando mensajes...</div>
+            </div>
+          </div>
+
+          <!-- Bookings Tab -->
+          <div id="bookings-tab" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold">Reservas y Citas</h3>
+              <div class="flex space-x-2">
+                <select
+                  id="booking-status"
+                  class="border border-gray-300 rounded px-3 py-1 text-sm"
+                >
+                  <option value="all">Todas</option>
+                  <option value="confirmed">Confirmadas</option>
+                  <option value="pending">Pendientes</option>
+                  <option value="cancelled">Canceladas</option>
+                </select>
+              </div>
+            </div>
+            <div class="space-y-4" id="bookings-container">
+              <div class="text-center text-gray-500">Cargando reservas...</div>
+            </div>
+          </div>
+
+          <!-- OpenAI Tab -->
+          <div id="openai-tab" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold">Estado de OpenAI</h3>
+              <button
+                id="test-openai"
+                class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700"
+              >
+                <i class="fas fa-vial mr-1"></i>Test Conectividad
+              </button>
+            </div>
+            <div id="openai-container">
+              <div class="text-center text-gray-500">
+                Cargando estado de OpenAI...
+              </div>
+            </div>
+          </div>
+
+          <!-- Twilio Tab -->
+          <div id="twilio-tab" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold">Estado de Twilio WhatsApp</h3>
+              <button
+                id="test-twilio"
+                class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700"
+              >
+                <i class="fas fa-vial mr-1"></i>Test Conectividad
+              </button>
+            </div>
+            <div id="twilio-container">
+              <div class="text-center text-gray-500">
+                Cargando estado de Twilio...
+              </div>
+            </div>
+          </div>
+
+          <!-- Users Tab -->
+          <div id="users-tab" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold">Usuarios y Actividad</h3>
+              <input
+                type="text"
+                id="user-search"
+                placeholder="Buscar usuario"
+                class="border border-gray-300 rounded px-3 py-1 text-sm"
+              />
+            </div>
+            <div id="users-container">
+              <div class="text-center text-gray-500">Cargando usuarios...</div>
+            </div>
+          </div>
+
+          <!-- Security Tab -->
+          <div id="security-tab" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold">Estado de Seguridad</h3>
+              <button
+                id="security-scan"
+                class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700"
+              >
+                <i class="fas fa-shield-alt mr-1"></i>Escanear
+              </button>
+            </div>
+            <div id="security-container">
+              <div class="text-center text-gray-500">
+                Cargando estado de seguridad...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div
+      id="loading-overlay"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+    >
+      <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+        <div
+          class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"
+        ></div>
+        <span>Cargando...</span>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="dashboard.js"></script>
+  </body>
+</html>

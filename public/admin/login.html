@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Centro de Mando</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .login-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+      .login-card {
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .input-field {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+      }
+      .input-field::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .input-field:focus {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.5);
+        outline: none;
+      }
+    </style>
+  </head>
+  <body class="login-container flex items-center justify-center">
+    <div class="login-card rounded-2xl p-8 w-full max-w-md mx-4 shadow-2xl">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <div
+          class="bg-white bg-opacity-20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
+        >
+          <i class="fas fa-robot text-white text-2xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-white mb-2">Centro de Mando</h1>
+        <p class="text-white text-opacity-80">Asistente Virtual Autónomo</p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="space-y-6">
+        <div>
+          <label
+            for="username"
+            class="block text-white text-sm font-medium mb-2"
+          >
+            <i class="fas fa-user mr-2"></i>Usuario
+          </label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            class="input-field w-full px-4 py-3 rounded-lg transition-all duration-200"
+            placeholder="Ingresa tu usuario"
+          />
+        </div>
+
+        <div>
+          <label
+            for="password"
+            class="block text-white text-sm font-medium mb-2"
+          >
+            <i class="fas fa-lock mr-2"></i>Contraseña
+          </label>
+          <div class="relative">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              class="input-field w-full px-4 py-3 rounded-lg pr-12 transition-all duration-200"
+              placeholder="Ingresa tu contraseña"
+            />
+            <button
+              type="button"
+              id="toggle-password"
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-opacity-70 hover:text-opacity-100"
+            >
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          id="login-btn"
+          class="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+        >
+          <span id="login-text">
+            <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+          </span>
+          <div id="login-spinner" class="hidden">
+            <i class="fas fa-spinner fa-spin mr-2"></i>Iniciando...
+          </div>
+        </button>
+      </form>
+
+      <!-- Development Tools -->
+      <div
+        class="mt-8 pt-6 border-t border-white border-opacity-20"
+        id="dev-tools"
+      >
+        <p class="text-white text-opacity-60 text-sm text-center mb-4">
+          Herramientas de Desarrollo
+        </p>
+        <button
+          id="temp-token-btn"
+          class="w-full bg-yellow-500 bg-opacity-20 hover:bg-opacity-30 text-yellow-200 font-medium py-2 px-4 rounded-lg transition-all duration-200 text-sm"
+        >
+          <i class="fas fa-key mr-2"></i>Generar Token Temporal
+        </button>
+      </div>
+
+      <!-- Error Message -->
+      <div
+        id="error-message"
+        class="hidden mt-4 p-3 bg-red-500 bg-opacity-20 border border-red-500 border-opacity-30 rounded-lg"
+      >
+        <div class="flex items-center text-red-200">
+          <i class="fas fa-exclamation-triangle mr-2"></i>
+          <span id="error-text"></span>
+        </div>
+      </div>
+
+      <!-- Success Message -->
+      <div
+        id="success-message"
+        class="hidden mt-4 p-3 bg-green-500 bg-opacity-20 border border-green-500 border-opacity-30 rounded-lg"
+      >
+        <div class="flex items-center text-green-200">
+          <i class="fas fa-check-circle mr-2"></i>
+          <span id="success-text"></span>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="mt-8 text-center">
+        <p class="text-white text-opacity-60 text-xs">
+          © 2024 Ricardo Buriticá - Asistente Virtual Autónomo
+        </p>
+        <p class="text-white text-opacity-40 text-xs mt-1">
+          Versión 1.0.0 | <span id="environment">Desarrollo</span>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      class AdminLogin {
+        constructor() {
+          this.apiBase = "/admin";
+          this.init();
+        }
+
+        init() {
+          // Check if already logged in
+          const token = localStorage.getItem("admin_token");
+          if (token) {
+            this.verifyToken(token);
+          }
+
+          // Setup event listeners
+          this.setupEventListeners();
+
+          // Hide dev tools in production
+          if (
+            window.location.hostname !== "localhost" &&
+            window.location.hostname !== "127.0.0.1"
+          ) {
+            document.getElementById("dev-tools").style.display = "none";
+            document.getElementById("environment").textContent = "Producción";
+          }
+        }
+
+        setupEventListeners() {
+          // Login form
+          document
+            .getElementById("login-form")
+            .addEventListener("submit", (e) => {
+              e.preventDefault();
+              this.handleLogin();
+            });
+
+          // Toggle password visibility
+          document
+            .getElementById("toggle-password")
+            .addEventListener("click", () => {
+              this.togglePasswordVisibility();
+            });
+
+          // Temporary token (development only)
+          document
+            .getElementById("temp-token-btn")
+            .addEventListener("click", () => {
+              this.generateTempToken();
+            });
+
+          // Enter key on inputs
+          document
+            .getElementById("username")
+            .addEventListener("keypress", (e) => {
+              if (e.key === "Enter") {
+                document.getElementById("password").focus();
+              }
+            });
+
+          document
+            .getElementById("password")
+            .addEventListener("keypress", (e) => {
+              if (e.key === "Enter") {
+                this.handleLogin();
+              }
+            });
+        }
+
+        async handleLogin() {
+          const username = document.getElementById("username").value.trim();
+          const password = document.getElementById("password").value;
+
+          if (!username || !password) {
+            this.showError("Por favor ingresa usuario y contraseña");
+            return;
+          }
+
+          this.setLoading(true);
+          this.hideMessages();
+
+          try {
+            const response = await fetch(`${this.apiBase}/auth/login`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ username, password }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              localStorage.setItem("admin_token", data.data.token);
+              this.showSuccess("¡Login exitoso! Redirigiendo...");
+
+              setTimeout(() => {
+                window.location.href = "/admin";
+              }, 1500);
+            } else {
+              this.showError(data.error || "Error de autenticación");
+            }
+          } catch (error) {
+            this.showError("Error de conexión: " + error.message);
+          } finally {
+            this.setLoading(false);
+          }
+        }
+
+        async verifyToken(token) {
+          try {
+            const response = await fetch(`${this.apiBase}/auth/verify`, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              // Token is valid, redirect to dashboard
+              window.location.href = "/admin";
+            } else {
+              // Token is invalid, remove it
+              localStorage.removeItem("admin_token");
+            }
+          } catch (error) {
+            // Error verifying token, remove it
+            localStorage.removeItem("admin_token");
+          }
+        }
+
+        async generateTempToken() {
+          this.setLoading(true, "temp");
+          this.hideMessages();
+
+          try {
+            const response = await fetch(`${this.apiBase}/auth/temp-token`);
+            const data = await response.json();
+
+            if (data.success) {
+              localStorage.setItem("admin_token", data.data.token);
+              this.showSuccess("Token temporal generado. Redirigiendo...");
+
+              setTimeout(() => {
+                window.location.href = "/admin";
+              }, 1500);
+            } else {
+              this.showError(data.error || "Error generando token temporal");
+            }
+          } catch (error) {
+            this.showError("Error: " + error.message);
+          } finally {
+            this.setLoading(false, "temp");
+          }
+        }
+
+        togglePasswordVisibility() {
+          const passwordInput = document.getElementById("password");
+          const toggleIcon = document.querySelector("#toggle-password i");
+
+          if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.className = "fas fa-eye-slash";
+          } else {
+            passwordInput.type = "password";
+            toggleIcon.className = "fas fa-eye";
+          }
+        }
+
+        setLoading(loading, type = "login") {
+          if (type === "login") {
+            const btn = document.getElementById("login-btn");
+            const text = document.getElementById("login-text");
+            const spinner = document.getElementById("login-spinner");
+
+            btn.disabled = loading;
+            text.classList.toggle("hidden", loading);
+            spinner.classList.toggle("hidden", !loading);
+          } else if (type === "temp") {
+            const btn = document.getElementById("temp-token-btn");
+            btn.disabled = loading;
+            btn.innerHTML = loading
+              ? '<i class="fas fa-spinner fa-spin mr-2"></i>Generando...'
+              : '<i class="fas fa-key mr-2"></i>Generar Token Temporal';
+          }
+        }
+
+        showError(message) {
+          const errorDiv = document.getElementById("error-message");
+          const errorText = document.getElementById("error-text");
+
+          errorText.textContent = message;
+          errorDiv.classList.remove("hidden");
+
+          // Auto-hide after 5 seconds
+          setTimeout(() => {
+            errorDiv.classList.add("hidden");
+          }, 5000);
+        }
+
+        showSuccess(message) {
+          const successDiv = document.getElementById("success-message");
+          const successText = document.getElementById("success-text");
+
+          successText.textContent = message;
+          successDiv.classList.remove("hidden");
+        }
+
+        hideMessages() {
+          document.getElementById("error-message").classList.add("hidden");
+          document.getElementById("success-message").classList.add("hidden");
+        }
+      }
+
+      // Initialize login when page loads
+      document.addEventListener("DOMContentLoaded", () => {
+        new AdminLogin();
+      });
+    </script>
+  </body>
+</html>
