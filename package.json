@@ -18,8 +18,6 @@
     "calendly:setup": "node scripts/setupCalendlyWebhook.js setup",
     "calendly:list": "node scripts/setupCalendlyWebhook.js list",
     "calendly:create": "node scripts/setupCalendlyWebhook.js create",
-    "setup:complete": "node scripts/setupCompleteSystem.js",
-    "setup:supabase-functions": "node -e \"const fs=require('fs'); const {supabaseClient}=require('./src/integrations/supabaseClient'); const sql=fs.readFileSync('./scripts/supabase_functions.sql','utf8'); console.log('Ejecuta este SQL en Supabase Dashboard:', sql);\"",
     "migrate:auth": "node scripts/migrateClientAuth.js",
     "generate-secrets": "node scripts/generateSecrets.js",
     "security:validate": "node scripts/securityValidation.js",

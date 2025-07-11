@@ -45,8 +45,8 @@ class CalendlyWebhookManager {
       if (error.response) {
         throw new Error(
           `Calendly API Error: ${error.response.status} - ${JSON.stringify(
-            error.response.data,
-          )}`,
+            error.response.data
+          )}`
         );
       }
       throw error;
@@ -67,7 +67,7 @@ class CalendlyWebhookManager {
           console.log(`   Estado: ${webhook.state}`);
           console.log(`   Eventos: ${webhook.events.join(", ")}`);
           console.log(
-            `   Creado: ${new Date(webhook.created_at).toLocaleString()}`,
+            `   Creado: ${new Date(webhook.created_at).toLocaleString()}`
           );
         });
       } else {
@@ -103,7 +103,7 @@ class CalendlyWebhookManager {
       const response = await this.makeRequest(
         "POST",
         "/webhook_subscriptions",
-        webhookData,
+        webhookData
       );
 
       console.log("\n✅ ¡Webhook creado exitosamente!");
@@ -118,14 +118,14 @@ class CalendlyWebhookManager {
 
       if (error.message.includes("already exists")) {
         console.log(
-          "\n💡 El webhook ya existe. Listando webhooks existentes...",
+          "\n💡 El webhook ya existe. Listando webhooks existentes..."
         );
         await this.listWebhooks();
       } else if (error.message.includes("401")) {
         console.log("\n💡 SOLUCIÓN:");
         console.log("1. Verifica que CALENDLY_ACCESS_TOKEN esté correcto");
         console.log(
-          "2. El token puede haber expirado - genera uno nuevo en Calendly",
+          "2. El token puede haber expirado - genera uno nuevo en Calendly"
         );
       } else if (error.message.includes("403")) {
         console.log("\n💡 SOLUCIÓN:");
@@ -143,7 +143,7 @@ class CalendlyWebhookManager {
     try {
       await this.makeRequest(
         "DELETE",
-        `/webhook_subscriptions/${webhookUri.split("/").pop()}`,
+        `/webhook_subscriptions/${webhookUri.split("/").pop()}`
       );
       console.log("✅ Webhook eliminado exitosamente");
       return true;
@@ -162,7 +162,7 @@ class CalendlyWebhookManager {
 
       // 2. Verificar si ya existe un webhook para nuestra URL
       const existingWebhook = existingWebhooks.find(
-        (webhook) => webhook.callback_url === this.webhookUrl,
+        (webhook) => webhook.callback_url === this.webhookUrl
       );
 
       if (existingWebhook) {
@@ -174,9 +174,9 @@ class CalendlyWebhookManager {
 
       // 3. Si hay webhooks antiguos, preguntar si eliminarlos
       if (existingWebhooks.length > 0) {
-        console.log("\n⚠️  Se encontraron webhooks existentes");
+        console.log("\n⚠️   Se encontraron webhooks existentes");
         console.log(
-          "💡 Recomendación: Eliminar webhooks antiguos antes de crear uno nuevo",
+          "💡 Recomendación: Eliminar webhooks antiguos antes de crear uno nuevo"
         );
 
         // Para este script, vamos a crear el nuevo webhook sin eliminar los antiguos
@@ -191,7 +191,7 @@ class CalendlyWebhookManager {
         console.log("\n📋 RESUMEN:");
         console.log(`✅ Webhook URL: ${this.webhookUrl}`);
         console.log(
-          `✅ Eventos configurados: invitee.created, invitee.canceled`,
+          `✅ Eventos configurados: invitee.created, invitee.canceled`
         );
         console.log(`✅ Estado: Activo`);
 
@@ -238,10 +238,10 @@ async function main() {
         break;
       default:
         console.log("Comandos disponibles:");
-        console.log("  setup  - Configurar webhook (por defecto)");
-        console.log("  list   - Listar webhooks existentes");
-        console.log("  create - Crear nuevo webhook");
-        console.log("  delete - Eliminar webhook específico");
+        console.log("   setup   - Configurar webhook (por defecto)");
+        console.log("   list    - Listar webhooks existentes");
+        console.log("   create - Crear nuevo webhook");
+        console.log("   delete - Eliminar webhook específico");
     }
   } catch (error) {
     console.error("❌ Error:", error.message);
