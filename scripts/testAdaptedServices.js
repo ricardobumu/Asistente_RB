@@ -17,12 +17,12 @@ async function testAdaptedServices() {
 
     if (allServicesResult.success) {
       console.log(
-        `✅ Éxito: ${allServicesResult.data.length} servicios encontrados`
+        `✅ Éxito: ${allServicesResult.data.length} servicios encontrados`,
       );
       if (allServicesResult.data.length > 0) {
         const firstService = allServicesResult.data[0];
         console.log(
-          `📌 Primer servicio: ${firstService.nombre} - €${firstService.precio}`
+          `📌 Primer servicio: ${firstService.nombre} - €${firstService.precio}`,
         );
       }
     } else {
@@ -36,7 +36,7 @@ async function testAdaptedServices() {
 
     if (activeServicesResult.success) {
       console.log(
-        `✅ Éxito: ${activeServicesResult.data.length} servicios activos`
+        `✅ Éxito: ${activeServicesResult.data.length} servicios activos`,
       );
     } else {
       console.log(`❌ Error: ${activeServicesResult.error}`);
@@ -68,7 +68,7 @@ async function testAdaptedServices() {
 
       if (categoryResult.success) {
         console.log(
-          `✅ Éxito: ${categoryResult.data.length} servicios en categoría ${categoria}`
+          `✅ Éxito: ${categoryResult.data.length} servicios en categoría ${categoria}`,
         );
       } else {
         console.log(`❌ Error: ${categoryResult.error}`);
@@ -82,7 +82,7 @@ async function testAdaptedServices() {
 
       if (byIdResult.success) {
         console.log(
-          `✅ Éxito: Servicio encontrado - ${byIdResult.data.nombre}`
+          `✅ Éxito: Servicio encontrado - ${byIdResult.data.nombre}`,
         );
       } else {
         console.log(`❌ Error: ${byIdResult.error}`);
@@ -96,7 +96,7 @@ async function testAdaptedServices() {
 
       if (searchResult.success) {
         console.log(
-          `✅ Éxito: ${searchResult.data.length} servicios encontrados`
+          `✅ Éxito: ${searchResult.data.length} servicios encontrados`,
         );
       } else {
         console.log(`❌ Error: ${searchResult.error}`);

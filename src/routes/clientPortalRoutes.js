@@ -113,7 +113,7 @@ router.get(
         error: "Error al obtener detalles del servicio",
       });
     }
-  }
+  },
 );
 
 // =====================================================
@@ -149,7 +149,7 @@ router.get(
             p_service_id: serviceId,
             p_date: date,
             p_days_ahead: parseInt(days),
-          }
+          },
         );
 
         if (error) throw error;
@@ -167,7 +167,7 @@ router.get(
         const slots = await generateAvailableSlots(
           serviceId,
           date,
-          parseInt(days)
+          parseInt(days),
         );
         res.json({
           success: true,
@@ -190,7 +190,7 @@ router.get(
         error: "Error al obtener disponibilidad",
       });
     }
-  }
+  },
 );
 
 // =====================================================
@@ -252,7 +252,7 @@ router.post(
             p_booking_date: booking_date,
             p_booking_time: booking_time,
             p_notes: notes,
-          }
+          },
         );
 
         if (error) throw error;
@@ -276,7 +276,7 @@ router.post(
         // Fallback: método tradicional
         logger.warn(
           "RPC function not available, using fallback booking creation",
-          { error: rpcError.message }
+          { error: rpcError.message },
         );
 
         const result = await BookingService.createBooking({
@@ -309,7 +309,7 @@ router.post(
         error: "Error interno al crear la reserva",
       });
     }
-  }
+  },
 );
 
 // Obtener reservas de un cliente por teléfono
@@ -358,7 +358,7 @@ router.get(
             name,
             price
           )
-        `
+        `,
         )
         .eq("client_id", client.id)
         .order("booking_date", { ascending: false });
@@ -392,7 +392,7 @@ router.get(
         error: "Error al obtener las reservas",
       });
     }
-  }
+  },
 );
 
 // Cancelar reserva
@@ -422,7 +422,7 @@ router.put(
 
       // Verificar que la reserva se puede cancelar (no está en el pasado)
       const bookingDateTime = new Date(
-        `${booking.booking_date}T${booking.booking_time}`
+        `${booking.booking_date}T${booking.booking_time}`,
       );
       const now = new Date();
 
@@ -467,7 +467,7 @@ router.put(
         error: "Error al cancelar la reserva",
       });
     }
-  }
+  },
 );
 
 // =====================================================
@@ -507,7 +507,7 @@ async function generateAvailableSlots(serviceId, startDate, days) {
               serviceId,
               currentDate.toISOString().split("T")[0],
               timeString,
-              service.duration_minutes
+              service.duration_minutes,
             );
 
             if (isAvailable) {
@@ -543,7 +543,7 @@ async function checkSlotAvailability(serviceId, date, time, duration) {
       .eq("booking_date", date)
       .in("status", ["confirmed", "pending"])
       .or(
-        `and(booking_time.lte.${time},booking_time.gte.${endTime}),and(booking_time.lt.${endTime},booking_time.gte.${time})`
+        `and(booking_time.lte.${time},booking_time.gte.${endTime}),and(booking_time.lt.${endTime},booking_time.gte.${time})`,
       );
 
     if (error) throw error;

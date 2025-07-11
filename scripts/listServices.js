@@ -38,10 +38,10 @@ async function listServices() {
         console.log(`   💰 Precio: $${servicio.precio}`);
         console.log(`   ⏱️  Duración: ${servicio.duracion} minutos`);
         console.log(
-          `   📝 Descripción: ${servicio.descripcion || "Sin descripción"}`
+          `   📝 Descripción: ${servicio.descripcion || "Sin descripción"}`,
         );
         console.log(
-          `   🔗 URL Reserva: ${servicio.url_reserva || "No disponible"}`
+          `   🔗 URL Reserva: ${servicio.url_reserva || "No disponible"}`,
         );
         console.log(`   ✅ Activo: ${servicio.activo ? "Sí" : "No"}`);
         console.log(`   🆔 ID: ${servicio.id_servicio}`);
@@ -68,7 +68,7 @@ async function listServices() {
     console.log(`Servicios inactivos: ${stats.inactivos}`);
     console.log(`Precio promedio: $${stats.precioPromedio.toFixed(2)}`);
     console.log(
-      `Duración promedio: ${stats.duracionPromedio.toFixed(0)} minutos`
+      `Duración promedio: ${stats.duracionPromedio.toFixed(0)} minutos`,
     );
   } catch (error) {
     console.error("💥 Error general:", error);

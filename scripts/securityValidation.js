@@ -79,7 +79,7 @@ class SecurityValidator {
 
       if (missing.length > 0) {
         throw new Error(
-          `Missing critical environment variables: ${missing.join(", ")}`
+          `Missing critical environment variables: ${missing.join(", ")}`,
         );
       }
 
@@ -219,7 +219,7 @@ class SecurityValidator {
   async validateDependencies() {
     await this.runTest("Dependency Security", async () => {
       const packageJson = JSON.parse(
-        fs.readFileSync(path.join(process.cwd(), "package.json"), "utf8")
+        fs.readFileSync(path.join(process.cwd(), "package.json"), "utf8"),
       );
 
       const vulnerableDeps = [
@@ -550,7 +550,7 @@ if (require.main === module) {
     } catch (error) {
       console.error(
         "💥 Error durante la validación de seguridad:",
-        error.message
+        error.message,
       );
       process.exit(1);
     }

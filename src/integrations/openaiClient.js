@@ -29,7 +29,7 @@ class OpenAIClient {
           {
             role: "user",
             content: `Contexto previo: ${JSON.stringify(
-              context
+              context,
             )}\n\nMensaje: ${message}`,
           },
         ],
@@ -93,7 +93,7 @@ ANALIZA el mensaje y devuelve SOLO un JSON válido con esta estructura:
           {
             role: "user",
             content: `Contexto: ${JSON.stringify(
-              context
+              context,
             )}\nMensaje: ${message}`,
           },
         ],
@@ -130,7 +130,7 @@ ANALIZA el mensaje y devuelve SOLO un JSON válido con esta estructura:
           {
             role: "user",
             content: `Contexto: ${JSON.stringify(
-              context
+              context,
             )}\n\nGenera respuesta para: ${prompt}`,
           },
         ],

@@ -1,5 +1,8 @@
 // scripts/gitCommitAndDeploy.js
 const { execSync } = require("child_process");
+require("dotenv").config({ path: ".env" });
+require("dotenv").config({ path: ".env.local", override: true });
+
 const fs = require("fs");
 
 console.log("🚀 GIT COMMIT Y DEPLOYMENT PROFESIONAL\n");
@@ -53,7 +56,7 @@ async function gitCommitAndDeploy() {
 
 🔧 CONFIGURACIÓN RAILWAY:
 - Variables de entorno configuradas
-- Dominio personalizado: bot.ricardoburitica.eu
+- Dominio personalizado: ${process.env.APP_BASE_URL}
 - Health checks y monitoring activos
 - SSL/HTTPS automático
 
@@ -66,10 +69,10 @@ async function gitCommitAndDeploy() {
 - Deploy: Railway
 
 🌐 URLs ACTIVAS:
-- Portal: https://bot.ricardoburitica.eu/portal
-- Admin: https://bot.ricardoburitica.eu/admin
-- API: https://bot.ricardoburitica.eu/api/servicios
-- Health: https://bot.ricardoburitica.eu/health
+- Portal: ${process.env.APP_BASE_URL}/portal
+- Admin: ${process.env.APP_BASE_URL}/admin
+- API: ${process.env.APP_BASE_URL}/api/servicios
+- Health: ${process.env.APP_BASE_URL}/health
 
 Estado: PRODUCCIÓN LISTA ✅`;
 
@@ -148,21 +151,21 @@ Estado: PRODUCCIÓN LISTA ✅`;
 
     console.log("\n🔗 URLs PARA CONFIGURAR:");
     console.log("");
-    console.log("📞 TWILIO WEBHOOKS:");
+    console.log(`📞 TWILIO WEBHOOKS (${process.env.APP_BASE_URL}):`);
     console.log(
-      "   Webhook URL: https://bot.ricardoburitica.eu/autonomous/whatsapp/webhook"
+      `   Webhook URL: ${process.env.APP_BASE_URL}/autonomous/whatsapp/webhook`
     );
     console.log(
-      "   Status URL:  https://bot.ricardoburitica.eu/autonomous/whatsapp/status"
+      `   Status URL:  ${process.env.APP_BASE_URL}/autonomous/whatsapp/status`
     );
     console.log("");
-    console.log("📅 CALENDLY WEBHOOK:");
+    console.log(`📅 CALENDLY WEBHOOK (${process.env.APP_BASE_URL}):`);
     console.log(
-      "   Webhook URL: https://bot.ricardoburitica.eu/api/calendly/webhook"
+      `   Webhook URL: ${process.env.APP_BASE_URL}/api/calendly/webhook`
     );
     console.log("");
     console.log("🌐 ADMIN PANEL:");
-    console.log("   URL: https://bot.ricardoburitica.eu/admin");
+    console.log(`   URL: ${process.env.APP_BASE_URL}/admin`);
     console.log("   Usuario: ricardo");
     console.log("   Password: [Configurado en .env.local]");
 

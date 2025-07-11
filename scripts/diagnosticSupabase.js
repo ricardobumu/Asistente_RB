@@ -10,17 +10,17 @@ async function diagnosticSupabase() {
   // Verificar variables de entorno
   console.log("📋 VARIABLES DE ENTORNO:");
   console.log(
-    `SUPABASE_URL: ${process.env.SUPABASE_URL ? "✅ Configurada" : "❌ Falta"}`
+    `SUPABASE_URL: ${process.env.SUPABASE_URL ? "✅ Configurada" : "❌ Falta"}`,
   );
   console.log(
     `SUPABASE_ANON_KEY: ${
       process.env.SUPABASE_ANON_KEY ? "✅ Configurada" : "❌ Falta"
-    }`
+    }`,
   );
   console.log(
     `SUPABASE_SERVICE_KEY: ${
       process.env.SUPABASE_SERVICE_KEY ? "✅ Configurada" : "❌ Falta"
-    }`
+    }`,
   );
 
   if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
@@ -42,7 +42,7 @@ async function diagnosticSupabase() {
           autoRefreshToken: false,
           persistSession: false,
         },
-      }
+      },
     );
 
     // Probar conexión básica
@@ -67,7 +67,7 @@ async function diagnosticSupabase() {
   try {
     const anonClient = createClient(
       process.env.SUPABASE_URL,
-      process.env.SUPABASE_ANON_KEY
+      process.env.SUPABASE_ANON_KEY,
     );
 
     const { data: anonData, error: anonError } = await anonClient
@@ -95,7 +95,7 @@ async function diagnosticSupabase() {
         autoRefreshToken: false,
         persistSession: false,
       },
-    }
+    },
   );
 
   const tables = [
@@ -125,7 +125,7 @@ async function diagnosticSupabase() {
         }
       } else {
         console.log(
-          `   ✅ ${table}: Accesible (${data?.length || 0} registros)`
+          `   ✅ ${table}: Accesible (${data?.length || 0} registros)`,
         );
       }
     } catch (err) {
@@ -155,13 +155,13 @@ async function diagnosticSupabase() {
       } else {
         console.log(
           "   ✅ Tablas encontradas:",
-          altData?.map((t) => t.table_name)
+          altData?.map((t) => t.table_name),
         );
       }
     } else {
       console.log(
         "   ✅ Tablas en la base de datos:",
-        data?.map((t) => t.table_name)
+        data?.map((t) => t.table_name),
       );
     }
   } catch (err) {

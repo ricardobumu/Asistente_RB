@@ -113,7 +113,7 @@ class AdminBookingController {
       const result = await BookingService.updateBookingStatus(
         bookingId,
         status,
-        notes
+        notes,
       );
 
       if (result.success) {
@@ -148,7 +148,7 @@ class AdminBookingController {
       const result = await BookingService.rescheduleBooking(
         bookingId,
         newDateTime,
-        reason
+        reason,
       );
 
       if (result.success) {
@@ -270,7 +270,7 @@ class AdminBookingController {
         res.setHeader("Content-Type", "text/csv");
         res.setHeader(
           "Content-Disposition",
-          `attachment; filename="${result.filename}"`
+          `attachment; filename="${result.filename}"`,
         );
         res.status(200).send(result.data);
       } else {

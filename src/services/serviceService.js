@@ -35,7 +35,7 @@ class ServiceService {
       // Filtro de búsqueda
       if (search) {
         conditions.push(
-          `(name ILIKE $${paramIndex} OR description ILIKE $${paramIndex} OR slug ILIKE $${paramIndex})`
+          `(name ILIKE $${paramIndex} OR description ILIKE $${paramIndex} OR slug ILIKE $${paramIndex})`,
         );
         params.push(`%${search}%`);
         paramIndex++;
@@ -318,7 +318,7 @@ class ServiceService {
 
       const { data, error } = await DatabaseAdapter.insert(
         "services",
-        serviceToCreate
+        serviceToCreate,
       );
 
       if (error) throw error;
@@ -403,7 +403,7 @@ class ServiceService {
       const { data, error } = await DatabaseAdapter.update(
         "services",
         dataToUpdate,
-        { id: serviceId }
+        { id: serviceId },
       );
 
       if (error) throw error;
@@ -471,7 +471,7 @@ class ServiceService {
 
       if (activeBookings > 0) {
         throw new Error(
-          `Cannot delete service with ${activeBookings} active booking(s). Cancel bookings first.`
+          `Cannot delete service with ${activeBookings} active booking(s). Cancel bookings first.`,
         );
       }
 
@@ -490,7 +490,7 @@ class ServiceService {
       const { data, error } = await DatabaseAdapter.update(
         "services",
         deleteData,
-        { id: serviceId }
+        { id: serviceId },
       );
 
       if (error) throw error;

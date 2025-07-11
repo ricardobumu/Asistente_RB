@@ -19,7 +19,7 @@ router.get("/services", bookingWidgetController.getServices);
  */
 router.get(
   "/services/:serviceId/availability",
-  bookingWidgetController.getAvailability
+  bookingWidgetController.getAvailability,
 );
 
 /**
@@ -34,7 +34,7 @@ router.post("/bookings", bookingWidgetController.createBooking);
  */
 router.post(
   "/check-availability",
-  bookingWidgetController.checkSlotAvailability
+  bookingWidgetController.checkSlotAvailability,
 );
 
 /**
@@ -63,7 +63,7 @@ router.get("/bookings/:email", bookingWidgetController.getClientBookings);
  */
 router.post(
   "/bookings/:bookingId/cancel",
-  bookingWidgetController.cancelBooking
+  bookingWidgetController.cancelBooking,
 );
 
 module.exports = router;

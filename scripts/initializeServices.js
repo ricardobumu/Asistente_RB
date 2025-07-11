@@ -5,7 +5,7 @@ const ServiceModel = require("../src/models/serviceModel");
 async function initializeServices() {
   try {
     console.log(
-      "🚀 Inicializando servicios de Ricardo Buriticá Beauty Consulting..."
+      "🚀 Inicializando servicios de Ricardo Buriticá Beauty Consulting...",
     );
 
     const serviceModel = new ServiceModel();

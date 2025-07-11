@@ -18,7 +18,7 @@ const authController = new AuthController();
 const authRateLimit = AuditMiddleware.rateLimitMiddleware(5, 15 * 60 * 1000); // 5 intentos por 15 minutos
 const registerRateLimit = AuditMiddleware.rateLimitMiddleware(
   3,
-  60 * 60 * 1000
+  60 * 60 * 1000,
 ); // 3 registros por hora
 
 /**
@@ -29,7 +29,7 @@ const registerRateLimit = AuditMiddleware.rateLimitMiddleware(
 router.post(
   "/login/client",
   authRateLimit,
-  authController.loginClient.bind(authController)
+  authController.loginClient.bind(authController),
 );
 
 /**
@@ -40,7 +40,7 @@ router.post(
 router.post(
   "/register/client",
   registerRateLimit,
-  authController.registerClient.bind(authController)
+  authController.registerClient.bind(authController),
 );
 
 /**
@@ -51,7 +51,7 @@ router.post(
 router.post(
   "/refresh",
   authRateLimit,
-  authController.refreshToken.bind(authController)
+  authController.refreshToken.bind(authController),
 );
 
 /**
@@ -62,7 +62,7 @@ router.post(
 router.post(
   "/logout",
   authenticate,
-  authController.logout.bind(authController)
+  authController.logout.bind(authController),
 );
 
 /**

@@ -55,7 +55,7 @@ async function fixCategoriesV2() {
 
     for (const correction of corrections) {
       const servicesToUpdate = services.filter(
-        (s) => s.categoria === correction.from
+        (s) => s.categoria === correction.from,
       );
 
       if (servicesToUpdate.length > 0) {
@@ -113,7 +113,7 @@ async function fixCategoriesV2() {
     ];
     const actualCategories = Object.keys(finalCategories);
     const unexpectedCategories = actualCategories.filter(
-      (cat) => !expectedCategories.includes(cat)
+      (cat) => !expectedCategories.includes(cat),
     );
 
     console.log("\n🎯 RESULTADO FINAL:");

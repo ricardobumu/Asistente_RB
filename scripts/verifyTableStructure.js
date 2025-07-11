@@ -33,10 +33,10 @@ async function verifyTableStructure() {
           if (data && data.length > 0) {
             console.log(
               `📊 Campos disponibles:`,
-              Object.keys(data[0]).join(", ")
+              Object.keys(data[0]).join(", "),
             );
             console.log(
-              `📈 Registros: ${data.length > 0 ? "Con datos" : "Vacía"}`
+              `📈 Registros: ${data.length > 0 ? "Con datos" : "Vacía"}`,
             );
           } else {
             console.log(`📊 Tabla vacía pero funcional`);

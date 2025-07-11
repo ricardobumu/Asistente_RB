@@ -129,17 +129,21 @@ async function deploy() {
       console.log("\n🧪 Verificando deployment...");
       console.log("   Ejecuta: npm run check:deployment");
       console.log("");
-      console.log("📋 URLs para configurar en Twilio:");
       console.log(
-        "   Webhook: https://bot.ricardoburitica.eu/autonomous/whatsapp/webhook"
+        `📋 URLs para configurar en Twilio (${process.env.APP_BASE_URL}):`
       );
       console.log(
-        "   Status:  https://bot.ricardoburitica.eu/autonomous/whatsapp/status"
+        `   Webhook: ${process.env.APP_BASE_URL}/autonomous/whatsapp/webhook`
+      );
+      console.log(
+        `   Status:  ${process.env.APP_BASE_URL}/autonomous/whatsapp/status`
       );
       console.log("");
-      console.log("📋 URL para configurar en Calendly:");
       console.log(
-        "   Webhook: https://bot.ricardoburitica.eu/api/calendly/webhook"
+        `📋 URL para configurar en Calendly (${process.env.APP_BASE_URL}):`
+      );
+      console.log(
+        `   Webhook: ${process.env.APP_BASE_URL}/api/calendly/webhook`
       );
     }, 5000);
   } else {

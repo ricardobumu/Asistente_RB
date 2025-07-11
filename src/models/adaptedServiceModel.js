@@ -182,7 +182,7 @@ class AdaptedServiceModel {
         return {
           success: false,
           error: `Categoría inválida. Válidas: ${this.validCategories.join(
-            ", "
+            ", ",
           )}`,
           data: null,
         };

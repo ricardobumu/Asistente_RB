@@ -19,9 +19,8 @@ async function testConnection() {
 
       // Intentar listar todas las tablas disponibles
       console.log("\n🔍 Intentando obtener información del esquema...");
-      const { data: tables, error: schemaError } = await supabase.rpc(
-        "get_schema_info"
-      );
+      const { data: tables, error: schemaError } =
+        await supabase.rpc("get_schema_info");
 
       if (schemaError) {
         console.error("❌ Error obteniendo esquema:", schemaError.message);

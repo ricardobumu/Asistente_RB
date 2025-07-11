@@ -55,7 +55,7 @@ class AdvancedLogger {
         if (this.sensitiveFields.some((field) => lowerKey.includes(field))) {
           if (typeof value === "string" && value.length > 0) {
             obj[key] = `${value.substring(0, 3)}***${value.substring(
-              value.length - 3
+              value.length - 3,
             )}`;
           } else {
             obj[key] = "[REDACTED]";
@@ -163,7 +163,7 @@ class AdvancedLogger {
     const logMessage = this.formatMessage(
       "AUDIT",
       `Audit event: ${action}`,
-      auditData
+      auditData,
     );
     this.writeToFile("audit.log", logMessage);
     this.writeToFile("app.log", logMessage);
@@ -181,7 +181,7 @@ class AdvancedLogger {
     const logMessage = this.formatMessage(
       "PERFORMANCE",
       `Performance: ${operation}`,
-      performanceData
+      performanceData,
     );
     this.writeToFile("performance.log", logMessage);
 
@@ -203,7 +203,7 @@ class AdvancedLogger {
     const logMessage = this.formatMessage(
       "WHATSAPP",
       `WhatsApp: ${event}`,
-      whatsappData
+      whatsappData,
     );
     this.writeToFile("whatsapp.log", logMessage);
     this.writeToFile("app.log", logMessage);
@@ -222,7 +222,7 @@ class AdvancedLogger {
     const logMessage = this.formatMessage(
       "BOOKING",
       `Booking ${action}`,
-      bookingData
+      bookingData,
     );
     this.writeToFile("bookings.log", logMessage);
     this.writeToFile("app.log", logMessage);
@@ -242,7 +242,7 @@ class AdvancedLogger {
     const logMessage = this.formatMessage(
       "INTEGRATION_ERROR",
       `Integration error: ${service}`,
-      integrationData
+      integrationData,
     );
     this.writeToFile("integrations.log", logMessage);
     this.writeToFile("error.log", logMessage);

@@ -1,0 +1,418 @@
+{} google-calendar-credentials.json
+1
+
+código.
+
+V JS autonomousAssistant.js src\services
+113
+
+- Asegúrate de que el .gitignore este configurado
+
+. ", expected. ts(1005) [Ln 803, Col 17]
+
+correctamente para evitar la inclusión de archivos sensibles en
+
+Unexpected keyword or identifier. ts(1434) [Ln 803, Col 22]
+
+el repositorio.
+
+: Unexpected keyword or identifier. ts(1434) [Ln 803, Col 32]
+
+5. Cumplimiento Normativo:
+
+. Unexpected keyword or identifier. ts(1434) [Ln 803, Col 47]
+
+- Asegúrate de que el proyecto cumpla con la normativa RGPD,
+
+. Unexpected keyword or identifier. ts(1434) [Ln 803, Col 50]
+. Declaration or statement expected. ts(1128) [Ln 803, Col 69]
+
+
+
+Invalid character. ts(1127) [Ln 803, Col 71]
+Unexpected keyword or identifier. ts(1434) [Ln 803, Col 72]
+Unexpected keyword or identifier. ts(1434) [Ln 803, Col 77]
+Invalid character. ts(1127) [Ln 803, Col 88]
+
+JS autonomousAssistant.js Current File X Codebase X
+
+. Invalid character. ts(1127) [Ln 803, Col 90]
+Invalid character. ts(1127) [Ln 803, Col 92]
+Unexpected kevword or identifier. ts(1434) ILn
+
+(x) Invalid character. ts(1127) [Ln 810, Col 80]
+Invalid character. ts(1127) [Ln 810, Col 82]
+
+- Asegúrate de que el .gitignore esté configurado
+
+x Invalid character. ts(1127) [Ln 810, Col 84]
+
+correctamente para evitar la inclusión de archivos sensibles en
+
+Invalid character. ts(1127) [Ln 810, Col 86]
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 87]
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 90]
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 99]
+
+esnecialmente en el maneio de datos nersonales
+
+x Unexpected keyword or identifier. ts(1434) [Ln 810, Col 103]
+
+
+
+x Unexpected keyword or identifier. ts(1434) [Ln 810, Col 109]
+Invalid character. ts(1127) [Ln 813, Col 23]
+Expression expected. ts(1109) [Ln 813, Col 26]
+
+JS autonomousAssistant.js Current File X E Codebase X
+
+x ',' expected. ts(1005) [Ln 813, Col 43]
+Unexpected keyword or identifier. ts(1434) [Ln 813, Col 48]
+Declaration or statement expected. ts(1128) [Ln 813, Col 67]
+
+
+(x) Invalid character. ts(1127) [Ln 810, Col 80]
+Invalid character. ts(1127) [Ln 810, Col 82]
+
+- Asegúrate de que el .gitignore esté configurado
+
+x Invalid character. ts(1127) [Ln 810, Col 84]
+
+correctamente para evitar la inclusión de archivos sensibles en
+
+Invalid character. ts(1127) [Ln 810, Col 86]
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 87]
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 90]
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 99]
+
+esnecialmente en el maneio de datos nersonales
+
+x Unexpected keyword or identifier. ts(1434) [Ln 810, Col 103]
+
+
+
+x Unexpected keyword or identifier. ts(1434) [Ln 810, Col 109]
+Invalid character. ts(1127) [Ln 813, Col 23]
+Expression expected. ts(1109) [Ln 813, Col 26]
+
+JS autonomousAssistant.js Current File X E Codebase X
+
+x ',' expected. ts(1005) [Ln 813, Col 43]
+Unexpected keyword or identifier. ts(1434) [Ln 813, Col 48]
+Declaration or statement expected. ts(1128) [Ln 813, Col 67]
+Ln 813, Col 67 (1 selected)
+Spaces: 2 UTF-8 CRLF
+{}
+
+x) Unexpected keyword or identifier. ts(1434) [Ln 803, Col 93]
+Identifier expected. ts(1003) [Ln 803, Col 151]
+x ',' expected. ts(1005) [Ln 810, Col 17]
+
+correctamente para evitar la inclusión de archivos sensibles en
+
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 20]
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 26]
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 41]
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 46]
+
+esnecialmente en el maneio de datos nersonales
+
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 66]
+
+
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 69]
+& Invalid character. ts(1127) [Ln 810, Col 80]
+& Invalid character. ts(1127) [Ln 810, Col 82]
+
+JS autonomousAssistant.js Current File X E Codebase X
+
+Invalid character. ts(1127) [Ln 810, Col 84]
+Unexpected keyword or identifier. , Col 86]
+
+
+Invalid character. ts(1127) [Ln 810, Col 80]
+Invalid character. ts(1127) [Ln 810, Col 82]
+
+- Asegúrate de que el .gitignore esté configurado
+
+x Invalid character. ts(1127) [Ln 810, Col 84]
+
+correctamente para evitar la inclusión de archivos sensibles en
+
+Invalid character. ts(1127) [Ln 810, Col 86]
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 87]
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 90]
+Unexpected keyword or identifier. ts(1434) [Ln 810, Col 99]
+
+esnecialmente en el maneio de datos nersonales
+
+x Unexpected keyword or identifier. ts(1434) [Ln 810, Col 103]
+
+
+
+x Unexpected keyword or identifier. ts(1434) [Ln 810, Col 109]
+Invalid character. ts(1127) [Ln 813, Col 23]
+Expression expected. ts(1109) [Ln 813, Col 26]
+
+JS autonomousAssistant.js Current File X E Codebase X
+
+x ',' expected. ts(1005) [Ln 813, Col 43]
+Unexpected keyword or identifier. ts(1434) [Ln 813, Col 48]
+Declaration or statement expected. ts(1128) [Ln 813,
+
+
+Declaration or statement expected. ts(1128) [Ln 813, Col 67]
+
+código.
+
+Expression expected. ts(1109) [Ln 813, Col 68]
+
+- Asegúrate de que el .gitignore este configurado
+
+Invalid character. ts(1127) [Ln 813, Col 70]
+
+correctamente para evitar la inclusión de archivos sensibles en
+
+Invalid character. ts(1127) [Ln 813, Col 72]
+Module declaration names may only use ' or " quoted strings. ts(1443) [Ln 813, Col 74]
+Unexpected keyword or identifier. ts(1434) [Ln 821, Col 22]
+& Declaration or statement expected. ts(1128) [Ln 821, Col 34]
+
+esnecialmente en el maneio de datos nersonales
+
+Invalid character. ts(1127) [Ln 821, Col 36]
+
+
+
+! Unexpected keyword or identifier. ts(1434) [Ln 821, Col 39]
+Unexpected keyword or identifier. ts(1434) [Ln 821, Col 47]
+
+Unexpected keyword or identifier.
+
+Invalid character. ts(1127) [Ln 821, Col 53]
+
+JS autonomousAssistant.js Current File X E Codebase X
+
+x Unexpected keyword or identifier. ts(1434) [Ln 821, Col 55]
+Invalid character. ts(1127) [Ln 821, Col 62]
+. Module declaration names may only use ' or " quoted strings. ts(1443) [Ln 821, Col 64]
+Ln 864, Col 22 (1617 selected)
+
+Spaces: 2 UTF-8
+
+
+x) Module declaration names may only use 'or " quoted strings. ts(1443) [Ln 821, Col 64]
+
+código.
+
+Unexpected keyword or identifier. ts(1434) [Ln 864, Col 22]
+
+- Asegúrate de que el .gitignore esté configurado
+
+& Declaration or statement expected. ts(1128) [Ln 864, Col 34]
+
+correctamente para evitar la inclusión de archivos sensibles en
+
+Unexpected keyword or identifier. ts(1434) [Ln 864, Col 36]
+x ',' expected. ts(1005) [Ln 864, Col 63]
+Unexpected keyword or identifier. ts(1434) [Ln 864, Col 70]
+& Unexpected keyword or identifier. ts(1434) [Ln 864, Col 72]
+
+esnecialmente en el maneio de datos nersonales
+
+Unexpected keyword or identifier. ts(1434) [Ln 864, Col 76]
+
+
+
+Invalid character. ts(1127) [Ln 864, Col 83]
+x Module declaration names may only use ' or " quoted strings. ts(1443) [Ln 864, Col 85]
+x Invalid character. ts(1127) [Ln 893, Col 19]
+
+JS autonomousAssistant.js Current File X E Codebase X
+
+Declaration or statement expected. ts(1128) [Ln 893, Col 19]
+Invalid character. ts(1127) [Ln 893, Col 21]
+Invalid character. ts(1127) [Ln 893, Col 22]
+Ln 893, Col 22 (1 selected)
+Spaces: 2
+UTF-8
+
+
+x) Invalid character. ts(1127) [Ln 893, Col 19]
+
+código.
+
+Declaration or statement expected. ts(1128) [Ln 893, Col 19]
+
+- Asegúrate de que el .gitignore este configurado
+
+x Invalid character. ts(1127) [Ln 893, Col 21]
+
+correctamente para evitar la inclusión de archivos sensibles en
+
+Invalid character. ts(1127) [Ln 893, Col 22]
+Invalid character. ts(1127) [Ln 893, Col 23]
+Expression expected. ts(1109) [Ln 893, Col 25]
+x ',' expected. ts(1005) [Ln 893, Col 28]
+
+esnecialmente en el maneio de datos nersonales
+
+Expression expected. ts(1109) [Ln 893, Col 42]
+
+
+Invalid character. ts(1127) [Ln 893, Col 44]
+& Invalid character. ts(1127) [Ln 893, Col 46]
+x Module declaration names may only use ' or " quoted strings. ts(1443) [Ln 893, Col 48]
+
+JS autonomousAssistant.js Current File X E Codebase X
+
+x Invalid character. ts(1127) [Ln 894, Col 19]
+Declaration or statement expected. ts(1128) [Ln 894, Col 19]
+
+x) Invalid character. ts(1127) [Ln 893, Col 19]
+
+código.
+
+Declaration or statement expected. ts(1128) [Ln 893, Col 19]
+
+- Asegúrate de que el .gitignore este configurado
+
+x Invalid character. ts(1127) [Ln 893, Col 21]
+
+correctamente para evitar la inclusión de archivos sensibles en
+
+Invalid character. ts(1127) [Ln 893, Col 22]
+Invalid character. ts(1127) [Ln 893, Col 23]
+Expression expected. ts(1109) [Ln 893, Col 25]
+x ',' expected. ts(1005) [Ln 893, Col 28]
+
+esnecialmente en el maneio de datos nersonales
+
+Expression expected. ts(1109) [Ln 893, Col 42]
+
+
+
+Invalid character. ts(1127) [Ln 893, Col 44]
+& Invalid character. ts(1127) [Ln 893, Col 46]
+x Module declaration names may only use ' or " quoted strings. ts(1443) [Ln 893, Col 48]
+
+JS autonomousAssistant.js Current File X E Codebase X
+
+x Invalid character. ts(1127) [Ln 894, Col 19]
+Declaration or statement expected. ts(1128) [Ln 894, Col 19]
+Invalid character. ts(1127) [Ln 894, Col 30]
+
+
+Invalid character. ts(1127) [Ln 894, Col 30]
+
+código.
+
+Unexpected keyword or identifier. ts(1434) [Ln 894, Col 31]
+
+- Asegúrate de que el .gitignore esté configurado
+
+Invalid character. ts(1127) [Ln 894, Col 47]
+
+correctamente para evitar la inclusión de archivos sensibles en
+
+Module declaration names may only use ' or " quoted strings. ts(1443) [Ln 894, Col 49]
+Invalid character. ts(1127) [Ln 895, Col 19]
+Declaration or statement expected. ts(1128) [Ln 895, Col 19]
+Invalid character. ts(1127) [Ln 895, Col 20]
+
+esnecialmente en el maneio de datos nersonales
+
+Unexpected keyword or identifier. ts(1434) [Ln 895, Col 32]
+
+
+
+Invalid character. ts(1127) [Ln 895, Col 67]
+x Module declaration names may only use ' or " quoted strings. ts(1443) [Ln 895, Col 69]
+Invalid character. ts(1127) [Ln 896, Col 19]
+
+JS autonomousAssistant.js Current File X E Codebase X
+
+Declaration or statement expected. ts(1128) [Ln 896, Col 19]
+x Unexpected keyword or identifier. ts(1434) [Ln 896, Col 22]
+Invalid character. ts(1127) [Ln 896, Col 81]
+OVR
+
+Ln 896, Col 80
+Spaces: 2
+UTF-8
+CRLF
+
+x) Unexpected keyword or identifier. ts(1434) [Ln 896, Col 22]
+
+código.
+
+Invalid character. ts(1127) [Ln 896, Col 81]
+
+- Asegúrate de que el .gitignore este configurado
+
+Invalid character. ts(1127) [Ln 896, Col 83]
+
+correctamente para evitar la inclusión de archivos sensibles en
+
+Module declaration names may only use ' or " quoted strings. ts(1443) [Ln 896, Col 85]
+Invalid character. ts(1127) [Ln 897, Col 19]
+Declaration or statement expected. ts(1128) [Ln 897, Col 19]
+& Unexpected keyword or identifier. ts(1434) [Ln 897, Col 20]
+
+esnecialmente en el maneio de datos nersonales
+
+Unexpected keyword or identifier. ts(1434) [Ln 897, Col 23]
+
+
+
+Unexpected keyword or identi Unexpected keyword or identifier.
+Unexpected keyword or identifier. ts(1434) [Ln 897, Col 41]
+& Invalid character. ts(1127) [Ln 897, Col 56]
+
+IS autonomousAssistant.js Current File X Codebase X
+
+Invalid character. ts(1127) [Ln 920, Col 16]
+Expression expected. ts(1109) [Ln 920, Col 19]
+! ',expected. ts(1005) [Ln 920, Col 22]
+OVR
+Ln 920, Col 22 (1 selected)
+
+Spaces:
+
+
+x) ', expected. ts(1005) [Ln 920, Col 22]
+
+código.
+
+x Expression expected. ts(1109) [Ln 920, Col 36]
+
+- Asegúrate de que el .gitignore este configurado
+
+x Invalid character. ts(1127) [Ln 920, Col 38]
+
+correctamente para evitar la inclusión de archivos sensibles en
+
+Module declaration names may only use ' or " quoted strings. ts(1443) [Ln 920, Col 40]
+Invalid character. ts(1127) [Ln 921, Col 19]
+Declaration or statement expected. ts(1128) [Ln 921, Col 19]
+X Invalid character. ts(1127) [Ln 921, Col 22]
+
+esnecialmente en el maneio de datos nersonales
+
+Unexpected keyword or identifier. ts(1434) [Ln 921, Col 23]
+s:
+
+Expression expected. ts(1109) [Ln 921, Col 40]
+x Invalid character. ts(1127) [Ln 921, Col 42]
+& Invalid character. ts(1127) [Ln 921, Col 43]
+
+JS autonomousAssistant.js Current File X E Codebase X
+
+x Unexpected keyword or identifier. ts(1434) [Ln 921, Col 45]
+Invalid character. ts(1127) [Ln 921, Col 75]
+. Module declaration names may only use ' or " quoted strings. ts(1443) [Ln 921, Col 77]
+OVR
+
+Ln 923, Col 18 (55 selected)
+
+Spaces: 2 UTF-8

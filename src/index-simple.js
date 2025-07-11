@@ -55,7 +55,7 @@ app.use(
         imgSrc: ["'self'", "data:", "https:"],
       },
     },
-  })
+  }),
 );
 app.use(cors(corsOptions));
 app.use(generalLimiter);
@@ -95,7 +95,7 @@ app.get("/api/servicios", async (req, res) => {
     }
 
     const activeServices = result.data.filter(
-      (service) => service.activo === true
+      (service) => service.activo === true,
     );
 
     res.json({

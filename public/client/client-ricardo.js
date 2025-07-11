@@ -34,7 +34,7 @@ class RicardoClientPortal {
           b.classList.remove(
             "active",
             "border-ricardo-gold",
-            "text-ricardo-gold"
+            "text-ricardo-gold",
           );
           b.classList.add("border-transparent", "text-gray-600");
         });
@@ -298,7 +298,7 @@ class RicardoClientPortal {
     // Pre-select the service
     setTimeout(() => {
       const serviceOption = document.querySelector(
-        `[data-service-id="${service.id_servicio}"]`
+        `[data-service-id="${service.id_servicio}"]`,
       );
       if (serviceOption) {
         serviceOption.click();
@@ -323,7 +323,7 @@ class RicardoClientPortal {
       if (this.selectedService && e.target.value) {
         this.loadAvailableSlots(
           this.selectedService.id_servicio,
-          e.target.value
+          e.target.value,
         );
       }
     });
@@ -399,7 +399,7 @@ class RicardoClientPortal {
         if (!name || !phone) {
           this.showAlert(
             "Por favor completa los campos obligatorios",
-            "warning"
+            "warning",
           );
           return false;
         }
@@ -529,7 +529,7 @@ class RicardoClientPortal {
             "selected",
             "bg-ricardo-gold",
             "text-white",
-            "border-ricardo-gold-dark"
+            "border-ricardo-gold-dark",
           );
           btn.classList.add("border-gray-200");
         });
@@ -539,7 +539,7 @@ class RicardoClientPortal {
           "selected",
           "bg-ricardo-gold",
           "text-white",
-          "border-ricardo-gold-dark"
+          "border-ricardo-gold-dark",
         );
         slotBtn.classList.remove("border-gray-200");
 
@@ -652,7 +652,7 @@ class RicardoClientPortal {
       console.error("Error confirming booking:", error);
       this.showAlert(
         "Error al procesar la reserva. Por favor intenta de nuevo.",
-        "error"
+        "error",
       );
     }
   }
@@ -714,7 +714,7 @@ class RicardoClientPortal {
                         }</h3>
                         <div class="space-y-2 text-gray-600">
                             <p><i class="fas fa-calendar mr-2 text-ricardo-gold"></i>${this.formatDate(
-                              booking.booking_date
+                              booking.booking_date,
                             )}</p>
                             <p><i class="fas fa-clock mr-2 text-ricardo-gold"></i>${
                               booking.booking_time
@@ -723,7 +723,7 @@ class RicardoClientPortal {
                     </div>
                     <div class="text-right">
                         <span class="inline-block px-4 py-2 rounded-full text-sm font-medium ${this.getStatusClass(
-                          booking.status
+                          booking.status,
                         )}">
                             ${this.getStatusText(booking.status)}
                         </span>
@@ -745,7 +745,7 @@ class RicardoClientPortal {
                     : ""
                 }
             </div>
-        `
+        `,
       )
       .join("");
   }
@@ -760,7 +760,7 @@ class RicardoClientPortal {
       this.hideLoading();
       this.showAlert(
         "Mensaje enviado correctamente. Te contactaremos pronto.",
-        "success"
+        "success",
       );
       form.reset();
     } catch (error) {
@@ -768,7 +768,7 @@ class RicardoClientPortal {
       console.error("Error submitting contact form:", error);
       this.showAlert(
         "Error al enviar el mensaje. Por favor intenta de nuevo.",
-        "error"
+        "error",
       );
     }
   }
@@ -918,7 +918,7 @@ class RicardoClientPortal {
       console.error("Error cancelling booking:", error);
       this.showAlert(
         "Error al cancelar la reserva. Por favor intenta de nuevo.",
-        "error"
+        "error",
       );
     }
   }

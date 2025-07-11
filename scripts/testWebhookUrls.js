@@ -1,7 +1,9 @@
 // scripts/testWebhookUrls.js
 const axios = require("axios");
+require("dotenv").config({ path: ".env" });
+require("dotenv").config({ path: ".env.local", override: true });
 
-const BASE_URL = "https://bot.ricardoburitica.eu";
+const BASE_URL = process.env.APP_BASE_URL || "http://localhost:3000";
 
 const webhookUrls = {
   "Twilio WhatsApp Webhook": `${BASE_URL}/autonomous/whatsapp/webhook`,

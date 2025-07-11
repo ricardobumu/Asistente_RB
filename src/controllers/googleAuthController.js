@@ -77,8 +77,8 @@ class GoogleAuthController {
         logger.warn("Google auth error", { error, state });
         return res.redirect(
           `/admin/settings?google_auth=error&message=${encodeURIComponent(
-            error
-          )}`
+            error,
+          )}`,
         );
       }
 
@@ -86,7 +86,7 @@ class GoogleAuthController {
       if (!code) {
         logger.warn("No authorization code received");
         return res.redirect(
-          "/admin/settings?google_auth=error&message=No authorization code received"
+          "/admin/settings?google_auth=error&message=No authorization code received",
         );
       }
 
@@ -95,14 +95,14 @@ class GoogleAuthController {
       if (!userId) {
         logger.warn("No user ID in state parameter");
         return res.redirect(
-          "/admin/settings?google_auth=error&message=Invalid state parameter"
+          "/admin/settings?google_auth=error&message=Invalid state parameter",
         );
       }
 
       // Intercambiar código por tokens
       const result = await googleCalendarClient.exchangeCodeForTokens(
         code,
-        userId
+        userId,
       );
 
       if (!result.success) {
@@ -112,8 +112,8 @@ class GoogleAuthController {
         });
         return res.redirect(
           `/admin/settings?google_auth=error&message=${encodeURIComponent(
-            result.error
-          )}`
+            result.error,
+          )}`,
         );
       }
 
@@ -124,7 +124,7 @@ class GoogleAuthController {
 
       // Redirigir con éxito
       res.redirect(
-        "/admin/settings?google_auth=success&message=Google Calendar connected successfully"
+        "/admin/settings?google_auth=success&message=Google Calendar connected successfully",
       );
     } catch (error) {
       logger.error("Error in Google auth callback", {
@@ -134,8 +134,8 @@ class GoogleAuthController {
 
       res.redirect(
         `/admin/settings?google_auth=error&message=${encodeURIComponent(
-          "Authentication failed"
-        )}`
+          "Authentication failed",
+        )}`,
       );
     }
   }
@@ -161,14 +161,13 @@ class GoogleAuthController {
       if (isConnected) {
         try {
           // Obtener información básica del calendario
-          const calendar = await googleCalendarClient.getAuthenticatedCalendar(
-            userId
-          );
+          const calendar =
+            await googleCalendarClient.getAuthenticatedCalendar(userId);
           const calendarList = await calendar.calendarList.list();
 
           calendarInfo = {
             primaryCalendar: calendarList.data.items?.find(
-              (cal) => cal.primary
+              (cal) => cal.primary,
             ),
             totalCalendars: calendarList.data.items?.length || 0,
           };
@@ -269,9 +268,8 @@ class GoogleAuthController {
       }
 
       // Probar acceso al calendario
-      const calendar = await googleCalendarClient.getAuthenticatedCalendar(
-        userId
-      );
+      const calendar =
+        await googleCalendarClient.getAuthenticatedCalendar(userId);
 
       // Obtener eventos de hoy para probar la conexión
       const today = new Date();
@@ -362,9 +360,8 @@ class GoogleAuthController {
       }
 
       // Obtener lista de calendarios
-      const calendar = await googleCalendarClient.getAuthenticatedCalendar(
-        userId
-      );
+      const calendar =
+        await googleCalendarClient.getAuthenticatedCalendar(userId);
       const calendarListResponse = await calendar.calendarList.list();
 
       const calendars =

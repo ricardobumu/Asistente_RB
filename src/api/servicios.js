@@ -106,7 +106,7 @@ router.get("/categorias", async (req, res) => {
     console.log(
       `✅ API: Servicios agrupados en ${
         Object.keys(servicesByCategory).length
-      } categorías`
+      } categorías`,
     );
 
     res.json({

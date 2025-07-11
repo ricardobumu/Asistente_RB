@@ -1,5 +1,8 @@
 // scripts/setupWebhooksAndBookings.js
 const { execSync } = require("child_process");
+require("dotenv").config({ path: ".env" });
+require("dotenv").config({ path: ".env.local", override: true });
+
 const fs = require("fs");
 const path = require("path");
 
@@ -45,18 +48,16 @@ dirs.forEach((dir) => {
 // Mostrar información de configuración
 console.log("\n🔗 URLS DE WEBHOOKS PARA CONFIGURAR:");
 console.log("");
-console.log("📱 TWILIO (WhatsApp):");
+console.log(`📱 TWILIO (WhatsApp) - [${process.env.APP_BASE_URL}]:`);
 console.log(
-  "   Webhook URL: https://bot.ricardoburitica.eu/autonomous/whatsapp/webhook"
+  `   Webhook URL: ${process.env.APP_BASE_URL}/autonomous/whatsapp/webhook`
 );
 console.log(
-  "   Status URL:  https://bot.ricardoburitica.eu/autonomous/whatsapp/status"
+  `   Status URL:  ${process.env.APP_BASE_URL}/autonomous/whatsapp/status`
 );
 console.log("");
-console.log("📅 CALENDLY:");
-console.log(
-  "   Webhook URL: https://bot.ricardoburitica.eu/api/calendly/webhook"
-);
+console.log(`📅 CALENDLY - [${process.env.APP_BASE_URL}]:`);
+console.log(`   Webhook URL: ${process.env.APP_BASE_URL}/api/calendly/webhook`);
 console.log(
   "   Eventos: invitee.created, invitee.canceled, invitee_no_show.created"
 );
@@ -76,10 +77,10 @@ console.log("");
 
 // Mostrar rutas administrativas
 console.log("🎛️  PANEL ADMINISTRATIVO:");
-console.log("");
-console.log("   URL: https://bot.ricardoburitica.eu/admin");
+console.log(``);
+console.log(`   URL: ${process.env.APP_BASE_URL}/admin`);
 console.log(
-  "   Dashboard: https://bot.ricardoburitica.eu/admin/bookings/dashboard"
+  `   Dashboard: ${process.env.APP_BASE_URL}/admin/bookings/dashboard`
 );
 console.log("");
 console.log("📊 ENDPOINTS PRINCIPALES:");

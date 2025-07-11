@@ -69,7 +69,7 @@ router.get("/list", adaptedServiceController.listServices);
  */
 router.get(
   "/category/:categoria",
-  adaptedServiceController.getServicesByCategory
+  adaptedServiceController.getServicesByCategory,
 );
 
 /**

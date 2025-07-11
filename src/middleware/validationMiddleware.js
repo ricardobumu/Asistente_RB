@@ -49,7 +49,7 @@ class ValidationMiddleware {
           "inactive",
           "suspended",
           "pending_verification",
-          "blocked"
+          "blocked",
         )
         .optional(),
     }),

@@ -21,7 +21,7 @@ class AuthMiddleware {
 
     if (!this.jwtSecret || !this.jwtRefreshSecret) {
       throw new Error(
-        "JWT secrets must be configured in environment variables"
+        "JWT secrets must be configured in environment variables",
       );
     }
 
@@ -352,7 +352,7 @@ class AuthMiddleware {
       if (userRequests.size > 1000) {
         for (const [key, value] of userRequests.entries()) {
           const filteredRequests = value.filter(
-            (timestamp) => timestamp > windowStart
+            (timestamp) => timestamp > windowStart,
           );
           if (filteredRequests.length === 0) {
             userRequests.delete(key);
@@ -398,7 +398,7 @@ class AuthMiddleware {
         {
           expiresIn: this.tokenConfig.refreshTokenExpiry,
           algorithm: "HS256",
-        }
+        },
       );
 
       // Guardar sesión activa
@@ -522,10 +522,10 @@ class AuthMiddleware {
         const timeSinceLastAttempt = now - attempts.lastAttempt;
         if (timeSinceLastAttempt < this.lockoutDuration) {
           const remainingTime = Math.ceil(
-            (this.lockoutDuration - timeSinceLastAttempt) / 1000 / 60
+            (this.lockoutDuration - timeSinceLastAttempt) / 1000 / 60,
           );
           throw new Error(
-            `Account locked. Try again in ${remainingTime} minutes.`
+            `Account locked. Try again in ${remainingTime} minutes.`,
           );
         } else {
           // Reset attempts after lockout period
@@ -549,7 +549,7 @@ class AuthMiddleware {
       // Verificar password
       const isValidPassword = await bcrypt.compare(
         password,
-        user.password_hash
+        user.password_hash,
       );
       if (!isValidPassword) {
         // Incrementar intentos fallidos
@@ -667,7 +667,7 @@ class AuthMiddleware {
         last_activity: sessionData.lastActivity.toISOString(),
         is_active: sessionData.isActive,
         expires_at: new Date(
-          Date.now() + 7 * 24 * 60 * 60 * 1000
+          Date.now() + 7 * 24 * 60 * 60 * 1000,
         ).toISOString(), // 7 días
       });
     } catch (error) {
@@ -707,7 +707,7 @@ class AuthMiddleware {
           last_activity: new Date().toISOString(),
           ...updates,
         },
-        { id: sessionId }
+        { id: sessionId },
       );
     } catch (error) {
       logger.error("Error updating session activity", {
@@ -728,13 +728,13 @@ class AuthMiddleware {
           is_active: false,
           revoked_at: new Date().toISOString(),
         },
-        { id: sessionId }
+        { id: sessionId },
       );
 
       // Remover de cache
       for (const [userId, sessions] of this.activeSessions.entries()) {
         const filteredSessions = sessions.filter(
-          (s) => s.sessionId !== sessionId
+          (s) => s.sessionId !== sessionId,
         );
         if (filteredSessions.length !== sessions.length) {
           this.activeSessions.set(userId, filteredSessions);
@@ -759,7 +759,7 @@ class AuthMiddleware {
           is_active: false,
           revoked_at: new Date().toISOString(),
         },
-        { user_id: userId }
+        { user_id: userId },
       );
 
       // Remover de cache
@@ -809,7 +809,7 @@ class AuthMiddleware {
         // Verificar permisos en base de datos
         const hasPermission = await this.checkUserPermission(
           req.user.id,
-          permission
+          permission,
         );
 
         if (!hasPermission) {
@@ -853,7 +853,7 @@ class AuthMiddleware {
         JOIN permissions p ON up.permission_id = p.id
         WHERE up.user_id = $1 AND p.name = $2 AND up.is_active = true
       `,
-        [userId, permission]
+        [userId, permission],
       );
 
       return result.data && result.data.length > 0;
@@ -872,9 +872,12 @@ class AuthMiddleware {
 const authMiddleware = new AuthMiddleware();
 
 // Iniciar limpieza periódica de sesiones
-setInterval(() => {
-  authMiddleware.cleanupExpiredSessions();
-}, 60 * 60 * 1000); // Cada hora
+setInterval(
+  () => {
+    authMiddleware.cleanupExpiredSessions();
+  },
+  60 * 60 * 1000,
+); // Cada hora
 
 module.exports = {
   authenticate: authMiddleware.authenticate,

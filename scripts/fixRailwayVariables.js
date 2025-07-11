@@ -10,7 +10,7 @@ function showCorrectVariables() {
   console.log("🚨 PROBLEMA DETECTADO:");
   console.log("Una variable tiene formato incorrecto en Railway");
   console.log(
-    'ERROR: invalid key-value pair "="ALLOWED_ORIGINS=...": empty key\n'
+    'ERROR: invalid key-value pair "="ALLOWED_ORIGINS=...": empty key\n',
   );
 
   console.log("✅ SOLUCIÓN:");
@@ -70,14 +70,14 @@ function showCorrectVariables() {
   console.log("======================");
   console.log("Variable Name: ALLOWED_ORIGINS");
   console.log(
-    "Variable Value: https://bot.ricardoburitica.eu,https://ricardoburitica.com"
+    "Variable Value: https://bot.ricardoburitica.eu,https://ricardoburitica.com",
   );
   console.log("(SIN comillas, SIN espacios extra, SIN = al inicio)\n");
 
   console.log("🔄 PASOS PARA ARREGLAR:");
   console.log("======================");
   console.log(
-    "1. Ir a: https://railway.app/project/2806399e-7537-46ce-acc7-fa043193e2a9"
+    "1. Ir a: https://railway.app/project/2806399e-7537-46ce-acc7-fa043193e2a9",
   );
   console.log("2. Settings → Variables");
   console.log('3. ELIMINAR variables con "=" al inicio');

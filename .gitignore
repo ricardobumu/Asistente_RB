@@ -1,1 +1,37 @@
-"node_modules/" 
+# Archivos de entorno
+# Contienen claves de API, contraseñas y otros secretos
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Archivos de credenciales de Google y otros proveedores
+# Contienen secretos de cliente y claves privadas
+credentials.json
+client_secret_*.json
+service_account.json
+*.pem
+
+# Archivos de código que pueden contener secretos o no deberían estar en el repositorio
+google-calendar-credentials.json
+
+# Archivos de sesión de OpenAI (si aplica)
+*.openai.json
+
+# Directorio de módulos de Node.js
+# Se puede reinstalar fácilmente con 'npm install'
+node_modules/
+
+# Archivos de registro (logs)
+# Pueden contener información sensible
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de configuración del editor y del sistema operativo
+.DS_Store
+.vscode/
+.idea/"node_modules/" 

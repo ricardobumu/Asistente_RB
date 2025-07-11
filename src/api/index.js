@@ -63,7 +63,7 @@ router.use(
       includeSubDomains: true,
       preload: true,
     },
-  })
+  }),
 );
 
 router.use(cors(corsOptions));

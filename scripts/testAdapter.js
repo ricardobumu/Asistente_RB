@@ -28,9 +28,8 @@ async function testAdapter() {
 
     // Test 2: Listar clientes
     console.log("\n2️⃣ PROBANDO CLIENTES:");
-    const { data: clients, error: clientsError } = await DatabaseAdapter.select(
-      "clients"
-    );
+    const { data: clients, error: clientsError } =
+      await DatabaseAdapter.select("clients");
 
     if (clientsError) {
       console.log(`❌ Error: ${clientsError.message}`);

@@ -1,15 +1,19 @@
 // scripts/deployToRailwayFinal.js
 // Script definitivo para deploy a Railway con configuración completa
 
+require("dotenv").config({ path: ".env" });
+require("dotenv").config({ path: ".env.local", override: true });
 const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
 // Configuración del proyecto Railway
 const RAILWAY_CONFIG = {
+  APP_BASE_URL: process.env.APP_BASE_URL || "https://bot.ricardoburitica.eu",
   PROJECT_ID: "2806399e-7537-46ce-acc7-fa043193e2a9",
   PROJECT_NAME: "Asistente RB",
-  DOMAIN: "bot.ricardoburitica.eu",
+  DOMAIN: new URL(process.env.APP_BASE_URL || "https://bot.ricardoburitica.eu")
+    .hostname,
   ENVIRONMENT: "production",
 };
 
@@ -56,6 +60,7 @@ async function deployToRailway() {
 
     const envVars = {
       NODE_ENV: "production",
+      APP_BASE_URL: RAILWAY_CONFIG.APP_BASE_URL,
       PORT: "3000",
       // Supabase
       SUPABASE_URL: process.env.SUPABASE_URL,
@@ -78,7 +83,7 @@ async function deployToRailway() {
       ADMIN_USERNAME: process.env.ADMIN_USERNAME,
       ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
       // CORS
-      ALLOWED_ORIGINS: `https://${RAILWAY_CONFIG.DOMAIN},https://ricardoburitica.com,http://localhost:3000`,
+      ALLOWED_ORIGINS: `${RAILWAY_CONFIG.APP_BASE_URL},https://ricardoburitica.com,http://localhost:3000`,
     };
 
     console.log("   📝 Configurando variables críticas...");
@@ -144,7 +149,7 @@ README.md
 
     console.log("\n✅ DEPLOY COMPLETADO");
     console.log("===================");
-    console.log(`🌐 URL: https://${RAILWAY_CONFIG.DOMAIN}`);
+    console.log(`🌐 URL: ${RAILWAY_CONFIG.APP_BASE_URL}`);
     console.log(
       `📊 Dashboard: https://railway.app/project/${RAILWAY_CONFIG.PROJECT_ID}`
     );
@@ -153,14 +158,15 @@ README.md
     console.log("\n8️⃣ Verificando deploy...");
     setTimeout(async () => {
       try {
-        const response = await fetch(`https://${RAILWAY_CONFIG.DOMAIN}/health`);
+        // Usar fetch que está disponible en Node.js 18+
+        const response = await fetch(`${RAILWAY_CONFIG.APP_BASE_URL}/health`);
         if (response.ok) {
           console.log("   ✅ Aplicación funcionando correctamente");
           console.log(
-            `   🔗 Portal Cliente: https://${RAILWAY_CONFIG.DOMAIN}/portal`
+            `   🔗 Portal Cliente: ${RAILWAY_CONFIG.APP_BASE_URL}/portal`
           );
           console.log(
-            `   🔗 Admin Panel: https://${RAILWAY_CONFIG.DOMAIN}/admin`
+            `   🔗 Admin Panel: ${RAILWAY_CONFIG.APP_BASE_URL}/admin`
           );
         } else {
           console.log("   ⚠️ Aplicación desplegada pero con errores");
@@ -176,7 +182,7 @@ README.md
 
     return {
       success: true,
-      url: `https://${RAILWAY_CONFIG.DOMAIN}`,
+      url: RAILWAY_CONFIG.APP_BASE_URL,
       projectId: RAILWAY_CONFIG.PROJECT_ID,
     };
   } catch (error) {

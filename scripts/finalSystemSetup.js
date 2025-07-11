@@ -53,7 +53,7 @@ async function finalSystemSetup() {
   console.log(
     `\n📊 Variables configuradas: ${configuredCount}/${
       Object.keys(envVars).length
-    }`
+    }`,
   );
 
   // 2. DEPLOY FINAL
@@ -94,15 +94,15 @@ async function finalSystemSetup() {
 
   console.log("\n📞 TWILIO WEBHOOKS:");
   console.log(
-    "Webhook URL: https://bot.ricardoburitica.eu/autonomous/whatsapp/webhook"
+    "Webhook URL: https://bot.ricardoburitica.eu/autonomous/whatsapp/webhook",
   );
   console.log(
-    "Status URL: https://bot.ricardoburitica.eu/autonomous/whatsapp/status"
+    "Status URL: https://bot.ricardoburitica.eu/autonomous/whatsapp/status",
   );
 
   console.log("\n📅 CALENDLY WEBHOOK:");
   console.log(
-    "Webhook URL: https://bot.ricardoburitica.eu/api/calendly/webhook"
+    "Webhook URL: https://bot.ricardoburitica.eu/api/calendly/webhook",
   );
 
   console.log("\n🌐 URLS PRINCIPALES:");

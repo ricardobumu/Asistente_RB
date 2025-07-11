@@ -169,7 +169,7 @@ class ClientModel {
       if (filters.preferred_contact_method) {
         query = query.eq(
           "preferred_contact_method",
-          filters.preferred_contact_method
+          filters.preferred_contact_method,
         );
       }
       if (filters.created_after) {
@@ -205,7 +205,7 @@ class ClientModel {
             price,
             duration
           )
-        `
+        `,
         )
         .eq("client_id", clientId)
         .order("booking_date", { ascending: false })
@@ -264,7 +264,7 @@ class ClientModel {
             price,
             duration
           )
-        `
+        `,
         )
         .eq("client_id", clientId)
         .gte("booking_date", today)

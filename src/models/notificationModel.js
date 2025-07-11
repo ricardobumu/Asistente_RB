@@ -273,7 +273,7 @@ Ricardo Buriticá Beauty Consulting`,
         validTypes: this.validTypes.length,
         validChannels: this.validChannels.length,
         consciousTemplates: Object.keys(this.consciousTemplates).length,
-      }
+      },
     );
   }
 
@@ -293,7 +293,7 @@ Ricardo Buriticá Beauty Consulting`,
       const { data: client, error: clientError } = await supabase
         .from("clients")
         .select(
-          "id, name, email, phone, whatsapp_number, preferred_contact_method, metadata"
+          "id, name, email, phone, whatsapp_number, preferred_contact_method, metadata",
         )
         .eq("id", notificationData.client_id)
         .single();
@@ -314,7 +314,7 @@ Ricardo Buriticá Beauty Consulting`,
             services (
               id, name, category, price, duration, metadata
             )
-          `
+          `,
           )
           .eq("id", notificationData.booking_id)
           .single();
@@ -336,7 +336,7 @@ Ricardo Buriticá Beauty Consulting`,
           service,
           booking,
           customData: notificationData.custom_data || {},
-        }
+        },
       );
 
       // Preparar datos para inserción
@@ -553,7 +553,7 @@ Ricardo Buriticá Beauty Consulting`,
           services (
             id, name, category, price, duration, metadata
           )
-        `
+        `,
         )
         .eq("id", bookingId)
         .single();
@@ -564,7 +564,7 @@ Ricardo Buriticá Beauty Consulting`,
 
       // Calcular cuándo enviar el recordatorio
       const bookingDateTime = new Date(
-        `${booking.booking_date}T${booking.booking_time}`
+        `${booking.booking_date}T${booking.booking_time}`,
       );
       let reminderTime = new Date(bookingDateTime);
 
@@ -605,7 +605,7 @@ Ricardo Buriticá Beauty Consulting`,
 
       const result = await this.create(
         notificationData,
-        "ricardo_reminder_system"
+        "ricardo_reminder_system",
       );
 
       if (result.success) {
@@ -654,7 +654,7 @@ Ricardo Buriticá Beauty Consulting`,
 
       const result = await this.create(
         notificationData,
-        "ricardo_education_system"
+        "ricardo_education_system",
       );
 
       if (result.success) {
@@ -714,7 +714,7 @@ Ricardo Buriticá Beauty Consulting`,
 
       const result = await this.create(
         notificationData,
-        "ricardo_maintenance_system"
+        "ricardo_maintenance_system",
       );
 
       if (result.success) {
@@ -779,7 +779,7 @@ Ricardo Buriticá Beauty Consulting`,
           clients (
             id, name, email, phone, whatsapp_number, preferred_contact_method
           )
-        `
+        `,
         )
         .eq("id", notificationId)
         .single();
@@ -823,7 +823,7 @@ Ricardo Buriticá Beauty Consulting`,
           clients (
             id, name, email, phone, whatsapp_number, preferred_contact_method
           )
-        `
+        `,
         )
         .eq("status", "pending")
         .lte("scheduled_for", now)

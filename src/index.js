@@ -83,14 +83,14 @@ app.use(
         throw new Error("Malicious content detected");
       }
     },
-  })
+  }),
 );
 app.use(
   express.urlencoded({
     extended: true,
     limit: "1mb",
     parameterLimit: 100, // Limitar parámetros
-  })
+  }),
 );
 
 // Middleware de logging existente (mejorado)
@@ -145,7 +145,7 @@ app.use(
     }
     next();
   },
-  autonomousWhatsAppRoutes
+  autonomousWhatsAppRoutes,
 );
 
 // 3. Widget de reservas con rate limiting específico
@@ -159,7 +159,7 @@ app.use(
     }
     next();
   },
-  bookingWidgetRoutes
+  bookingWidgetRoutes,
 );
 
 // 4. Dashboard administrativo con máxima seguridad
@@ -182,7 +182,7 @@ const path = require("path");
 // Servir dashboard administrativo (solo con autenticación)
 app.use(
   "/admin/static",
-  express.static(path.join(__dirname, "../public/admin"))
+  express.static(path.join(__dirname, "../public/admin")),
 );
 
 // Ruta para acceder al dashboard
@@ -200,7 +200,7 @@ app.get("/admin/login.html", (req, res) => {
 // Servir archivos estáticos del portal cliente
 app.use(
   "/portal/static",
-  express.static(path.join(__dirname, "../public/client"))
+  express.static(path.join(__dirname, "../public/client")),
 );
 
 // Ruta principal del portal cliente

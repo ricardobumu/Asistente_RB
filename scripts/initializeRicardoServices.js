@@ -11,7 +11,7 @@ const logger = require("../src/utils/logger");
 async function initializeServices() {
   try {
     console.log(
-      "🚀 Inicializando servicios de Ricardo Buriticá Beauty Consulting...\n"
+      "🚀 Inicializando servicios de Ricardo Buriticá Beauty Consulting...\n",
     );
 
     // Inicializar servicios usando el método del modelo
@@ -37,17 +37,17 @@ async function initializeServices() {
           console.log(`\n🎯 ${name}:`);
           categoryResult.data.forEach((service) => {
             console.log(
-              `   • ${service.name} - ${service.price}€ (${service.duration}min)`
+              `   • ${service.name} - ${service.price}€ (${service.duration}min)`,
             );
           });
         }
       }
 
       console.log(
-        "\n💚 Filosofía de Peluquería Consciente integrada en todos los servicios"
+        "\n💚 Filosofía de Peluquería Consciente integrada en todos los servicios",
       );
       console.log(
-        "🔗 Integración con Calendly configurada para reservas automáticas"
+        "🔗 Integración con Calendly configurada para reservas automáticas",
       );
     } else {
       console.error("❌ Error inicializando servicios:", result.error);

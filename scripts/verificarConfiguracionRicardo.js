@@ -131,12 +131,12 @@ console.log("\n📊 RESUMEN DE CONFIGURACIÓN:\n");
 console.log(
   `✅ Variables críticas configuradas: ${presentRequired.length}/${
     Object.keys(requiredVars).length
-  }`
+  }`,
 );
 console.log(
   `🔧 Variables opcionales configuradas: ${presentOptional.length}/${
     Object.keys(optionalVars).length
-  }`
+  }`,
 );
 
 if (missingRequired.length > 0) {
@@ -166,7 +166,7 @@ if (process.env.GOOGLE_CALENDAR_ID) {
     console.log("✅ Google Calendar configurado con calendario específico");
   } else {
     console.log(
-      "⚠️  Verificar GOOGLE_CALENDAR_ID - debería ser info@ricardoburitica.com o un calendario específico"
+      "⚠️  Verificar GOOGLE_CALENDAR_ID - debería ser info@ricardoburitica.com o un calendario específico",
     );
   }
 }
@@ -181,7 +181,7 @@ if (process.env.CALENDLY_WEBHOOK_URI) {
   console.log("✅ URI de webhook de Calendly configurada");
 } else {
   console.log(
-    "⚠️  CALENDLY_WEBHOOK_URI no configurada - agrégala a .env.local"
+    "⚠️  CALENDLY_WEBHOOK_URI no configurada - agrégala a .env.local",
   );
 }
 
@@ -205,7 +205,7 @@ if (missingRequired.length > 0) {
 
 if (!process.env.GOOGLE_CALENDAR_CREDENTIALS) {
   console.log(
-    "2. 📅 Configurar Google Calendar Service Account (cuenta profesional)"
+    "2. 📅 Configurar Google Calendar Service Account (cuenta profesional)",
   );
 } else {
   console.log("2. ✅ Google Calendar configurado");
@@ -222,6 +222,6 @@ console.log("5. 🔗 Configurar webhooks en Twilio y Calendly");
 console.log("6. 🚀 Ejecutar: npm run dev");
 
 console.log(
-  "\n📖 Consulta CONFIGURACION_RICARDO_BURITICA.md para detalles específicos"
+  "\n📖 Consulta CONFIGURACION_RICARDO_BURITICA.md para detalles específicos",
 );
 console.log("");

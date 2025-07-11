@@ -140,15 +140,15 @@ async function migrateClientAuth() {
       ];
 
       const missingColumns = requiredColumns.filter(
-        (col) => !existingColumns.includes(col)
+        (col) => !existingColumns.includes(col),
       );
 
       if (missingColumns.length > 0) {
         console.log(
-          `⚠️  Columnas faltantes detectadas: ${missingColumns.join(", ")}`
+          `⚠️  Columnas faltantes detectadas: ${missingColumns.join(", ")}`,
         );
         console.log(
-          "📋 Por favor, ejecuta manualmente en Supabase SQL Editor:"
+          "📋 Por favor, ejecuta manualmente en Supabase SQL Editor:",
         );
         console.log("\n" + migrationSQL + "\n");
       } else {
@@ -168,7 +168,7 @@ async function migrateClientAuth() {
       console.log("⚠️  Verificación final falló:", finalError.message);
     } else {
       console.log(
-        "✅ Verificación final exitosa - Estructura de tabla actualizada"
+        "✅ Verificación final exitosa - Estructura de tabla actualizada",
       );
     }
 

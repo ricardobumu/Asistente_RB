@@ -279,7 +279,7 @@ class ClientService {
 
       const { data, error } = await DatabaseAdapter.insert(
         "clients",
-        clientToCreate
+        clientToCreate,
       );
 
       if (error) throw error;
@@ -352,7 +352,7 @@ class ClientService {
           existingByPhone.data.id !== clientId
         ) {
           throw new Error(
-            "Another client with this phone number already exists"
+            "Another client with this phone number already exists",
           );
         }
       }
@@ -380,7 +380,7 @@ class ClientService {
       const { data, error } = await DatabaseAdapter.update(
         "clients",
         dataToUpdate,
-        { id: clientId }
+        { id: clientId },
       );
 
       if (error) throw error;
@@ -448,7 +448,7 @@ class ClientService {
 
       if (activeBookings > 0) {
         throw new Error(
-          `Cannot delete client with ${activeBookings} active booking(s). Cancel bookings first.`
+          `Cannot delete client with ${activeBookings} active booking(s). Cancel bookings first.`,
         );
       }
 
@@ -463,7 +463,7 @@ class ClientService {
       const { data, error } = await DatabaseAdapter.update(
         "clients",
         deleteData,
-        { id: clientId }
+        { id: clientId },
       );
 
       if (error) throw error;

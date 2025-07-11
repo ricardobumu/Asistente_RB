@@ -21,7 +21,7 @@ async function testCompleteSystem() {
       if (servicesResult.data.length > 0) {
         const firstService = servicesResult.data[0];
         console.log(
-          `📋 Primer servicio: ${firstService.name} - €${firstService.price} (${firstService.duration_minutes}min)`
+          `📋 Primer servicio: ${firstService.name} - €${firstService.price} (${firstService.duration_minutes}min)`,
         );
       }
     } else {
@@ -41,7 +41,7 @@ async function testCompleteSystem() {
         console.log(
           `📋 Primer cliente: ${firstClient.first_name || "Sin nombre"} - ${
             firstClient.phone
-          }`
+          }`,
         );
       }
     } else {
@@ -59,7 +59,7 @@ async function testCompleteSystem() {
       if (todayBookings.data.length > 0) {
         const booking = todayBookings.data[0];
         console.log(
-          `📋 Primera reserva: ${booking.service.name} - ${booking.client.first_name}`
+          `📋 Primera reserva: ${booking.service.name} - ${booking.client.first_name}`,
         );
       }
     } else {
@@ -95,19 +95,19 @@ async function testCompleteSystem() {
         // Cancelar la reserva de prueba inmediatamente
         const cancelResult = await BookingService.cancelBooking(
           createResult.data.id,
-          "Prueba del sistema - cancelada automáticamente"
+          "Prueba del sistema - cancelada automáticamente",
         );
 
         if (cancelResult.success) {
           console.log("✅ Reserva de prueba cancelada correctamente");
         } else {
           console.log(
-            `⚠️ Error cancelando reserva de prueba: ${cancelResult.error}`
+            `⚠️ Error cancelando reserva de prueba: ${cancelResult.error}`,
           );
         }
       } else {
         console.log(
-          `❌ Error creando reserva de prueba: ${createResult.error}`
+          `❌ Error creando reserva de prueba: ${createResult.error}`,
         );
       }
     } else {
@@ -124,25 +124,25 @@ async function testCompleteSystem() {
       if (upcomingBookings.data.length > 0) {
         upcomingBookings.data.slice(0, 3).forEach((booking, index) => {
           const date = new Date(booking.scheduled_at).toLocaleDateString(
-            "es-ES"
+            "es-ES",
           );
           const time = new Date(booking.scheduled_at).toLocaleTimeString(
             "es-ES",
             {
               hour: "2-digit",
               minute: "2-digit",
-            }
+            },
           );
           console.log(
             `   ${index + 1}. ${booking.service.name} - ${date} ${time} (${
               booking.status
-            })`
+            })`,
           );
         });
       }
     } else {
       console.log(
-        `⚠️ Error obteniendo próximas reservas: ${upcomingBookings.error}`
+        `⚠️ Error obteniendo próximas reservas: ${upcomingBookings.error}`,
       );
     }
 
@@ -166,25 +166,25 @@ async function testCompleteSystem() {
 
     // Verificar que todos los servicios tienen precios válidos
     const invalidServices = servicesResult.data.filter(
-      (s) => !s.price || s.price <= 0
+      (s) => !s.price || s.price <= 0,
     );
     if (invalidServices.length === 0) {
       console.log("✅ Todos los servicios tienen precios válidos");
     } else {
       console.log(
-        `⚠️ ${invalidServices.length} servicios con precios inválidos`
+        `⚠️ ${invalidServices.length} servicios con precios inválidos`,
       );
     }
 
     // Verificar que todos los clientes tienen teléfonos válidos
     const invalidClients = clientsResult.data.filter(
-      (c) => !c.phone || !c.phone.startsWith("+")
+      (c) => !c.phone || !c.phone.startsWith("+"),
     );
     if (invalidClients.length === 0) {
       console.log("✅ Todos los clientes tienen teléfonos válidos");
     } else {
       console.log(
-        `⚠️ ${invalidClients.length} clientes con teléfonos inválidos`
+        `⚠️ ${invalidClients.length} clientes con teléfonos inválidos`,
       );
     }
 

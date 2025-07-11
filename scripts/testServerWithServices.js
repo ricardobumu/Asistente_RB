@@ -39,12 +39,12 @@ async function testServerWithServices() {
     try {
       const servicesResponse = await axios.get(`${baseURL}/api/services/`);
       console.log(
-        `✅ Servicios obtenidos: ${servicesResponse.data.count} servicios`
+        `✅ Servicios obtenidos: ${servicesResponse.data.count} servicios`,
       );
       if (servicesResponse.data.data.length > 0) {
         const firstService = servicesResponse.data.data[0];
         console.log(
-          `📌 Primer servicio: ${firstService.nombre} - €${firstService.precio}`
+          `📌 Primer servicio: ${firstService.nombre} - €${firstService.precio}`,
         );
       }
     } catch (error) {
@@ -57,7 +57,7 @@ async function testServerWithServices() {
     try {
       const activeResponse = await axios.get(`${baseURL}/api/services/active`);
       console.log(
-        `✅ Servicios activos: ${activeResponse.data.count} servicios`
+        `✅ Servicios activos: ${activeResponse.data.count} servicios`,
       );
     } catch (error) {
       console.log(`❌ Error: ${error.response?.data?.error || error.message}`);
@@ -81,11 +81,11 @@ async function testServerWithServices() {
     console.log("📋 Test 6: GET /api/services/categories");
     try {
       const categoriesResponse = await axios.get(
-        `${baseURL}/api/services/categories`
+        `${baseURL}/api/services/categories`,
       );
       console.log(
         `✅ Categorías válidas:`,
-        categoriesResponse.data.data.categories
+        categoriesResponse.data.data.categories,
       );
     } catch (error) {
       console.log(`❌ Error: ${error.response?.data?.error || error.message}`);
@@ -96,10 +96,10 @@ async function testServerWithServices() {
     console.log("📋 Test 7: GET /api/services/search?q=corte");
     try {
       const searchResponse = await axios.get(
-        `${baseURL}/api/services/search?q=corte`
+        `${baseURL}/api/services/search?q=corte`,
       );
       console.log(
-        `✅ Búsqueda exitosa: ${searchResponse.data.count} resultados`
+        `✅ Búsqueda exitosa: ${searchResponse.data.count} resultados`,
       );
     } catch (error) {
       console.log(`❌ Error: ${error.response?.data?.error || error.message}`);
@@ -110,10 +110,10 @@ async function testServerWithServices() {
     console.log("📋 Test 8: GET /api/services/list?page=1&limit=3");
     try {
       const listResponse = await axios.get(
-        `${baseURL}/api/services/list?page=1&limit=3`
+        `${baseURL}/api/services/list?page=1&limit=3`,
       );
       console.log(
-        `✅ Lista paginada: ${listResponse.data.data.length} servicios`
+        `✅ Lista paginada: ${listResponse.data.data.length} servicios`,
       );
       console.log(`📊 Paginación:`, listResponse.data.pagination);
     } catch (error) {
@@ -125,10 +125,10 @@ async function testServerWithServices() {
     console.log("📋 Test 9: GET /api/services/category/CORTE");
     try {
       const categoryResponse = await axios.get(
-        `${baseURL}/api/services/category/CORTE`
+        `${baseURL}/api/services/category/CORTE`,
       );
       console.log(
-        `✅ Servicios de CORTE: ${categoryResponse.data.count} servicios`
+        `✅ Servicios de CORTE: ${categoryResponse.data.count} servicios`,
       );
     } catch (error) {
       console.log(`❌ Error: ${error.response?.data?.error || error.message}`);
@@ -160,7 +160,7 @@ async function startServerForTests() {
 // Ejecutar tests
 if (require.main === module) {
   console.log(
-    "⚠️  NOTA: Asegúrate de que el servidor esté ejecutándose en otro terminal:"
+    "⚠️  NOTA: Asegúrate de que el servidor esté ejecutándose en otro terminal:",
   );
   console.log("   npm start  o  node src/index.js\n");
 

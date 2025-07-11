@@ -71,7 +71,7 @@ class Validators {
     if (
       clientData.preferred_contact_method &&
       !["whatsapp", "email", "sms", "phone"].includes(
-        clientData.preferred_contact_method
+        clientData.preferred_contact_method,
       )
     ) {
       errors.push("Método de contacto inválido");
@@ -84,7 +84,7 @@ class Validators {
     if (
       clientData.gender &&
       !["male", "female", "other", "prefer_not_to_say"].includes(
-        clientData.gender
+        clientData.gender,
       )
     ) {
       errors.push("Género inválido");
@@ -155,7 +155,7 @@ class Validators {
 
     if (clientData.emergency_contact_name) {
       sanitized.emergency_contact_name = this.sanitizeText(
-        clientData.emergency_contact_name
+        clientData.emergency_contact_name,
       );
     }
 
@@ -332,7 +332,7 @@ class Validators {
 
     if (bookingData.client_last_name) {
       sanitized.client_last_name = this.sanitizeText(
-        bookingData.client_last_name
+        bookingData.client_last_name,
       );
     }
 
@@ -351,7 +351,7 @@ class Validators {
 
     if (bookingData.cancellation_reason) {
       sanitized.cancellation_reason = this.sanitizeText(
-        bookingData.cancellation_reason
+        bookingData.cancellation_reason,
       );
     }
 
@@ -452,7 +452,7 @@ class Validators {
         serviceData.min_advance_booking_hours < 0)
     ) {
       errors.push(
-        "Las horas mínimas de anticipación deben ser mayor o igual a 0"
+        "Las horas mínimas de anticipación deben ser mayor o igual a 0",
       );
     }
 
@@ -462,7 +462,7 @@ class Validators {
         serviceData.max_cancellation_hours < 0)
     ) {
       errors.push(
-        "Las horas máximas de cancelación deben ser mayor o igual a 0"
+        "Las horas máximas de cancelación deben ser mayor o igual a 0",
       );
     }
 
@@ -535,7 +535,7 @@ class Validators {
 
     if (serviceData.short_description) {
       sanitized.short_description = this.sanitizeText(
-        serviceData.short_description
+        serviceData.short_description,
       );
     }
 
@@ -558,19 +558,19 @@ class Validators {
 
     if (serviceData.max_advance_booking_days !== undefined) {
       sanitized.max_advance_booking_days = parseInt(
-        serviceData.max_advance_booking_days
+        serviceData.max_advance_booking_days,
       );
     }
 
     if (serviceData.min_advance_booking_hours !== undefined) {
       sanitized.min_advance_booking_hours = parseInt(
-        serviceData.min_advance_booking_hours
+        serviceData.min_advance_booking_hours,
       );
     }
 
     if (serviceData.max_cancellation_hours !== undefined) {
       sanitized.max_cancellation_hours = parseInt(
-        serviceData.max_cancellation_hours
+        serviceData.max_cancellation_hours,
       );
     }
 

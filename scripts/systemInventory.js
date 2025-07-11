@@ -225,8 +225,8 @@ async function systemInventory() {
   console.log(`📦 Tamaño total: ${totalSize} KB`);
   console.log(
     `📈 Integridad del sistema: ${Math.round(
-      (existingFiles / allFiles.length) * 100
-    )}%`
+      (existingFiles / allFiles.length) * 100,
+    )}%`,
   );
 
   if (existingFiles === allFiles.length) {

@@ -47,12 +47,12 @@ async function fixServiceCategories() {
 
     for (const [oldCategory, newCategory] of Object.entries(categoryMapping)) {
       const servicesToUpdate = currentServices.filter(
-        (s) => s.categoria === oldCategory
+        (s) => s.categoria === oldCategory,
       );
 
       if (servicesToUpdate.length > 0) {
         console.log(
-          `\n📝 Actualizando "${oldCategory}" → "${newCategory}" (${servicesToUpdate.length} servicios)`
+          `\n📝 Actualizando "${oldCategory}" → "${newCategory}" (${servicesToUpdate.length} servicios)`,
         );
 
         for (const service of servicesToUpdate) {
@@ -68,7 +68,7 @@ async function fixServiceCategories() {
           console.error(`❌ Error actualizando ${oldCategory}:`, updateError);
         } else {
           console.log(
-            `✅ ${servicesToUpdate.length} servicios actualizados correctamente`
+            `✅ ${servicesToUpdate.length} servicios actualizados correctamente`,
           );
         }
       }
@@ -104,7 +104,7 @@ async function fixServiceCategories() {
     const actualCategories = Object.keys(finalCategoryCount);
 
     const unexpectedCategories = actualCategories.filter(
-      (cat) => !expectedCategories.includes(cat)
+      (cat) => !expectedCategories.includes(cat),
     );
 
     if (unexpectedCategories.length === 0) {

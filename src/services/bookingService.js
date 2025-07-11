@@ -47,7 +47,7 @@ class BookingService {
       let client = null;
       if (sanitizedData.client_id) {
         const clientResult = await ClientService.findById(
-          sanitizedData.client_id
+          sanitizedData.client_id,
         );
         if (!clientResult.success || !clientResult.data) {
           throw new Error("Cliente no encontrado");
@@ -56,7 +56,7 @@ class BookingService {
       } else if (sanitizedData.client_phone) {
         // Buscar por teléfono o crear cliente temporal
         const clientResult = await ClientService.findByPhone(
-          sanitizedData.client_phone
+          sanitizedData.client_phone,
         );
         if (clientResult.success && clientResult.data) {
           client = clientResult.data;
@@ -84,7 +84,7 @@ class BookingService {
 
       // Validar que el servicio existe
       const serviceResult = await ServiceService.getServiceById(
-        sanitizedData.service_id
+        sanitizedData.service_id,
       );
       if (!serviceResult.success || !serviceResult.data) {
         throw new Error("Servicio no encontrado");
@@ -96,7 +96,7 @@ class BookingService {
       const endDate = sanitizedData.end_time
         ? new Date(sanitizedData.end_time)
         : new Date(
-            startDate.getTime() + (service.duration_minutes || 60) * 60000
+            startDate.getTime() + (service.duration_minutes || 60) * 60000,
           );
 
       // Validar que la fecha no sea en el pasado
@@ -108,7 +108,7 @@ class BookingService {
       if (googleCalendarClient.isInitialized()) {
         const availability = await googleCalendarClient.checkAvailability(
           startDate.toISOString(),
-          endDate.toISOString()
+          endDate.toISOString(),
         );
 
         if (!availability.available) {
@@ -147,7 +147,7 @@ class BookingService {
       // Crear la reserva en la base de datos
       const { data, error } = await DatabaseAdapter.insert(
         "bookings",
-        bookingToCreate
+        bookingToCreate,
       );
 
       if (error) throw error;
@@ -183,9 +183,8 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
           location: service.location || "Por confirmar",
         };
 
-        const calendarResult = await googleCalendarClient.createEvent(
-          eventData
-        );
+        const calendarResult =
+          await googleCalendarClient.createEvent(eventData);
 
         if (calendarResult.success) {
           calendarEventId = calendarResult.data.id;
@@ -203,7 +202,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
                 meet_link: meetLink,
               },
             },
-            { id: booking.id }
+            { id: booking.id },
           );
 
           logger.info("Booking created with Google Calendar event", {
@@ -243,7 +242,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
                   calendly_booking: calendlyResult.data,
                 },
               },
-              { id: booking.id }
+              { id: booking.id },
             );
           }
         } catch (calendlyError) {
@@ -455,7 +454,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
     bookingId,
     status,
     notes = null,
-    reason = null
+    reason = null,
   ) {
     try {
       if (!bookingId) {
@@ -516,7 +515,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
       const { data, error } = await DatabaseAdapter.update(
         "bookings",
         updateData,
-        { id: bookingId }
+        { id: bookingId },
       );
 
       if (error) throw error;
@@ -561,7 +560,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
       const startOfDay = new Date(
         today.getFullYear(),
         today.getMonth(),
-        today.getDate()
+        today.getDate(),
       );
       const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000);
 
@@ -677,7 +676,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
       const { data: bookings, error } = await DatabaseAdapter.select(
         "bookings",
         "*",
-        { id: bookingId }
+        { id: bookingId },
       );
 
       if (error || !bookings || bookings.length === 0) {
@@ -701,7 +700,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
       if (calendarEventId && googleCalendarClient.isInitialized()) {
         const cancelResult = await googleCalendarClient.cancelEvent(
           calendarEventId,
-          reason || "Booking cancelled"
+          reason || "Booking cancelled",
         );
 
         if (!cancelResult.success) {
@@ -723,7 +722,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
         bookingId,
         "cancelled",
         `Cancelled by ${cancelledBy || "system"}`,
-        reason
+        reason,
       );
 
       if (result.success) {
@@ -763,7 +762,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
           *,
           clientes(nombre, apellido, telefono_movil, email),
           servicios(nombre, precio, duracion, descripcion)
-        `
+        `,
         )
         .eq("id_reserva", bookingId)
         .single();
@@ -779,14 +778,14 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
       // Calcular nueva fecha de fin
       const newStartDate = new Date(newDateTime);
       const newEndDate = new Date(
-        newStartDate.getTime() + service.duracion * 60000
+        newStartDate.getTime() + service.duracion * 60000,
       );
 
       // Verificar disponibilidad en el nuevo horario
       if (googleCalendarClient.isInitialized()) {
         const availability = await googleCalendarClient.checkAvailability(
           newStartDate.toISOString(),
-          newEndDate.toISOString()
+          newEndDate.toISOString(),
         );
 
         if (!availability.available) {
@@ -812,13 +811,13 @@ ${reason ? `Reprogramada: ${reason}` : "Cita reprogramada"}`,
 
         const updateResult = await googleCalendarClient.updateEvent(
           booking.calendar_event_id,
-          updateData
+          updateData,
         );
 
         if (!updateResult.success) {
           logger.warn(
             "No se pudo actualizar evento en Google Calendar:",
-            updateResult.error
+            updateResult.error,
           );
         }
       }
@@ -832,7 +831,7 @@ ${reason ? `Reprogramada: ${reason}` : "Cita reprogramada"}`,
           notes: notes,
           status: "confirmada",
         },
-        { id: bookingId }
+        { id: bookingId },
       );
 
       if (updateError) throw updateError;
@@ -880,7 +879,7 @@ ${reason ? `Reprogramada: ${reason}` : "Cita reprogramada"}`,
           *,
           clientes(nombre, apellido, telefono_movil, email),
           servicios(nombre, precio, duracion, descripcion)
-        `
+        `,
         )
         .is("calendar_event_id", null)
         .eq("estado", "confirmada")
@@ -898,7 +897,7 @@ ${reason ? `Reprogramada: ${reason}` : "Cita reprogramada"}`,
 
           const startDate = new Date(booking.fecha_reserva);
           const endDate = new Date(
-            startDate.getTime() + service.duracion * 60000
+            startDate.getTime() + service.duracion * 60000,
           );
 
           const eventData = {
@@ -920,9 +919,8 @@ ${service.descripcion || ""}
             location: "Consulta Virtual",
           };
 
-          const calendarResult = await googleCalendarClient.createEvent(
-            eventData
-          );
+          const calendarResult =
+            await googleCalendarClient.createEvent(eventData);
 
           if (calendarResult.success) {
             // Actualizar reserva con ID del evento
@@ -932,21 +930,21 @@ ${service.descripcion || ""}
                 calendar_event_id: calendarResult.data.id,
                 meeting_url: calendarResult.data.meetLink,
               },
-              { id: booking.id_reserva }
+              { id: booking.id_reserva },
             );
             synced++;
           } else {
             errors++;
             logger.warn(
               `Error sincronizando reserva ${booking.id_reserva}:`,
-              calendarResult.error
+              calendarResult.error,
             );
           }
         } catch (syncError) {
           errors++;
           logger.error(
             `Error sincronizando reserva ${booking.id_reserva}:`,
-            syncError
+            syncError,
           );
         }
       }

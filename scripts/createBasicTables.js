@@ -67,7 +67,7 @@ async function createBasicTables() {
           service_id: serviceData[0].id,
           start_time: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Mañana
           end_time: new Date(
-            Date.now() + 24 * 60 * 60 * 1000 + 30 * 60 * 1000
+            Date.now() + 24 * 60 * 60 * 1000 + 30 * 60 * 1000,
           ).toISOString(), // Mañana + 30 min
           status: "pending",
           created_at: new Date().toISOString(),
@@ -97,7 +97,7 @@ async function createBasicTables() {
 
     if (notificationError) {
       console.log(
-        `❌ Error creando notificación: ${notificationError.message}`
+        `❌ Error creando notificación: ${notificationError.message}`,
       );
       console.log("📝 Detalles del error:", notificationError);
     } else {

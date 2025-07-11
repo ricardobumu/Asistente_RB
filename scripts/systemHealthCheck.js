@@ -72,13 +72,13 @@ async function systemHealthCheck() {
   for (const endpoint of apiEndpoints) {
     try {
       const response = await makeRequest(
-        `https://bot.ricardoburitica.eu${endpoint}`
+        `https://bot.ricardoburitica.eu${endpoint}`,
       );
       const status = response.includes("Cannot GET") ? "⚠️" : "✅";
       console.log(
         `${status} ${endpoint}: ${
           status === "✅" ? "FUNCIONANDO" : "RUTA NO ENCONTRADA"
-        }`
+        }`,
       );
       results.apis[endpoint] = status === "✅";
     } catch (error) {
@@ -104,7 +104,7 @@ async function systemHealthCheck() {
     }
   } catch (error) {
     console.log(
-      "⚠️ Supabase: CONFIGURADO (verificación completa requiere autenticación)"
+      "⚠️ Supabase: CONFIGURADO (verificación completa requiere autenticación)",
     );
     results.integrations.supabase = "partial";
   }
@@ -113,7 +113,7 @@ async function systemHealthCheck() {
   console.log(
     process.env.OPENAI_API_KEY
       ? "✅ OpenAI: API KEY CONFIGURADA"
-      : "❌ OpenAI: API KEY NO CONFIGURADA"
+      : "❌ OpenAI: API KEY NO CONFIGURADA",
   );
   results.integrations.openai = !!process.env.OPENAI_API_KEY;
 
@@ -121,7 +121,7 @@ async function systemHealthCheck() {
   console.log(
     process.env.TWILIO_ACCOUNT_SID
       ? "✅ Twilio: CREDENCIALES CONFIGURADAS"
-      : "❌ Twilio: CREDENCIALES NO CONFIGURADAS"
+      : "❌ Twilio: CREDENCIALES NO CONFIGURADAS",
   );
   results.integrations.twilio = !!process.env.TWILIO_ACCOUNT_SID;
 
@@ -129,7 +129,7 @@ async function systemHealthCheck() {
   console.log(
     process.env.CALENDLY_ACCESS_TOKEN
       ? "✅ Calendly: TOKEN CONFIGURADO"
-      : "❌ Calendly: TOKEN NO CONFIGURADO"
+      : "❌ Calendly: TOKEN NO CONFIGURADO",
   );
   results.integrations.calendly = !!process.env.CALENDLY_ACCESS_TOKEN;
 
@@ -166,12 +166,12 @@ async function systemHealthCheck() {
   const serviceCount = Object.values(results.services).filter(Boolean).length;
   const apiCount = Object.values(results.apis).filter(Boolean).length;
   const integrationCount = Object.values(results.integrations).filter(
-    (v) => v === true
+    (v) => v === true,
   ).length;
   const cliCount = Object.values(results.cli).filter(Boolean).length;
 
   console.log(
-    `📋 Variables de entorno: ${envCount}/${requiredVars.length} configuradas`
+    `📋 Variables de entorno: ${envCount}/${requiredVars.length} configuradas`,
   );
   console.log(`🚀 Servicios: ${serviceCount}/1 funcionando`);
   console.log(`📡 APIs: ${apiCount}/${apiEndpoints.length} disponibles`);
@@ -183,7 +183,7 @@ async function systemHealthCheck() {
     (requiredVars.length + 1 + apiEndpoints.length + 4 + clis.length);
 
   console.log(
-    `\n🎯 SALUD GENERAL DEL SISTEMA: ${Math.round(overallHealth * 100)}%`
+    `\n🎯 SALUD GENERAL DEL SISTEMA: ${Math.round(overallHealth * 100)}%`,
   );
 
   if (overallHealth >= 0.8) {

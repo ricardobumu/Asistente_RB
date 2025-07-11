@@ -220,7 +220,7 @@ class AutonomousWhatsAppController {
       for (const [
         phoneNumber,
         context,
-      ] of autonomousAssistant.conversations.entries()) {
+      ] of autonomousAssistant.contextService.conversations.entries()) {
         conversations.push({
           phoneNumber,
           lastActivity: context.lastActivity,
@@ -260,12 +260,12 @@ class AutonomousWhatsAppController {
    */
   async cleanupConversations(req, res) {
     try {
-      const beforeCount = autonomousAssistant.conversations.size;
+      const beforeCount = autonomousAssistant.contextService.conversations.size;
 
       // Forzar limpieza
-      autonomousAssistant.cleanupOldContexts();
+      autonomousAssistant.contextService.cleanupOldContexts();
 
-      const afterCount = autonomousAssistant.conversations.size;
+      const afterCount = autonomousAssistant.contextService.conversations.size;
       const cleaned = beforeCount - afterCount;
 
       logger.info("Conversations cleanup completed", {
@@ -334,7 +334,8 @@ class AutonomousWhatsAppController {
         status: "OK",
         service: "Autonomous WhatsApp Assistant",
         timestamp: new Date().toISOString(),
-        activeConversations: autonomousAssistant.conversations.size,
+        activeConversations:
+          autonomousAssistant.contextService.conversations.size,
         servicesLoaded: autonomousAssistant.services?.length || 0,
         integrations: {
           openai: !!process.env.OPENAI_API_KEY,

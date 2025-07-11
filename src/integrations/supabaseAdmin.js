@@ -7,7 +7,7 @@ const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
 if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
   throw new Error(
-    "SUPABASE_URL y SUPABASE_SERVICE_KEY son requeridas para el cliente administrativo"
+    "SUPABASE_URL y SUPABASE_SERVICE_KEY son requeridas para el cliente administrativo",
   );
 }
 

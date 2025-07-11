@@ -23,7 +23,7 @@ router.post("/auth/login", ErrorHandler.asyncWrapper(AuthController.login));
  */
 router.post(
   "/auth/verify",
-  ErrorHandler.asyncWrapper(AuthController.verifyToken)
+  ErrorHandler.asyncWrapper(AuthController.verifyToken),
 );
 
 /**
@@ -32,7 +32,7 @@ router.post(
  */
 router.get(
   "/auth/temp-token",
-  ErrorHandler.asyncWrapper(AuthController.generateTempToken)
+  ErrorHandler.asyncWrapper(AuthController.generateTempToken),
 );
 
 // ===== MIDDLEWARE DE SEGURIDAD PARA ADMIN =====
@@ -63,7 +63,7 @@ router.use((req, res, next) => {
       method: req.method,
       ip: req.ip,
       userAgent: req.headers["user-agent"],
-    }
+    },
   );
   next();
 });
@@ -76,7 +76,7 @@ router.use((req, res, next) => {
  */
 router.get(
   "/dashboard",
-  ErrorHandler.asyncWrapper(AdminController.getDashboard)
+  ErrorHandler.asyncWrapper(AdminController.getDashboard),
 );
 
 /**
@@ -93,7 +93,7 @@ router.get("/logs", ErrorHandler.asyncWrapper(AdminController.getSystemLogs));
  */
 router.get(
   "/messages",
-  ErrorHandler.asyncWrapper(AdminController.getBotMessages)
+  ErrorHandler.asyncWrapper(AdminController.getBotMessages),
 );
 
 // ===== RUTAS DE GESTIÓN DE RESERVAS =====
@@ -111,7 +111,7 @@ router.use("/bookings", adminBookingRoutes);
  */
 router.get(
   "/bookings-legacy",
-  ErrorHandler.asyncWrapper(AdminController.getBookings)
+  ErrorHandler.asyncWrapper(AdminController.getBookings),
 );
 
 /**
@@ -121,7 +121,7 @@ router.get(
  */
 router.get(
   "/openai",
-  ErrorHandler.asyncWrapper(AdminController.getOpenAIStatus)
+  ErrorHandler.asyncWrapper(AdminController.getOpenAIStatus),
 );
 
 /**
@@ -131,7 +131,7 @@ router.get(
  */
 router.get(
   "/twilio",
-  ErrorHandler.asyncWrapper(AdminController.getTwilioStatus)
+  ErrorHandler.asyncWrapper(AdminController.getTwilioStatus),
 );
 
 /**
@@ -141,7 +141,7 @@ router.get(
  */
 router.get(
   "/users",
-  ErrorHandler.asyncWrapper(AdminController.getUserActivity)
+  ErrorHandler.asyncWrapper(AdminController.getUserActivity),
 );
 
 /**
@@ -151,7 +151,7 @@ router.get(
  */
 router.get(
   "/security",
-  ErrorHandler.asyncWrapper(AdminController.getSecurityStatus)
+  ErrorHandler.asyncWrapper(AdminController.getSecurityStatus),
 );
 
 /**
@@ -160,7 +160,7 @@ router.get(
  */
 router.get(
   "/health",
-  ErrorHandler.asyncWrapper(AdminController.getSystemHealth)
+  ErrorHandler.asyncWrapper(AdminController.getSystemHealth),
 );
 
 // ===== RUTAS DE ACCIONES ADMINISTRATIVAS =====
@@ -183,7 +183,7 @@ router.post(
         "logs_rotate",
         {
           ip: req.ip,
-        }
+        },
       );
 
       res.json({
@@ -195,7 +195,7 @@ router.post(
       logger.error("Error rotating logs", error);
       throw error;
     }
-  })
+  }),
 );
 
 /**
@@ -218,7 +218,7 @@ router.post(
         {
           days: parseInt(days),
           ip: req.ip,
-        }
+        },
       );
 
       res.json({
@@ -230,7 +230,7 @@ router.post(
       logger.error("Error cleaning logs", error);
       throw error;
     }
-  })
+  }),
 );
 
 /**
@@ -255,7 +255,7 @@ router.post(
       "system_restart",
       {
         ip: req.ip,
-      }
+      },
     );
 
     res.json({
@@ -268,7 +268,7 @@ router.post(
     setTimeout(() => {
       process.exit(0);
     }, 1000);
-  })
+  }),
 );
 
 /**
@@ -299,7 +299,7 @@ router.get(
           "Content-Disposition",
           `attachment; filename="${type}-logs-${
             new Date().toISOString().split("T")[0]
-          }.csv"`
+          }.csv"`,
         );
         res.send(csv);
       } else {
@@ -309,7 +309,7 @@ router.get(
           "Content-Disposition",
           `attachment; filename="${type}-logs-${
             new Date().toISOString().split("T")[0]
-          }.json"`
+          }.json"`,
         );
         res.json({
           exportDate: new Date().toISOString(),
@@ -322,7 +322,7 @@ router.get(
       logger.error("Error exporting logs", error);
       throw error;
     }
-  })
+  }),
 );
 
 /**
@@ -350,7 +350,7 @@ router.get(
       logger.error("Error getting stats summary", error);
       throw error;
     }
-  })
+  }),
 );
 
 // ===== RUTAS DE CONFIGURACIÓN =====
@@ -394,14 +394,14 @@ router.get(
       "config",
       {
         ip: req.ip,
-      }
+      },
     );
 
     res.json({
       success: true,
       data: config,
     });
-  })
+  }),
 );
 
 // ===== MIDDLEWARE DE MANEJO DE ERRORES =====

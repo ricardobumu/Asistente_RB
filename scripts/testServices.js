@@ -18,14 +18,14 @@ async function testServices() {
 
       if (servicesResult.data.length > 0) {
         const formatted = ServiceService.formatServicesForUser(
-          servicesResult.data.slice(0, 3)
+          servicesResult.data.slice(0, 3),
         );
         console.log("📋 Primeros 3 servicios:");
         formatted.forEach((service, index) => {
           console.log(
             `   ${index + 1}. ${service.nombre} - ${service.precio} (${
               service.duracion
-            })`
+            })`,
           );
         });
       }

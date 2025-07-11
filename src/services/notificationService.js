@@ -94,7 +94,7 @@ class NotificationService {
       const message = this.buildBookingCancellationMessage(
         booking,
         client,
-        reason
+        reason,
       );
 
       const result = await this.sendWhatsAppMessage(client.telefono, message);
@@ -128,7 +128,7 @@ class NotificationService {
         booking,
         client,
         oldDate,
-        newDate
+        newDate,
       );
 
       const result = await this.sendWhatsAppMessage(client.telefono, message);
@@ -158,7 +158,7 @@ class NotificationService {
       const adminPhone =
         process.env.ADMIN_PHONE || process.env.TWILIO_WHATSAPP_NUMBER;
       const alertMessage = `🚨 ALERTA SISTEMA\n\n${message}\n\nPrioridad: ${priority.toUpperCase()}\nFecha: ${new Date().toLocaleString(
-        "es-ES"
+        "es-ES",
       )}`;
 
       const result = await this.sendWhatsAppMessage(adminPhone, alertMessage);
@@ -323,7 +323,7 @@ Hola ${client.nombre}, tu cita ha sido reprogramada:
     } catch (error) {
       logger.error(
         "❌ Error obteniendo estadísticas de notificaciones:",
-        error
+        error,
       );
       return { success: false, error: error.message };
     }

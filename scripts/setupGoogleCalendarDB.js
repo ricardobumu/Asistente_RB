@@ -9,7 +9,7 @@ const logger = require("../src/utils/logger");
 async function setupGoogleCalendarDB() {
   try {
     logger.info(
-      "🔧 Configurando campos de Google Calendar en la base de datos..."
+      "🔧 Configurando campos de Google Calendar en la base de datos...",
     );
 
     // Leer el script SQL
@@ -39,7 +39,7 @@ async function setupGoogleCalendarDB() {
         logger.info("📋 Columnas de Google Calendar creadas:");
         verifyResult.data.forEach((col) => {
           logger.info(
-            `  - ${col.column_name}: ${col.data_type} (nullable: ${col.is_nullable})`
+            `  - ${col.column_name}: ${col.data_type} (nullable: ${col.is_nullable})`,
           );
         });
       } else {
@@ -66,7 +66,7 @@ async function setupGoogleCalendarDB() {
     } else {
       logger.error(
         "❌ Error configurando campos de Google Calendar:",
-        result.error
+        result.error,
       );
       process.exit(1);
     }

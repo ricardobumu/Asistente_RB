@@ -49,7 +49,7 @@ class BookingWidgetController {
       const availability = await bookingWidgetService.getServiceAvailability(
         serviceId,
         startDate,
-        endDate
+        endDate,
       );
 
       res.json({
@@ -160,7 +160,7 @@ class BookingWidgetController {
 
       const isAvailable = await bookingWidgetService.verifySlotAvailability(
         serviceId,
-        datetime
+        datetime,
       );
 
       res.json({
@@ -260,7 +260,7 @@ class BookingWidgetController {
       const result = await bookingWidgetService.cancelBooking(
         bookingId,
         email,
-        reason
+        reason,
       );
 
       logger.info("Booking cancelled via widget", {

@@ -62,7 +62,7 @@ class AdminDashboard {
     // Filtros de mensajes
     document.getElementById("phone-filter").addEventListener(
       "input",
-      this.debounce(() => this.loadMessages(), 500)
+      this.debounce(() => this.loadMessages(), 500),
     );
 
     document.getElementById("message-status").addEventListener("change", () => {
@@ -86,7 +86,7 @@ class AdminDashboard {
     // Búsqueda de usuarios
     document.getElementById("user-search").addEventListener(
       "input",
-      this.debounce(() => this.loadUsers(), 500)
+      this.debounce(() => this.loadUsers(), 500),
     );
 
     // Escaneo de seguridad
@@ -148,7 +148,7 @@ class AdminDashboard {
     if (data.recentActivity.bookings.length > 0) {
       const nextBooking = data.recentActivity.bookings[0];
       document.getElementById("next-appointment").textContent = this.formatTime(
-        nextBooking.scheduled_at
+        nextBooking.scheduled_at,
       );
     }
   }
@@ -170,15 +170,15 @@ class AdminDashboard {
         status.status === "healthy"
           ? "status-healthy"
           : status.status === "warning"
-          ? "status-warning"
-          : "status-error";
+            ? "status-warning"
+            : "status-error";
 
       const statusText =
         status.status === "healthy"
           ? "Conectado"
           : status.status === "warning"
-          ? "Advertencia"
-          : "Error";
+            ? "Advertencia"
+            : "Error";
 
       container.innerHTML += `
                 <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -249,7 +249,7 @@ class AdminDashboard {
 
     try {
       const response = await this.apiCall(
-        `/logs?type=${type}&level=${level}&limit=100`
+        `/logs?type=${type}&level=${level}&limit=100`,
       );
 
       if (response.success) {
@@ -283,11 +283,11 @@ class AdminDashboard {
                 <div class="log-entry mb-2 p-2 hover:bg-gray-800 rounded">
                     <div class="flex items-start space-x-2">
                         <span class="text-gray-500 text-xs">${this.formatTime(
-                          log.timestamp
+                          log.timestamp,
                         )}</span>
                         <span class="${levelColor} font-bold text-xs">[${
-          log.level
-        }]</span>
+                          log.level
+                        }]</span>
                         <span class="text-green-400 flex-1">${
                           log.message
                         }</span>
@@ -316,7 +316,7 @@ class AdminDashboard {
 
     try {
       const response = await this.apiCall(
-        `/messages?phone=${phone}&status=${status}&limit=50`
+        `/messages?phone=${phone}&status=${status}&limit=50`,
       );
 
       if (response.success) {
@@ -352,14 +352,14 @@ class AdminDashboard {
                         <div class="flex items-center space-x-2">
                             <i class="fab fa-whatsapp text-green-600"></i>
                             <span class="font-medium">${this.maskPhone(
-                              message.phone_number
+                              message.phone_number,
                             )}</span>
                             <span class="px-2 py-1 rounded-full text-xs ${statusColor}">${
-          message.status
-        }</span>
+                              message.status
+                            }</span>
                         </div>
                         <span class="text-sm text-gray-500">${this.formatTime(
-                          message.created_at
+                          message.created_at,
                         )}</span>
                     </div>
                     <div class="text-gray-700">
@@ -388,7 +388,7 @@ class AdminDashboard {
 
     try {
       const response = await this.apiCall(
-        `/bookings?status=${status}&limit=50`
+        `/bookings?status=${status}&limit=50`,
       );
 
       if (response.success) {
@@ -426,22 +426,22 @@ class AdminDashboard {
                               booking.service_name || "Servicio"
                             }</span>
                             <span class="px-2 py-1 rounded-full text-xs ${statusColor}">${
-          booking.status
-        }</span>
+                              booking.status
+                            }</span>
                         </div>
                         <span class="text-sm text-gray-500">${this.formatTime(
-                          booking.scheduled_at
+                          booking.scheduled_at,
                         )}</span>
                     </div>
                     <div class="grid grid-cols-2 gap-4 text-sm">
                         <div>
                             <strong>Cliente:</strong> ${this.maskEmail(
-                              booking.client_email
+                              booking.client_email,
                             )}
                         </div>
                         <div>
                             <strong>Teléfono:</strong> ${this.maskPhone(
-                              booking.client_phone
+                              booking.client_phone,
                             )}
                         </div>
                         <div>
@@ -451,7 +451,7 @@ class AdminDashboard {
                         </div>
                         <div>
                             <strong>Creado:</strong> ${this.formatTime(
-                              booking.created_at
+                              booking.created_at,
                             )}
                         </div>
                     </div>
@@ -527,13 +527,13 @@ class AdminDashboard {
                             (log) => `
                             <div class="log-entry mb-1">
                                 <span class="text-gray-500 text-xs">${this.formatTime(
-                                  log.timestamp
+                                  log.timestamp,
                                 )}</span>
                                 <span class="text-green-400 ml-2">${
                                   log.message
                                 }</span>
                             </div>
-                        `
+                        `,
                           )
                           .join("")}
                     </div>
@@ -599,13 +599,13 @@ class AdminDashboard {
                             (log) => `
                             <div class="log-entry mb-1">
                                 <span class="text-gray-500 text-xs">${this.formatTime(
-                                  log.timestamp
+                                  log.timestamp,
                                 )}</span>
                                 <span class="text-green-400 ml-2">${
                                   log.message
                                 }</span>
                             </div>
-                        `
+                        `,
                           )
                           .join("")}
                     </div>
@@ -648,11 +648,11 @@ class AdminDashboard {
                           user.client_name || "Usuario"
                         }</span>
                         <span class="text-sm text-gray-500">${this.maskPhone(
-                          user.phone_number
+                          user.phone_number,
                         )}</span>
                     </div>
                     <span class="text-sm text-gray-500">Última actividad: ${this.formatTime(
-                      user.last_activity
+                      user.last_activity,
                     )}</span>
                 </div>
                 <div class="grid grid-cols-3 gap-4 text-sm">
@@ -678,7 +678,7 @@ class AdminDashboard {
                     </div>
                 </div>
             </div>
-        `
+        `,
       )
       .join("");
   }
@@ -735,11 +735,11 @@ class AdminDashboard {
                             return `
                                 <div class="log-entry mb-1">
                                     <span class="text-gray-500 text-xs">${this.formatTime(
-                                      log.timestamp
+                                      log.timestamp,
                                     )}</span>
                                     <span class="${levelColor} ml-2">[${
-                              log.level
-                            }]</span>
+                                      log.level
+                                    }]</span>
                                     <span class="text-green-400 ml-2">${
                                       log.message
                                     }</span>
@@ -844,7 +844,7 @@ class AdminDashboard {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
-        }
+        },
       );
 
       if (response.ok) {

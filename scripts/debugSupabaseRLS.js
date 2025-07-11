@@ -68,7 +68,7 @@ async function debugSupabaseRLS() {
         console.log("❌ Error con SERVICE_KEY:", errorAdmin.message);
       } else {
         console.log(
-          `✅ Lectura con SERVICE_KEY: ${servicesAdmin.length} servicios`
+          `✅ Lectura con SERVICE_KEY: ${servicesAdmin.length} servicios`,
         );
 
         // Probar actualización con SERVICE_KEY
@@ -83,7 +83,7 @@ async function debugSupabaseRLS() {
           if (updateError) {
             console.log(
               "❌ Error actualizando con SERVICE_KEY:",
-              updateError.message
+              updateError.message,
             );
           } else {
             console.log("✅ Actualización con SERVICE_KEY exitosa");
@@ -104,25 +104,25 @@ async function debugSupabaseRLS() {
     console.log("\n📊 Configuración actual:");
     console.log(
       "SUPABASE_URL:",
-      process.env.SUPABASE_URL ? "✅ Configurada" : "❌ No configurada"
+      process.env.SUPABASE_URL ? "✅ Configurada" : "❌ No configurada",
     );
     console.log(
       "SUPABASE_ANON_KEY:",
-      process.env.SUPABASE_ANON_KEY ? "✅ Configurada" : "❌ No configurada"
+      process.env.SUPABASE_ANON_KEY ? "✅ Configurada" : "❌ No configurada",
     );
     console.log(
       "SUPABASE_SERVICE_KEY:",
-      process.env.SUPABASE_SERVICE_KEY ? "✅ Configurada" : "❌ No configurada"
+      process.env.SUPABASE_SERVICE_KEY ? "✅ Configurada" : "❌ No configurada",
     );
 
     // 5. Recomendaciones
     console.log("\n💡 RECOMENDACIONES:");
     console.log(
-      "1. Si las actualizaciones fallan con ANON_KEY, usar SERVICE_KEY"
+      "1. Si las actualizaciones fallan con ANON_KEY, usar SERVICE_KEY",
     );
     console.log("2. Verificar políticas RLS en el dashboard de Supabase");
     console.log(
-      "3. Considerar deshabilitar RLS temporalmente para operaciones administrativas"
+      "3. Considerar deshabilitar RLS temporalmente para operaciones administrativas",
     );
   } catch (error) {
     console.error("❌ Error durante diagnóstico:", error);

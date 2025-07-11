@@ -270,7 +270,7 @@ class ServiceModel {
         totalServices: this.ricardoServices.length,
         categories: this.validCategories.length,
         philosophy: "Peluquería Consciente",
-      }
+      },
     );
   }
 
@@ -282,7 +282,7 @@ class ServiceModel {
 
     try {
       logger.info(
-        "Inicializando servicios de Ricardo Buriticá Beauty Consulting"
+        "Inicializando servicios de Ricardo Buriticá Beauty Consulting",
       );
 
       const results = [];
@@ -427,7 +427,7 @@ class ServiceModel {
       const servicesWithRecommendations = services.map((service) => {
         const recommendations = this._generateConsciousRecommendations(
           service,
-          clientProfile
+          clientProfile,
         );
         return {
           ...service,
@@ -461,7 +461,7 @@ class ServiceModel {
         {
           searchTerm,
           duration: `${duration}ms`,
-        }
+        },
       );
       return { success: false, error: error.message };
     }
@@ -573,10 +573,10 @@ class ServiceModel {
         score >= 80
           ? "Altamente Consciente"
           : score >= 60
-          ? "Consciente"
-          : score >= 40
-          ? "Parcialmente Consciente"
-          : "Básico",
+            ? "Consciente"
+            : score >= 40
+              ? "Parcialmente Consciente"
+              : "Básico",
     };
   }
 
@@ -616,10 +616,10 @@ class ServiceModel {
       const categoryStats = {};
       this.validCategories.forEach((category) => {
         const categoryServices = services.filter(
-          (s) => s.category === category
+          (s) => s.category === category,
         );
         const categoryBookings = bookings.filter((b) =>
-          categoryServices.some((s) => s.id === b.service_id)
+          categoryServices.some((s) => s.id === b.service_id),
         );
 
         categoryStats[category] = {
@@ -627,7 +627,7 @@ class ServiceModel {
           total_bookings: categoryBookings.length,
           total_revenue: categoryBookings.reduce(
             (sum, b) => sum + (b.total_amount || 0),
-            0
+            0,
           ),
           avg_price:
             categoryServices.length > 0
@@ -641,14 +641,14 @@ class ServiceModel {
       const servicePopularity = services
         .map((service) => {
           const serviceBookings = bookings.filter(
-            (b) => b.service_id === service.id
+            (b) => b.service_id === service.id,
           );
           return {
             ...service,
             booking_count: serviceBookings.length,
             revenue: serviceBookings.reduce(
               (sum, b) => sum + (b.total_amount || 0),
-              0
+              0,
             ),
           };
         })
@@ -657,14 +657,14 @@ class ServiceModel {
       // Análisis de filosofía consciente
       const consciousAnalysis = {
         highly_conscious: services.filter(
-          (s) => this._calculatePhilosophyAlignment(s).score >= 80
+          (s) => this._calculatePhilosophyAlignment(s).score >= 80,
         ).length,
         conscious: services.filter((s) => {
           const score = this._calculatePhilosophyAlignment(s).score;
           return score >= 60 && score < 80;
         }).length,
         basic: services.filter(
-          (s) => this._calculatePhilosophyAlignment(s).score < 60
+          (s) => this._calculatePhilosophyAlignment(s).score < 60,
         ).length,
       };
 
@@ -686,7 +686,7 @@ class ServiceModel {
             total_bookings: bookings.length,
             total_revenue: bookings.reduce(
               (sum, b) => sum + (b.total_amount || 0),
-              0
+              0,
             ),
           },
           categories: categoryStats,
@@ -695,7 +695,7 @@ class ServiceModel {
           philosophy: this.consciousPhilosophy,
           recommendations: this._generateBusinessRecommendations(
             categoryStats,
-            servicePopularity
+            servicePopularity,
           ),
         },
       };
@@ -708,7 +708,7 @@ class ServiceModel {
           startDate,
           endDate,
           duration: `${duration}ms`,
-        }
+        },
       );
       return { success: false, error: error.message };
     }
@@ -741,7 +741,7 @@ class ServiceModel {
         type: "category_promotion",
         priority: "medium",
         message: `Categorías con poca demanda: ${lowPerformingCategories.join(
-          ", "
+          ", ",
         )}`,
         action:
           "Considera estrategias de marketing específicas o educación consciente",
@@ -750,7 +750,7 @@ class ServiceModel {
 
     // Recomendación de precios
     const highValueServices = servicePopularity.filter(
-      (s) => s.price > 100 && s.booking_count > 0
+      (s) => s.price > 100 && s.booking_count > 0,
     );
     if (highValueServices.length > 0) {
       recommendations.push({
@@ -900,7 +900,7 @@ class ServiceModel {
 
       if (filters.search_text) {
         query = query.or(
-          `name.ilike.%${filters.search_text}%,description.ilike.%${filters.search_text}%`
+          `name.ilike.%${filters.search_text}%,description.ilike.%${filters.search_text}%`,
         );
       }
 

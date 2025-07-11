@@ -122,7 +122,7 @@ class ServiceModel {
       // Validar horarios disponibles
       if (serviceData.available_time_slots) {
         const invalidSlots = serviceData.available_time_slots.filter(
-          (slot) => !Validators.isValidTime(slot)
+          (slot) => !Validators.isValidTime(slot),
         );
         if (invalidSlots.length > 0) {
           return {
@@ -136,7 +136,7 @@ class ServiceModel {
       // Validar días disponibles
       if (serviceData.available_days) {
         const invalidDays = serviceData.available_days.filter(
-          (day) => !this.validDays.includes(day)
+          (day) => !this.validDays.includes(day),
         );
         if (invalidDays.length > 0) {
           return {
@@ -324,7 +324,7 @@ class ServiceModel {
       // Búsqueda por texto en nombre o descripción
       if (filters.search_text) {
         query = query.or(
-          `name.ilike.%${filters.search_text}%,description.ilike.%${filters.search_text}%`
+          `name.ilike.%${filters.search_text}%,description.ilike.%${filters.search_text}%`,
         );
       }
 
@@ -348,7 +348,7 @@ class ServiceModel {
       // Aplicar paginación
       query = query.range(
         pagination.offset,
-        pagination.offset + pagination.limit - 1
+        pagination.offset + pagination.limit - 1,
       );
 
       const { data, error } = await query;
@@ -450,7 +450,7 @@ class ServiceModel {
       // Validar días disponibles
       if (scheduleData.available_days) {
         const invalidDays = scheduleData.available_days.filter(
-          (day) => !this.validDays.includes(day)
+          (day) => !this.validDays.includes(day),
         );
         if (invalidDays.length > 0) {
           return {
@@ -464,7 +464,7 @@ class ServiceModel {
       // Validar horarios disponibles
       if (scheduleData.available_time_slots) {
         const invalidSlots = scheduleData.available_time_slots.filter(
-          (slot) => !Validators.isValidTime(slot)
+          (slot) => !Validators.isValidTime(slot),
         );
         if (invalidSlots.length > 0) {
           return {
@@ -753,7 +753,7 @@ class ServiceModel {
           created_at,
           cancelled_at,
           clients (is_vip)
-        `
+        `,
         )
         .eq("service_id", serviceId)
         .gte("booking_date", startDate)
@@ -773,7 +773,7 @@ class ServiceModel {
           .length,
         totalRevenue: bookings
           .filter(
-            (b) => b.status === "completed" && b.payment_status === "paid"
+            (b) => b.status === "completed" && b.payment_status === "paid",
           )
           .reduce((sum, b) => sum + (b.total_price || 0), 0),
         pendingPayments: bookings
@@ -799,12 +799,12 @@ class ServiceModel {
         averageRevenuePerDay:
           basicStats.totalRevenue /
           (Math.ceil(
-            (new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)
+            (new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24),
           ) || 1),
         bookingFrequency:
           basicStats.totalBookings /
           (Math.ceil(
-            (new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)
+            (new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24),
           ) || 1),
       };
 
@@ -816,7 +816,7 @@ class ServiceModel {
             (b) =>
               b.clients?.is_vip &&
               b.status === "completed" &&
-              b.payment_status === "paid"
+              b.payment_status === "paid",
           )
           .reduce((sum, b) => sum + (b.total_price || 0), 0),
       };
@@ -863,7 +863,7 @@ class ServiceModel {
           recommendations: this._generateRecommendations(
             basicStats,
             performanceStats,
-            service
+            service,
           ),
         },
       };
@@ -877,7 +877,7 @@ class ServiceModel {
           startDate,
           endDate,
           duration: `${duration}ms`,
-        }
+        },
       );
       return { success: false, error: error.message };
     }
@@ -1063,7 +1063,7 @@ class ServiceModel {
             price,
             duration
           )
-        `
+        `,
         )
         .gte("booking_date", startDate)
         .lte("booking_date", endDate)
@@ -1146,13 +1146,13 @@ class ServiceModel {
 
       if (updateData.description) {
         updateData.description = Validators.sanitizeText(
-          updateData.description
+          updateData.description,
         );
       }
 
       if (updateData.instructions) {
         updateData.instructions = Validators.sanitizeText(
-          updateData.instructions
+          updateData.instructions,
         );
       }
 

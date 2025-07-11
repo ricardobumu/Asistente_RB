@@ -31,7 +31,7 @@ async function testBookingSystem() {
       console.log(`✅ ${services.count} servicios activos encontrados`);
       services.data.forEach((service) => {
         console.log(
-          `   - ${service.name} (€${service.price}, ${service.duration_minutes}min)`
+          `   - ${service.name} (€${service.price}, ${service.duration_minutes}min)`,
         );
       });
     } else {
@@ -57,7 +57,7 @@ async function testBookingSystem() {
 
     if (clientResult.success) {
       console.log(
-        `✅ Cliente: ${clientResult.data.first_name} ${clientResult.data.last_name}`
+        `✅ Cliente: ${clientResult.data.first_name} ${clientResult.data.last_name}`,
       );
     } else {
       console.log("❌ Error creando cliente:", clientResult.error);
@@ -87,7 +87,7 @@ async function testBookingSystem() {
 
       if (bookingResult.data.calendar_event_id) {
         console.log(
-          `   📅 Evento de Google Calendar: ${bookingResult.data.calendar_event_id}`
+          `   📅 Evento de Google Calendar: ${bookingResult.data.calendar_event_id}`,
         );
       }
 
@@ -104,7 +104,7 @@ async function testBookingSystem() {
         console.log(`   Reservas de hoy: ${dashboard.data.today.count}`);
         console.log(`   Próximas reservas: ${dashboard.data.upcoming.count}`);
         console.log(
-          `   Google Calendar sincronizado: ${dashboard.data.calendar.synchronized}`
+          `   Google Calendar sincronizado: ${dashboard.data.calendar.synchronized}`,
         );
       } else {
         console.log("❌ Error en dashboard:", dashboard.error);
@@ -119,7 +119,7 @@ async function testBookingSystem() {
 
       if (searchResult.success) {
         console.log(
-          `✅ Búsqueda exitosa: ${searchResult.data.length} reservas encontradas`
+          `✅ Búsqueda exitosa: ${searchResult.data.length} reservas encontradas`,
         );
       } else {
         console.log("❌ Error en búsqueda:", searchResult.error);
@@ -129,7 +129,7 @@ async function testBookingSystem() {
       console.log("\n🧹 Limpiando reserva de prueba...");
       const cancelResult = await BookingService.cancelBooking(
         bookingResult.data.id,
-        "Reserva de prueba - cancelada automáticamente"
+        "Reserva de prueba - cancelada automáticamente",
       );
 
       if (cancelResult.success) {
@@ -137,7 +137,7 @@ async function testBookingSystem() {
       } else {
         console.log(
           "⚠️  No se pudo cancelar reserva de prueba:",
-          cancelResult.error
+          cancelResult.error,
         );
       }
     } else {
@@ -149,7 +149,7 @@ async function testBookingSystem() {
     console.log(
       `   ✅ Google Calendar: ${
         googleCalendarClient.isInitialized() ? "Configurado" : "No configurado"
-      }`
+      }`,
     );
     console.log(`   ✅ Servicios: ${services.count} activos`);
     console.log(`   ✅ Sistema de reservas: Funcionando`);

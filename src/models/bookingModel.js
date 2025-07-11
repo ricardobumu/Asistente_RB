@@ -95,7 +95,7 @@ class BookingModel {
       const availability = await this.checkAvailability(
         bookingData.booking_date,
         bookingData.booking_time,
-        bookingData.service_id
+        bookingData.service_id,
       );
 
       if (!availability.success || !availability.available) {
@@ -389,7 +389,7 @@ class BookingModel {
       // Aplicar paginación
       query = query.range(
         pagination.offset,
-        pagination.offset + pagination.limit - 1
+        pagination.offset + pagination.limit - 1,
       );
 
       const { data, error } = await query;
@@ -461,7 +461,7 @@ class BookingModel {
         newDate,
         newTime,
         booking.service_id,
-        bookingId
+        bookingId,
       );
       if (!availability.success || !availability.available) {
         return { success: false, error: "El nuevo horario no está disponible" };
@@ -557,7 +557,7 @@ class BookingModel {
       const { data: service, error: serviceError } = await supabase
         .from("services")
         .select(
-          "available_days, available_time_slots, min_advance_booking_hours, max_advance_booking_days"
+          "available_days, available_time_slots, min_advance_booking_hours, max_advance_booking_days",
         )
         .eq("id", serviceId)
         .eq("is_active", true)
@@ -673,7 +673,7 @@ class BookingModel {
           created_at,
           services (name, category),
           clients (is_vip)
-        `
+        `,
         )
         .gte("booking_date", startDate)
         .lte("booking_date", endDate);
@@ -689,7 +689,7 @@ class BookingModel {
         cancelledBookings: data.filter((b) => b.status === "cancelled").length,
         totalRevenue: data
           .filter(
-            (b) => b.status === "completed" && b.payment_status === "paid"
+            (b) => b.status === "completed" && b.payment_status === "paid",
           )
           .reduce((sum, b) => sum + (b.total_price || 0), 0),
         pendingPayments: data
@@ -726,7 +726,7 @@ class BookingModel {
             (b) =>
               b.clients?.is_vip &&
               b.status === "completed" &&
-              b.payment_status === "paid"
+              b.payment_status === "paid",
           )
           .reduce((sum, b) => sum + (b.total_price || 0), 0),
       };
@@ -878,7 +878,7 @@ class BookingModel {
   async cancelBookingAdvanced(
     bookingId,
     cancellationReason = null,
-    cancelledBy = "client"
+    cancelledBy = "client",
   ) {
     const startTime = Date.now();
 
@@ -898,7 +898,7 @@ class BookingModel {
             cancellation_policy_hours,
             requires_deposit
           )
-        `
+        `,
         )
         .eq("id", bookingId)
         .single();
@@ -922,7 +922,7 @@ class BookingModel {
 
       // Verificar política de cancelación
       const bookingDateTime = new Date(
-        `${booking.booking_date}T${booking.booking_time}`
+        `${booking.booking_date}T${booking.booking_time}`,
       );
       const now = new Date();
       const hoursUntilBooking = (bookingDateTime - now) / (1000 * 60 * 60);
@@ -1020,7 +1020,7 @@ class BookingModel {
         booking.booking_date,
         booking.booking_time,
         booking.service_id,
-        bookingId
+        bookingId,
       );
 
       if (!availability.success || !availability.available) {
@@ -1077,7 +1077,7 @@ class BookingModel {
   async completeBookingAdvanced(
     bookingId,
     completedBy = "system",
-    notes = null
+    notes = null,
   ) {
     const startTime = Date.now();
 
@@ -1289,7 +1289,7 @@ class BookingModel {
           newDate,
           newTime,
           newServiceId,
-          bookingId
+          bookingId,
         );
         if (!availability.success || !availability.available) {
           return {

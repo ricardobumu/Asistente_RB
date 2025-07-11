@@ -40,7 +40,7 @@ class GoogleCalendarClient {
       this.oauth2Client = new google.auth.OAuth2(
         GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET,
-        GOOGLE_REDIRECT_URI
+        GOOGLE_REDIRECT_URI,
       );
 
       this.initialized = true;
@@ -174,7 +174,7 @@ class GoogleCalendarClient {
         FROM users 
         WHERE id = $1 AND google_access_token IS NOT NULL
       `,
-        [userId]
+        [userId],
       );
 
       if (!result.data || result.data.length === 0) {
@@ -240,7 +240,7 @@ class GoogleCalendarClient {
           tokens.refresh_token,
           expiresAt?.toISOString(),
           userId,
-        ]
+        ],
       );
 
       logger.info("User tokens saved successfully", { userId });
@@ -324,7 +324,7 @@ class GoogleCalendarClient {
           updated_at = NOW()
         WHERE id = $1
       `,
-        [userId]
+        [userId],
       );
 
       // Limpiar cache
@@ -355,7 +355,7 @@ class GoogleCalendarClient {
       const userOAuth2Client = new google.auth.OAuth2(
         GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET,
-        GOOGLE_REDIRECT_URI
+        GOOGLE_REDIRECT_URI,
       );
 
       userOAuth2Client.setCredentials(tokens);

@@ -12,7 +12,7 @@ const path = require("path");
 // Cliente con service_role para operaciones administrativas
 const supabaseAdmin = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
+  process.env.SUPABASE_SERVICE_KEY,
 );
 
 async function executeSchema() {
@@ -180,7 +180,7 @@ async function executeSchemaAlternative() {
     }
 
     console.log(
-      "\n✅ Esquema básico ejecutado. Verificando tablas existentes..."
+      "\n✅ Esquema básico ejecutado. Verificando tablas existentes...",
     );
 
     // Verificar tablas

@@ -9,7 +9,7 @@ const supabase = require("../src/integrations/supabaseClient");
 async function getTableStructure() {
   try {
     console.log(
-      "🔍 Obteniendo estructura detallada de tablas principales...\n"
+      "🔍 Obteniendo estructura detallada de tablas principales...\n",
     );
 
     const mainTables = ["servicios", "clientes", "reservas", "appointments"];
@@ -98,13 +98,13 @@ async function getTableStructure() {
           console.log(`❌ Error: ${clientError.message}`);
         } else {
           console.log(
-            `✅ Éxito: Cliente creado con ID ${clientData[0]?.id || "N/A"}`
+            `✅ Éxito: Cliente creado con ID ${clientData[0]?.id || "N/A"}`,
           );
 
           // Limpiar inmediatamente
           if (clientData && clientData[0]) {
             const idField = Object.keys(clientData[0]).find((key) =>
-              key.includes("id")
+              key.includes("id"),
             );
             if (idField) {
               await supabase

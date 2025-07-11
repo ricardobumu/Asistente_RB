@@ -28,7 +28,7 @@ const validateEnvVars = () => {
 
   if (missing.length > 0) {
     const errorMsg = `Variables de entorno requeridas faltantes: ${missing.join(
-      ", "
+      ", ",
     )}`;
     logger.error(errorMsg);
     throw new Error(errorMsg);

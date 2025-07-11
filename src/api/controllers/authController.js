@@ -61,7 +61,7 @@ class AuthController {
         expiresIn: this.refreshTokenExpiry,
         issuer: "asistente-rb",
         audience: "asistente-rb-refresh",
-      }
+      },
     );
 
     return { accessToken, refreshToken };
@@ -134,7 +134,7 @@ class AuthController {
       // Verificar contraseña
       const passwordValid = await bcrypt.compare(
         password,
-        client.password_hash
+        client.password_hash,
       );
       if (!passwordValid) {
         logger.warn("Intento de login con contraseña incorrecta", {

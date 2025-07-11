@@ -70,7 +70,7 @@ class BookingController {
         // Enviar notificación de confirmación
         await notificationService.sendBookingConfirmation(
           result.data,
-          clientResult.data
+          clientResult.data,
         );
 
         logger.info("✅ Reserva creada exitosamente", {
@@ -287,7 +287,7 @@ class BookingController {
       }
 
       const clientResult = await clientModel.getById(
-        bookingResult.data.client_id
+        bookingResult.data.client_id,
       );
 
       const result = await bookingService.cancelBooking(id, reason);
@@ -298,7 +298,7 @@ class BookingController {
           await notificationService.sendBookingCancellation(
             bookingResult.data,
             clientResult.data,
-            reason
+            reason,
           );
         }
 
@@ -403,13 +403,13 @@ class BookingController {
       const result = await bookingService.rescheduleBooking(
         id,
         nueva_fecha_hora,
-        reason
+        reason,
       );
 
       if (result.success) {
         // Obtener cliente para notificación
         const clientResult = await clientModel.getById(
-          currentBooking.data.client_id
+          currentBooking.data.client_id,
         );
 
         if (clientResult.success) {
@@ -417,7 +417,7 @@ class BookingController {
             result.data,
             clientResult.data,
             oldDate,
-            nueva_fecha_hora
+            nueva_fecha_hora,
           );
         }
 
@@ -474,7 +474,7 @@ class BookingController {
         fecha,
         hora,
         service_id,
-        duracion
+        duracion,
       );
 
       res.json({

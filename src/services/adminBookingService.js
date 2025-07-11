@@ -93,7 +93,7 @@ class AdminBookingService {
         .select(
           `
           servicios(precio)
-        `
+        `,
         )
         .eq("estado", "completada")
         .gte("fecha_reserva", thisMonth.toISOString())
@@ -118,7 +118,7 @@ class AdminBookingService {
           growth: {
             bookings: AdminBookingService.calculateGrowth(
               lastMonthBookings?.length || 0,
-              thisMonthBookings?.length || 0
+              thisMonthBookings?.length || 0,
             ),
           },
         },
@@ -302,7 +302,7 @@ class AdminBookingService {
       if (!clientResult?.success || !clientResult.data) {
         // Crear nuevo cliente
         const [firstName, ...lastNameParts] = (client_name || "Cliente").split(
-          " "
+          " ",
         );
         const lastName = lastNameParts.join(" ") || "";
 
@@ -467,7 +467,7 @@ class AdminBookingService {
             `"${booking.notes || ""}"`,
             booking.meeting_url || "",
             booking.created_at,
-          ].join(",")
+          ].join(","),
         ),
       ];
 

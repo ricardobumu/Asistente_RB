@@ -36,7 +36,7 @@ class AuthController {
       const isValidUsername = username === adminCredentials.username;
       const isValidPassword = await bcrypt.compare(
         password,
-        await bcrypt.hash(adminCredentials.password, 10)
+        await bcrypt.hash(adminCredentials.password, 10),
       );
 
       if (!isValidUsername || !isValidPassword) {
@@ -62,7 +62,7 @@ class AuthController {
         process.env.JWT_SECRET,
         {
           expiresIn: "8h", // Token válido por 8 horas
-        }
+        },
       );
 
       // Log de login exitoso
@@ -181,7 +181,7 @@ class AuthController {
         process.env.JWT_SECRET,
         {
           expiresIn: "1h", // Token temporal válido por 1 hora
-        }
+        },
       );
 
       logger.audit(
@@ -190,7 +190,7 @@ class AuthController {
         "temp_token",
         {
           ip: req.ip,
-        }
+        },
       );
 
       res.json({

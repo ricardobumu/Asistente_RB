@@ -427,7 +427,7 @@ class UserModel {
       // Búsqueda por texto en múltiples campos
       if (filters.search_text) {
         query = query.or(
-          `username.ilike.%${filters.search_text}%,full_name.ilike.%${filters.search_text}%,email.ilike.%${filters.search_text}%`
+          `username.ilike.%${filters.search_text}%,full_name.ilike.%${filters.search_text}%,email.ilike.%${filters.search_text}%`,
         );
       }
 
@@ -455,7 +455,7 @@ class UserModel {
           query = query.gt("locked_until", new Date().toISOString());
         } else {
           query = query.or(
-            "locked_until.is.null,locked_until.lt." + new Date().toISOString()
+            "locked_until.is.null,locked_until.lt." + new Date().toISOString(),
           );
         }
       }
@@ -467,7 +467,7 @@ class UserModel {
       // Aplicar paginación
       query = query.range(
         pagination.offset,
-        pagination.offset + pagination.limit - 1
+        pagination.offset + pagination.limit - 1,
       );
 
       const { data, error } = await query;
@@ -688,7 +688,7 @@ class UserModel {
             id, username, email, role, full_name, status, is_active,
             settings, permissions_override
           )
-        `
+        `,
         )
         .eq("session_token", sessionToken)
         .single();
@@ -936,7 +936,7 @@ class UserModel {
       const { data: users, error: usersError } = await supabase
         .from(this.tableName)
         .select(
-          "role, status, is_active, created_at, last_login, department, hire_date"
+          "role, status, is_active, created_at, last_login, department, hire_date",
         );
 
       if (usersError) throw usersError;
@@ -956,7 +956,7 @@ class UserModel {
         activeUsers: users.filter((u) => u.is_active && u.status === "active")
           .length,
         inactiveUsers: users.filter(
-          (u) => !u.is_active || u.status !== "active"
+          (u) => !u.is_active || u.status !== "active",
         ).length,
         suspendedUsers: users.filter((u) => u.status === "suspended").length,
         pendingUsers: users.filter((u) => u.status === "pending_activation")
@@ -969,7 +969,7 @@ class UserModel {
         roleStats[role] = {
           total: users.filter((u) => u.role === role).length,
           active: users.filter(
-            (u) => u.role === role && u.is_active && u.status === "active"
+            (u) => u.role === role && u.is_active && u.status === "active",
           ).length,
         };
       });
@@ -1022,17 +1022,17 @@ class UserModel {
 
       const loginStats = {
         recentlyActive: users.filter(
-          (u) => u.last_login && new Date(u.last_login) > sevenDaysAgo
+          (u) => u.last_login && new Date(u.last_login) > sevenDaysAgo,
         ).length,
         activeThisMonth: users.filter(
-          (u) => u.last_login && new Date(u.last_login) > thirtyDaysAgo
+          (u) => u.last_login && new Date(u.last_login) > thirtyDaysAgo,
         ).length,
         neverLoggedIn: users.filter((u) => !u.last_login).length,
       };
 
       // Nuevos usuarios en el período
       const newUsersInPeriod = users.filter(
-        (u) => u.created_at >= startDate && u.created_at <= endDate
+        (u) => u.created_at >= startDate && u.created_at <= endDate,
       ).length;
 
       const duration = Date.now() - startTime;
@@ -1058,7 +1058,7 @@ class UserModel {
           recommendations: this._generateUserRecommendations(
             basicStats,
             activityStats,
-            loginStats
+            loginStats,
           ),
         },
       };
@@ -1071,7 +1071,7 @@ class UserModel {
           startDate,
           endDate,
           duration: `${duration}ms`,
-        }
+        },
       );
       return { success: false, error: error.message };
     }
@@ -1126,7 +1126,7 @@ class UserModel {
     userId,
     permissions,
     updatedBy,
-    reason = null
+    reason = null,
   ) {
     const startTime = Date.now();
 
@@ -1239,7 +1239,7 @@ class UserModel {
       ) {
         const usernameCheck = await this.usernameExists(
           updateData.username,
-          userId
+          userId,
         );
         if (!usernameCheck.success) return usernameCheck;
         if (usernameCheck.exists) {
@@ -1540,7 +1540,7 @@ class UserModel {
   async getByUsername(username) {
     const result = await this.searchAdvanced(
       { search_text: username },
-      { limit: 1 }
+      { limit: 1 },
     );
     if (result.success && result.data.length > 0) {
       const user = result.data.find((u) => u.username === username);
@@ -1554,7 +1554,7 @@ class UserModel {
   async getByEmail(email) {
     const result = await this.searchAdvanced(
       { search_text: email },
-      { limit: 1 }
+      { limit: 1 },
     );
     if (result.success && result.data.length > 0) {
       const user = result.data.find((u) => u.email === email);

@@ -51,7 +51,7 @@ router.get("/stats", autonomousWhatsAppController.getAssistantStats);
  */
 router.get(
   "/conversations",
-  autonomousWhatsAppController.getActiveConversations
+  autonomousWhatsAppController.getActiveConversations,
 );
 
 /**

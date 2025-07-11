@@ -23,7 +23,7 @@ router.get(
   "/auth/google",
   authenticate,
   auditLog("GOOGLE_AUTH_INITIATE"),
-  GoogleAuthController.initiateAuth
+  GoogleAuthController.initiateAuth,
 );
 
 /**
@@ -34,7 +34,7 @@ router.get(
 router.get(
   "/auth/google/callback",
   auditLog("GOOGLE_AUTH_CALLBACK"),
-  GoogleAuthController.handleCallback
+  GoogleAuthController.handleCallback,
 );
 
 /**
@@ -46,7 +46,7 @@ router.get(
   "/auth/google/status",
   authenticate,
   auditLog("GOOGLE_AUTH_STATUS"),
-  GoogleAuthController.getConnectionStatus
+  GoogleAuthController.getConnectionStatus,
 );
 
 /**
@@ -58,7 +58,7 @@ router.post(
   "/auth/google/disconnect",
   authenticate,
   auditLog("GOOGLE_AUTH_DISCONNECT"),
-  GoogleAuthController.disconnect
+  GoogleAuthController.disconnect,
 );
 
 /**
@@ -70,7 +70,7 @@ router.post(
   "/auth/google/test",
   authenticate,
   auditLog("GOOGLE_AUTH_TEST"),
-  GoogleAuthController.testConnection
+  GoogleAuthController.testConnection,
 );
 
 /**
@@ -82,7 +82,7 @@ router.get(
   "/calendars",
   authenticate,
   auditLog("GOOGLE_CALENDARS_LIST"),
-  GoogleAuthController.getCalendars
+  GoogleAuthController.getCalendars,
 );
 
 // =====================================================
@@ -156,9 +156,8 @@ router.post(
 
       // Obtener cliente autenticado
       const googleCalendarClient = require("../integrations/googleCalendarClient");
-      const calendar = await googleCalendarClient.getAuthenticatedCalendar(
-        userId
-      );
+      const calendar =
+        await googleCalendarClient.getAuthenticatedCalendar(userId);
 
       // Crear evento
       const event = {
@@ -225,7 +224,7 @@ router.post(
         details: error.message,
       });
     }
-  }
+  },
 );
 
 /**
@@ -250,9 +249,8 @@ router.get(
 
       // Obtener cliente autenticado
       const googleCalendarClient = require("../integrations/googleCalendarClient");
-      const calendar = await googleCalendarClient.getAuthenticatedCalendar(
-        userId
-      );
+      const calendar =
+        await googleCalendarClient.getAuthenticatedCalendar(userId);
 
       // Configurar parámetros de búsqueda
       const params = {
@@ -316,7 +314,7 @@ router.get(
         details: error.message,
       });
     }
-  }
+  },
 );
 
 /**
@@ -359,9 +357,8 @@ router.put(
 
       // Obtener cliente autenticado
       const googleCalendarClient = require("../integrations/googleCalendarClient");
-      const calendar = await googleCalendarClient.getAuthenticatedCalendar(
-        userId
-      );
+      const calendar =
+        await googleCalendarClient.getAuthenticatedCalendar(userId);
 
       // Obtener evento actual
       const currentEvent = await calendar.events.get({
@@ -425,7 +422,7 @@ router.put(
         details: error.message,
       });
     }
-  }
+  },
 );
 
 /**
@@ -445,9 +442,8 @@ router.delete(
 
       // Obtener cliente autenticado
       const googleCalendarClient = require("../integrations/googleCalendarClient");
-      const calendar = await googleCalendarClient.getAuthenticatedCalendar(
-        userId
-      );
+      const calendar =
+        await googleCalendarClient.getAuthenticatedCalendar(userId);
 
       // Eliminar evento
       await calendar.events.delete({
@@ -467,7 +463,7 @@ router.delete(
         details: error.message,
       });
     }
-  }
+  },
 );
 
 /**
@@ -494,9 +490,8 @@ router.post(
 
       // Obtener cliente autenticado
       const googleCalendarClient = require("../integrations/googleCalendarClient");
-      const calendar = await googleCalendarClient.getAuthenticatedCalendar(
-        userId
-      );
+      const calendar =
+        await googleCalendarClient.getAuthenticatedCalendar(userId);
 
       // Obtener evento actual
       const currentEvent = await calendar.events.get({
@@ -532,7 +527,7 @@ router.post(
         details: error.message,
       });
     }
-  }
+  },
 );
 
 module.exports = router;

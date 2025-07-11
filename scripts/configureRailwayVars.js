@@ -1,6 +1,7 @@
 // scripts/configureRailwayVars.js
 // Script para configurar variables de entorno en Railway
 
+require("dotenv").config({ path: ".env" });
 require("dotenv").config({ path: ".env.local" });
 const { execSync } = require("child_process");
 
@@ -12,6 +13,7 @@ async function configureRailwayVariables() {
   const variables = {
     // Sistema
     NODE_ENV: "production",
+    APP_BASE_URL: process.env.APP_BASE_URL,
     PORT: "3000",
 
     // Supabase
@@ -32,7 +34,7 @@ async function configureRailwayVariables() {
     // Calendly
     CALENDLY_ACCESS_TOKEN: process.env.CALENDLY_ACCESS_TOKEN,
     CALENDLY_USER_URI: process.env.CALENDLY_USER_URI,
-    CALENDLY_WEBHOOK_URI: "https://bot.ricardoburitica.eu/api/calendly/webhook",
+    CALENDLY_WEBHOOK_URI: `${process.env.APP_BASE_URL}/api/calendly/webhook`,
 
     // JWT
     JWT_SECRET: process.env.JWT_SECRET,
@@ -43,8 +45,7 @@ async function configureRailwayVariables() {
     ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
 
     // CORS
-    ALLOWED_ORIGINS:
-      "https://bot.ricardoburitica.eu,https://ricardoburitica.com,http://localhost:3000",
+    ALLOWED_ORIGINS: `${process.env.APP_BASE_URL},https://ricardoburitica.com,http://localhost:3000`,
 
     // Rate Limiting
     RATE_LIMIT_WINDOW_MS: process.env.RATE_LIMIT_WINDOW_MS || "900000",
@@ -97,10 +98,10 @@ async function configureRailwayVariables() {
   }
 
   console.log("\n🌐 URLs de verificación:");
-  console.log("- Aplicación: https://bot.ricardoburitica.eu");
-  console.log("- Health Check: https://bot.ricardoburitica.eu/health");
-  console.log("- Portal Cliente: https://bot.ricardoburitica.eu/portal");
-  console.log("- Admin Panel: https://bot.ricardoburitica.eu/admin");
+  console.log(`- Aplicación: ${process.env.APP_BASE_URL}`);
+  console.log(`- Health Check: ${process.env.APP_BASE_URL}/health`);
+  console.log(`- Portal Cliente: ${process.env.APP_BASE_URL}/portal`);
+  console.log(`- Admin Panel: ${process.env.APP_BASE_URL}/admin`);
   console.log(
     "- Dashboard Railway: https://railway.app/project/2806399e-7537-46ce-acc7-fa043193e2a9"
   );

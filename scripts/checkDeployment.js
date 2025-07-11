@@ -21,7 +21,7 @@ async function checkDeployment() {
 
     if (response.status === 404) {
       console.log(
-        "   ⚠️  El dominio responde pero no hay aplicación ejecutándose"
+        "   ⚠️  El dominio responde pero no hay aplicación ejecutándose",
       );
     } else if (response.status >= 500) {
       console.log("   ❌ Error del servidor - aplicación con problemas");
@@ -63,13 +63,13 @@ async function checkDeployment() {
         console.log(`   ✅ ${route} - OK (${response.status})`);
       } else if (response.status === 405) {
         console.log(
-          `   ✅ ${route} - Method Not Allowed (${response.status}) - Normal para webhooks`
+          `   ✅ ${route} - Method Not Allowed (${response.status}) - Normal para webhooks`,
         );
       } else if (response.status === 404) {
         console.log(`   ❌ ${route} - Not Found (${response.status})`);
       } else {
         console.log(
-          `   ⚠️  ${route} - ${response.status} ${response.statusText}`
+          `   ⚠️  ${route} - ${response.status} ${response.statusText}`,
         );
       }
     } catch (error) {

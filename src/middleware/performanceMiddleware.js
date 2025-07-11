@@ -259,7 +259,7 @@ class PerformanceMiddleware {
         res.set("X-Process-Time", `${duration.toFixed(2)}ms`);
         res.set(
           "X-Node-Memory",
-          `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB`
+          `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB`,
         );
         res.set("X-Node-Uptime", `${Math.round(process.uptime())}s`);
 
@@ -493,7 +493,7 @@ class PerformanceMiddleware {
         logger.info("Garbage collection triggered", {
           beforeGC: `${heapUsedMB.toFixed(2)}MB`,
           afterGC: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
-            2
+            2,
           )}MB`,
         });
       }

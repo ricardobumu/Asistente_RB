@@ -109,7 +109,7 @@ class NotificationModel {
   _validateNotificationData(notificationData, isUpdate = false) {
     const validation = Validators.validateNotificationData(
       notificationData,
-      isUpdate
+      isUpdate,
     );
 
     if (!validation.isValid) {
@@ -348,7 +348,7 @@ class NotificationModel {
       // Búsqueda por texto en título y mensaje
       if (filters.search_text) {
         query = query.or(
-          `title.ilike.%${filters.search_text}%,message.ilike.%${filters.search_text}%`
+          `title.ilike.%${filters.search_text}%,message.ilike.%${filters.search_text}%`,
         );
       }
 
@@ -407,7 +407,7 @@ class NotificationModel {
       // Aplicar paginación
       query = query.range(
         pagination.offset,
-        pagination.offset + pagination.limit - 1
+        pagination.offset + pagination.limit - 1,
       );
 
       const { data, error } = await query;
@@ -853,7 +853,7 @@ class NotificationModel {
             category,
             preparation_instructions
           )
-        `
+        `,
         )
         .eq("id", bookingId)
         .single();
@@ -879,7 +879,7 @@ class NotificationModel {
 
       // Calcular cuándo enviar el recordatorio
       const bookingDateTime = new Date(
-        `${booking.booking_date}T${booking.booking_time}`
+        `${booking.booking_date}T${booking.booking_time}`,
       );
       let reminderTime = new Date(bookingDateTime);
 
@@ -938,7 +938,7 @@ class NotificationModel {
           reminderType: config.reminderType,
           includePreparation: config.includePreparation,
           includeLocation: config.includeLocation,
-        }
+        },
       );
 
       // Crear datos de la notificación
@@ -1070,7 +1070,7 @@ class NotificationModel {
       const { data: notifications, error: notificationsError } = await supabase
         .from(this.tableName)
         .select(
-          "type, channel, status, priority, created_at, sent_at, delivered_at, read_at, retry_count"
+          "type, channel, status, priority, created_at, sent_at, delivered_at, read_at, retry_count",
         )
         .gte("created_at", startDate)
         .lte("created_at", endDate);
@@ -1084,14 +1084,14 @@ class NotificationModel {
           (n) =>
             n.status === "sent" ||
             n.status === "delivered" ||
-            n.status === "read"
+            n.status === "read",
         ).length,
         pending: notifications.filter(
-          (n) => n.status === "pending" || n.status === "scheduled"
+          (n) => n.status === "pending" || n.status === "scheduled",
         ).length,
         failed: notifications.filter((n) => n.status === "failed").length,
         delivered: notifications.filter(
-          (n) => n.status === "delivered" || n.status === "read"
+          (n) => n.status === "delivered" || n.status === "read",
         ).length,
         read: notifications.filter((n) => n.status === "read").length,
         cancelled: notifications.filter((n) => n.status === "cancelled").length,
@@ -1123,7 +1123,7 @@ class NotificationModel {
       const channelStats = {};
       this.validChannels.forEach((channel) => {
         const channelNotifications = notifications.filter(
-          (n) => n.channel === channel
+          (n) => n.channel === channel,
         );
         channelStats[channel] = {
           total: channelNotifications.length,
@@ -1131,10 +1131,10 @@ class NotificationModel {
             (n) =>
               n.status === "sent" ||
               n.status === "delivered" ||
-              n.status === "read"
+              n.status === "read",
           ).length,
           delivered: channelNotifications.filter(
-            (n) => n.status === "delivered" || n.status === "read"
+            (n) => n.status === "delivered" || n.status === "read",
           ).length,
           failed: channelNotifications.filter((n) => n.status === "failed")
             .length,
@@ -1142,7 +1142,7 @@ class NotificationModel {
             channelNotifications.length > 0
               ? (
                   (channelNotifications.filter(
-                    (n) => n.status === "delivered" || n.status === "read"
+                    (n) => n.status === "delivered" || n.status === "read",
                   ).length /
                     channelNotifications.length) *
                   100
@@ -1161,10 +1161,10 @@ class NotificationModel {
             (n) =>
               n.status === "sent" ||
               n.status === "delivered" ||
-              n.status === "read"
+              n.status === "read",
           ).length,
           delivered: typeNotifications.filter(
-            (n) => n.status === "delivered" || n.status === "read"
+            (n) => n.status === "delivered" || n.status === "read",
           ).length,
           failed: typeNotifications.filter((n) => n.status === "failed").length,
         };
@@ -1174,7 +1174,7 @@ class NotificationModel {
       const priorityStats = {};
       this.validPriorities.forEach((priority) => {
         const priorityNotifications = notifications.filter(
-          (n) => n.priority === priority
+          (n) => n.priority === priority,
         );
         priorityStats[priority] = {
           total: priorityNotifications.length,
@@ -1182,10 +1182,10 @@ class NotificationModel {
             (n) =>
               n.status === "sent" ||
               n.status === "delivered" ||
-              n.status === "read"
+              n.status === "read",
           ).length,
           avgDeliveryTime: this._calculateAverageDeliveryTime(
-            priorityNotifications
+            priorityNotifications,
           ),
         };
       });
@@ -1194,17 +1194,17 @@ class NotificationModel {
       const retryStats = {
         totalRetries: notifications.reduce(
           (sum, n) => sum + (n.retry_count || 0),
-          0
+          0,
         ),
         notificationsWithRetries: notifications.filter(
-          (n) => (n.retry_count || 0) > 0
+          (n) => (n.retry_count || 0) > 0,
         ).length,
         avgRetriesPerNotification:
           notifications.length > 0
             ? (
                 notifications.reduce(
                   (sum, n) => sum + (n.retry_count || 0),
-                  0
+                  0,
                 ) / notifications.length
               ).toFixed(2)
             : 0,
@@ -1222,7 +1222,7 @@ class NotificationModel {
       const dailyTrends = this._calculateDailyTrends(
         notifications,
         startDate,
-        endDate
+        endDate,
       );
 
       const duration = Date.now() - startTime;
@@ -1249,7 +1249,7 @@ class NotificationModel {
             basicStats,
             successRates,
             channelStats,
-            retryStats
+            retryStats,
           ),
         },
       };
@@ -1262,7 +1262,7 @@ class NotificationModel {
           startDate,
           endDate,
           duration: `${duration}ms`,
-        }
+        },
       );
       return { success: false, error: error.message };
     }
@@ -1273,7 +1273,7 @@ class NotificationModel {
    */
   _calculateAverageTimeToSend(notifications) {
     const sentNotifications = notifications.filter(
-      (n) => n.sent_at && n.created_at
+      (n) => n.sent_at && n.created_at,
     );
     if (sentNotifications.length === 0) return 0;
 
@@ -1289,7 +1289,7 @@ class NotificationModel {
    */
   _calculateAverageTimeToDeliver(notifications) {
     const deliveredNotifications = notifications.filter(
-      (n) => n.delivered_at && n.sent_at
+      (n) => n.delivered_at && n.sent_at,
     );
     if (deliveredNotifications.length === 0) return 0;
 
@@ -1305,7 +1305,7 @@ class NotificationModel {
    */
   _calculateAverageTimeToRead(notifications) {
     const readNotifications = notifications.filter(
-      (n) => n.read_at && n.delivered_at
+      (n) => n.read_at && n.delivered_at,
     );
     if (readNotifications.length === 0) return 0;
 
@@ -1369,7 +1369,7 @@ class NotificationModel {
     basicStats,
     successRates,
     channelStats,
-    retryStats
+    retryStats,
   ) {
     const recommendations = [];
 
@@ -1412,7 +1412,7 @@ class NotificationModel {
       .filter(([_, stats]) => stats.total > 0)
       .sort(
         ([_, a], [__, b]) =>
-          parseFloat(b.deliveryRate) - parseFloat(a.deliveryRate)
+          parseFloat(b.deliveryRate) - parseFloat(a.deliveryRate),
       )[0];
 
     if (bestChannel && parseFloat(bestChannel[1].deliveryRate) > 90) {
@@ -1645,7 +1645,7 @@ class NotificationModel {
               acc[channel] = advancedStats.channels[channel].total;
               return acc;
             },
-            {}
+            {},
           ),
           byType: Object.keys(advancedStats.types).reduce((acc, type) => {
             acc[type] = advancedStats.types[type].total;

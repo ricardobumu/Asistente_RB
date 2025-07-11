@@ -107,7 +107,7 @@ if (fs.existsSync(envPath)) {
         console.log("❌ Configuración cancelada.");
         rl.close();
       }
-    }
+    },
   );
 } else {
   askQuestion();

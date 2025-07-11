@@ -117,7 +117,7 @@ class ClientPortal {
       card.innerHTML = `
                 <div class="text-center">
                     <div class="text-4xl mb-4">${this.getServiceIcon(
-                      service.name
+                      service.name,
                     )}</div>
                     <h3 class="text-xl font-semibold mb-2">${service.name}</h3>
                     <p class="text-gray-600 mb-4">${
@@ -199,7 +199,7 @@ class ClientPortal {
     // Pre-select the service
     setTimeout(() => {
       const serviceOption = document.querySelector(
-        `[data-service-id="${service.id}"]`
+        `[data-service-id="${service.id}"]`,
       );
       if (serviceOption) {
         serviceOption.click();
@@ -212,7 +212,7 @@ class ClientPortal {
       this.showLoading();
 
       const response = await fetch(
-        `/api/availability/${serviceId}?date=${date}&days=1`
+        `/api/availability/${serviceId}?date=${date}&days=1`,
       );
       const result = await response.json();
 
@@ -449,7 +449,7 @@ class ClientPortal {
       this.showLoading();
 
       const response = await fetch(
-        `/api/bookings/client/${encodeURIComponent(phone)}`
+        `/api/bookings/client/${encodeURIComponent(phone)}`,
       );
       const result = await response.json();
 
@@ -492,7 +492,7 @@ class ClientPortal {
                           booking.service_name
                         }</h3>
                         <p class="text-gray-600">${this.formatDate(
-                          booking.booking_date
+                          booking.booking_date,
                         )} a las ${booking.booking_time}</p>
                         <p class="text-sm text-gray-500">Duración: ${
                           booking.duration
@@ -505,7 +505,7 @@ class ClientPortal {
                     </div>
                     <div class="text-right">
                         <span class="inline-block px-3 py-1 rounded-full text-sm font-medium ${this.getStatusClass(
-                          booking.status
+                          booking.status,
                         )}">
                             ${this.getStatusText(booking.status)}
                         </span>
@@ -527,7 +527,7 @@ class ClientPortal {
                     : ""
                 }
             </div>
-        `
+        `,
       )
       .join("");
   }

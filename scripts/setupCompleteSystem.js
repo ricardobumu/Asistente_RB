@@ -118,20 +118,20 @@ class CompleteSystemSetup {
             console.log(
               `⚠️ Error ejecutando función: ${error.message.substring(
                 0,
-                100
-              )}...`
+                100,
+              )}...`,
             );
           }
         }
       }
 
       console.log(
-        `✅ Funciones SQL: ${executed} ejecutadas, ${errors} errores`
+        `✅ Funciones SQL: ${executed} ejecutadas, ${errors} errores`,
       );
       return { executed, errors, total: statements.length };
     } catch (error) {
       console.log(
-        "⚠️ No se pudo ejecutar archivo SQL completo, continuando..."
+        "⚠️ No se pudo ejecutar archivo SQL completo, continuando...",
       );
       return { executed: 0, errors: 1, message: "SQL file execution skipped" };
     }
@@ -199,7 +199,7 @@ class CompleteSystemSetup {
       try {
         const functionTest = await openaiClient.analyzeMessageWithFunctions(
           "Quiero reservar corte de cabello mañana a las 10:00",
-          {}
+          {},
         );
 
         console.log(`✅ Function calling: ${functionTest.type}`);
@@ -369,13 +369,13 @@ class CompleteSystemSetup {
     console.log("============================");
 
     const successful = Object.values(this.results).filter(
-      (r) => r.success
+      (r) => r.success,
     ).length;
     const total = Object.keys(this.results).length;
 
     console.log(`📊 Pasos completados: ${successful}/${total}`);
     console.log(
-      `📈 Tasa de éxito: ${Math.round((successful / total) * 100)}%\n`
+      `📈 Tasa de éxito: ${Math.round((successful / total) * 100)}%\n`,
     );
 
     Object.entries(this.results).forEach(([step, result]) => {
@@ -406,7 +406,7 @@ class CompleteSystemSetup {
 
       if (!this.results.verifyDatabase?.success) {
         console.log(
-          "💡 Ejecuta: npm run setup para inicializar la base de datos"
+          "💡 Ejecuta: npm run setup para inicializar la base de datos",
         );
       }
 

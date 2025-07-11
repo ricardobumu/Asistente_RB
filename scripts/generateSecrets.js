@@ -27,7 +27,7 @@ function generateSecrets() {
   console.log("- Guarda estos secretos de forma segura");
   console.log("- NO los compartas en repositorios públicos");
   console.log(
-    "- Usa secretos diferentes para cada entorno (dev, staging, prod)"
+    "- Usa secretos diferentes para cada entorno (dev, staging, prod)",
   );
   console.log("- Cambia los secretos regularmente en producción");
 

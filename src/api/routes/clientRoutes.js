@@ -24,7 +24,7 @@ router.get(
   "/me",
   authenticate,
   requireRole("client"),
-  clientController.getMyProfile.bind(clientController)
+  clientController.getMyProfile.bind(clientController),
 );
 
 /**
@@ -37,7 +37,7 @@ router.put(
   authenticate,
   requireRole("client"),
   userRateLimit(10, 60 * 60 * 1000), // 10 actualizaciones por hora
-  clientController.updateMyProfile.bind(clientController)
+  clientController.updateMyProfile.bind(clientController),
 );
 
 /**
@@ -49,7 +49,7 @@ router.get(
   "/me/bookings",
   authenticate,
   requireRole("client"),
-  clientController.getMyBookings.bind(clientController)
+  clientController.getMyBookings.bind(clientController),
 );
 
 /**
@@ -61,7 +61,7 @@ router.get(
   "/me/stats",
   authenticate,
   requireRole("client"),
-  clientController.getMyStats.bind(clientController)
+  clientController.getMyStats.bind(clientController),
 );
 
 /**
@@ -77,7 +77,7 @@ router.get(
   "/",
   authenticate,
   requireRole(["admin", "manager"]),
-  clientController.getAllClients.bind(clientController)
+  clientController.getAllClients.bind(clientController),
 );
 
 /**
@@ -89,7 +89,7 @@ router.get(
   "/:id",
   authenticate,
   requireRole(["admin", "manager"]),
-  clientController.getClientById.bind(clientController)
+  clientController.getClientById.bind(clientController),
 );
 
 /**
@@ -102,7 +102,7 @@ router.put(
   authenticate,
   requireRole(["admin", "manager"]),
   userRateLimit(20, 60 * 60 * 1000), // 20 actualizaciones por hora
-  clientController.updateClient.bind(clientController)
+  clientController.updateClient.bind(clientController),
 );
 
 /**
@@ -115,7 +115,7 @@ router.post(
   authenticate,
   requireRole("admin"),
   userRateLimit(5, 60 * 60 * 1000), // 5 suspensiones por hora
-  clientController.suspendClient.bind(clientController)
+  clientController.suspendClient.bind(clientController),
 );
 
 /**
@@ -128,7 +128,7 @@ router.post(
   authenticate,
   requireRole("admin"),
   userRateLimit(5, 60 * 60 * 1000), // 5 reactivaciones por hora
-  clientController.reactivateClient.bind(clientController)
+  clientController.reactivateClient.bind(clientController),
 );
 
 /**
@@ -141,7 +141,7 @@ router.delete(
   authenticate,
   requireRole("super_admin"),
   userRateLimit(2, 24 * 60 * 60 * 1000), // 2 eliminaciones por día
-  clientController.deleteClient.bind(clientController)
+  clientController.deleteClient.bind(clientController),
 );
 
 module.exports = router;

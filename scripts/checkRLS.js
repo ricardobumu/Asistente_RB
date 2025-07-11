@@ -33,14 +33,14 @@ async function checkRLS() {
             console.log(`❌ ${table}: NO EXISTE`);
           } else if (error.code === "42501") {
             console.log(
-              `🔒 ${table}: EXISTE - RLS BLOQUEANDO (necesita políticas)`
+              `🔒 ${table}: EXISTE - RLS BLOQUEANDO (necesita políticas)`,
             );
           } else {
             console.log(`⚠️ ${table}: ERROR - ${error.message}`);
           }
         } else {
           console.log(
-            `✅ ${table}: ACCESIBLE (${data?.length || 0} registros)`
+            `✅ ${table}: ACCESIBLE (${data?.length || 0} registros)`,
           );
         }
       } catch (err) {
@@ -50,17 +50,17 @@ async function checkRLS() {
 
     console.log("\n🔐 VERIFICANDO CONFIGURACIÓN SUPABASE:");
     console.log(
-      `✅ URL: ${process.env.SUPABASE_URL ? "Configurada" : "❌ Falta"}`
+      `✅ URL: ${process.env.SUPABASE_URL ? "Configurada" : "❌ Falta"}`,
     );
     console.log(
       `✅ ANON_KEY: ${
         process.env.SUPABASE_ANON_KEY ? "Configurada" : "❌ Falta"
-      }`
+      }`,
     );
     console.log(
       `✅ SERVICE_KEY: ${
         process.env.SUPABASE_SERVICE_KEY ? "Configurada" : "❌ Falta"
-      }`
+      }`,
     );
   } catch (error) {
     console.error("❌ Error general:", error.message);

@@ -342,7 +342,7 @@ class ClientController {
 
         // Verificar que el teléfono no esté en uso por otro cliente
         const existingByPhone = await clientModel.findByPhone(
-          updateData.telefono
+          updateData.telefono,
         );
         if (
           existingByPhone.success &&

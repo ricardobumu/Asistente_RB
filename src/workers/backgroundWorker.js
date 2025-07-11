@@ -445,7 +445,7 @@ class BackgroundWorker {
               task.maxAttempts,
               task.status,
               task.createdAt.toISOString(),
-            ]
+            ],
           );
         }
       }

@@ -332,7 +332,7 @@ class ProtectionMiddleware {
 
       // Verificar patrones sospechosos
       const isSuspicious = suspiciousPatterns.some(
-        (pattern) => pattern.test(url) || pattern.test(userAgent)
+        (pattern) => pattern.test(url) || pattern.test(userAgent),
       );
 
       if (isSuspicious) {
@@ -348,7 +348,7 @@ class ProtectionMiddleware {
 
         // Registrar patrón detectado
         const detectedPattern = suspiciousPatterns.find(
-          (pattern) => pattern.test(url) || pattern.test(userAgent)
+          (pattern) => pattern.test(url) || pattern.test(userAgent),
         );
 
         if (
@@ -483,7 +483,7 @@ class ProtectionMiddleware {
     ];
 
     const isEnumeration = enumerationPatterns.some((pattern) =>
-      pattern.test(url)
+      pattern.test(url),
     );
 
     if (isEnumeration) {
@@ -526,30 +526,33 @@ class ProtectionMiddleware {
    * Limpiar caches periódicamente
    */
   static startCleanupTask() {
-    setInterval(() => {
-      const now = Date.now();
-      const maxAge = 24 * 60 * 60 * 1000; // 24 horas
+    setInterval(
+      () => {
+        const now = Date.now();
+        const maxAge = 24 * 60 * 60 * 1000; // 24 horas
 
-      // Limpiar IPs sospechosas antiguas
-      for (const [ip, data] of this.suspiciousIPs.entries()) {
-        if (now - data.lastSeen > maxAge) {
-          this.suspiciousIPs.delete(ip);
+        // Limpiar IPs sospechosas antiguas
+        for (const [ip, data] of this.suspiciousIPs.entries()) {
+          if (now - data.lastSeen > maxAge) {
+            this.suspiciousIPs.delete(ip);
+          }
         }
-      }
 
-      // Limpiar cache de rate limiting
-      for (const [key, data] of this.rateLimitCache.entries()) {
-        if (now - data.lastAttempt > maxAge) {
-          this.rateLimitCache.delete(key);
+        // Limpiar cache de rate limiting
+        for (const [key, data] of this.rateLimitCache.entries()) {
+          if (now - data.lastAttempt > maxAge) {
+            this.rateLimitCache.delete(key);
+          }
         }
-      }
 
-      logger.info("Protection middleware cache cleaned", {
-        suspiciousIPs: this.suspiciousIPs.size,
-        rateLimitEntries: this.rateLimitCache.size,
-        blockedIPs: this.blockedIPs.size,
-      });
-    }, 60 * 60 * 1000); // Cada hora
+        logger.info("Protection middleware cache cleaned", {
+          suspiciousIPs: this.suspiciousIPs.size,
+          rateLimitEntries: this.rateLimitCache.size,
+          blockedIPs: this.blockedIPs.size,
+        });
+      },
+      60 * 60 * 1000,
+    ); // Cada hora
   }
 
   /**

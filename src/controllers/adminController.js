@@ -39,7 +39,7 @@ class AdminController {
         {
           ip: req.ip,
           userAgent: req.headers["user-agent"],
-        }
+        },
       );
 
       res.json({
@@ -128,7 +128,7 @@ class AdminController {
           `
           *,
           whatsapp_conversations(phone_number, client_name)
-        `
+        `,
         )
         .order("created_at", { ascending: false })
         .limit(parseInt(limit));
@@ -164,7 +164,7 @@ class AdminController {
           limit,
           phone: phone ? "[FILTERED]" : "all",
           status,
-        }
+        },
       );
 
       res.json({
@@ -228,7 +228,7 @@ class AdminController {
         {
           status,
           limit,
-        }
+        },
       );
 
       res.json({
@@ -272,7 +272,7 @@ class AdminController {
       logger.audit(
         "OpenAI status accessed",
         req.user?.email || "admin",
-        "openai"
+        "openai",
       );
 
       res.json({
@@ -314,7 +314,7 @@ class AdminController {
       logger.audit(
         "Twilio status accessed",
         req.user?.email || "admin",
-        "twilio"
+        "twilio",
       );
 
       res.json({
@@ -350,7 +350,7 @@ class AdminController {
           *,
           whatsapp_messages(count),
           bookings(count)
-        `
+        `,
         )
         .order("last_activity", { ascending: false })
         .limit(parseInt(limit));
@@ -373,7 +373,7 @@ class AdminController {
         {
           limit,
           phone: phone ? "[FILTERED]" : "all",
-        }
+        },
       );
 
       res.json({
@@ -414,7 +414,7 @@ class AdminController {
       logger.audit(
         "Security status accessed",
         req.user?.email || "admin",
-        "security"
+        "security",
       );
 
       res.json({
@@ -446,7 +446,7 @@ class AdminController {
         logger.audit(
           "System health accessed",
           req.user?.email || "admin",
-          "health"
+          "health",
         );
 
         res.json({
@@ -506,19 +506,19 @@ class AdminController {
         logs = logs.filter((log) =>
           JSON.stringify(log)
             .toLowerCase()
-            .includes(options.search.toLowerCase())
+            .includes(options.search.toLowerCase()),
         );
       }
 
       if (options.startDate) {
         logs = logs.filter(
-          (log) => new Date(log.timestamp) >= new Date(options.startDate)
+          (log) => new Date(log.timestamp) >= new Date(options.startDate),
         );
       }
 
       if (options.endDate) {
         logs = logs.filter(
-          (log) => new Date(log.timestamp) <= new Date(options.endDate)
+          (log) => new Date(log.timestamp) <= new Date(options.endDate),
         );
       }
 

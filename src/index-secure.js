@@ -84,14 +84,14 @@ const rateLimiters = {
   general: createRateLimiter(
     15 * 60 * 1000,
     100,
-    "Demasiadas solicitudes generales"
+    "Demasiadas solicitudes generales",
   ),
   api: createRateLimiter(15 * 60 * 1000, 50, "Demasiadas solicitudes a la API"),
   webhook: createRateLimiter(1 * 60 * 1000, 30, "Demasiados webhooks"),
   auth: createRateLimiter(
     15 * 60 * 1000,
     5,
-    "Demasiados intentos de autenticación"
+    "Demasiados intentos de autenticación",
   ),
 };
 
@@ -125,7 +125,7 @@ app.use(
     frameguard: { action: "deny" },
     xssFilter: true,
     referrerPolicy: { policy: "strict-origin-when-cross-origin" },
-  })
+  }),
 );
 
 // 4. MIDDLEWARE DE SEGURIDAD
@@ -145,7 +145,7 @@ app.use(
         throw new Error("JSON inválido");
       }
     },
-  })
+  }),
 );
 
 app.use(
@@ -153,7 +153,7 @@ app.use(
     extended: true,
     limit: "1mb",
     parameterLimit: 100,
-  })
+  }),
 );
 
 // 5. LOGGING SEGURO Y ESTRUCTURADO
@@ -293,7 +293,7 @@ function validateTwilioSignature(req) {
 
   return crypto.timingSafeEqual(
     Buffer.from(signature, "base64"),
-    Buffer.from(expectedSignature, "base64")
+    Buffer.from(expectedSignature, "base64"),
   );
 }
 
@@ -357,7 +357,7 @@ app.post(
       });
       res.status(500).json({ error: "Error procesando mensaje" });
     }
-  }
+  },
 );
 
 // Webhook Calendly SEGURO
@@ -376,7 +376,7 @@ app.post("/api/calendly/webhook", rateLimiters.webhook, async (req, res) => {
       if (
         !crypto.timingSafeEqual(
           Buffer.from(signature),
-          Buffer.from(expectedSignature)
+          Buffer.from(expectedSignature),
         )
       ) {
         logger.warn("Firma Calendly inválida", { ip: req.ip });
