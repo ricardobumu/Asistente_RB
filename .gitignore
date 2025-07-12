@@ -35,3 +35,9 @@ yarn-error.log*
 .DS_Store
 .vscode/
 .idea/"node_modules/" 
+
+# Archivos temporales de atribución/citas problemáticas
+*citations*
+*code-citations*
+*untitled*
+".env.local" 

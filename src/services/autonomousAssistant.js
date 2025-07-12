@@ -28,7 +28,7 @@ const ClientService = require("./clientService");
 const ServiceService = require("./serviceService");
 const DatabaseAdapter = require("../adapters/databaseAdapter");
 const logger = require("../utils/logger");
-const ConversationContextService = require("./conversationContextService");
+const ConversationContextService = require("./ConversationContextService");
 const Validators = require("../utils/validators");
 
 /**
@@ -210,7 +210,7 @@ Si no puedes resolver algo automáticamente, indica: "Te conectaré con Ricardo 
           );
           break;
         case "availability_inquiry":
-          response = await this.handleAvailabilityInquiry(analysis, context);
+          response = await this.handleAvailabilityInquiry(analysis);
           break;
         case "booking_modification":
           response = await this.handleBookingModification(
@@ -368,7 +368,7 @@ Responde SOLO con un objeto JSON válido:
 
     try {
       switch (function_name) {
-        case "check_availability":
+        case "check_availability": {
           const availability = await this.checkCalendlyAvailability(
             args.service_name,
             args.date,
@@ -383,6 +383,7 @@ Responde SOLO con un objeto JSON válido:
             ready_to_book: availability.available,
             function_result: availability,
           };
+        }
 
         case "create_booking":
           return {
@@ -395,7 +396,7 @@ Responde SOLO con un objeto JSON válido:
             function_result: { action: "create_booking", data: args },
           };
 
-        case "get_available_slots":
+        case "get_available_slots": {
           const slots = await this.getAvailableSlots(
             args.service_name,
             args.from_date,
@@ -410,6 +411,7 @@ Responde SOLO con un objeto JSON válido:
             ready_to_book: false,
             function_result: slots,
           };
+        }
 
         default:
           logger.warn("Unknown function call", { function_name });
@@ -610,7 +612,7 @@ Responde SOLO con un objeto JSON válido:
       const booking = bookingResult.data[0];
 
       // Programar recordatorios automáticos
-      await this.scheduleAutomaticReminders(booking, client);
+      await this.scheduleAutomaticReminders(booking);
 
       logger.info("Automatic booking created successfully", {
         bookingId: booking.id,
@@ -631,7 +633,7 @@ Responde SOLO con un objeto JSON válido:
   /**
    * Programa recordatorios automáticos
    */
-  async scheduleAutomaticReminders(booking, client) {
+  async scheduleAutomaticReminders(booking) {
     try {
       const reminders = [
         {
@@ -650,9 +652,9 @@ Responde SOLO con un objeto JSON válido:
 
       // Aquí implementarías la lógica de programación
       // Por ejemplo, usando cron jobs o un sistema de colas
-      for (const reminder of reminders) {
+      reminders.forEach(() => {
         // await reminderService.schedule(booking.id, reminder);
-      }
+      });
 
       this.logger.info("Automatic reminders scheduled", {
         bookingId: booking.id,
@@ -947,7 +949,7 @@ ${servicesMenu}`;
   /**
    * Maneja consultas de disponibilidad
    */
-  async handleAvailabilityInquiry(analysis, context) {
+  async handleAvailabilityInquiry(analysis) {
     try {
       const { entities } = analysis;
 
@@ -1232,9 +1234,12 @@ ${servicesMenu}`;
    */
   startCacheRefreshScheduler() {
     // Actualizar cache cada 30 minutos
-    setInterval(() => {
-      this.refreshServicesCache();
-    }, 30 * 60 * 1000);
+    setInterval(
+      () => {
+        this.refreshServicesCache();
+      },
+      30 * 60 * 1000
+    );
   }
 }
 
