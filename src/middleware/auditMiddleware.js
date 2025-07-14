@@ -37,7 +37,7 @@ class AuditMiddleware {
       if (includeBody && req.body) {
         requestInfo.body = this.sanitizeSensitiveData(
           req.body,
-          sensitiveFields,
+          sensitiveFields
         );
       }
 
@@ -97,7 +97,7 @@ class AuditMiddleware {
         if (includeResponse && responseData) {
           responseInfo.response = this.sanitizeSensitiveData(
             responseData,
-            sensitiveFields,
+            sensitiveFields
           );
         }
 
@@ -116,7 +116,7 @@ class AuditMiddleware {
         if (success) {
           logger[logLevel](
             `Request completed: ${responseInfo.action}`,
-            logData,
+            logData
           );
         } else {
           logger.warn(`Request failed: ${responseInfo.action}`, logData);
@@ -356,6 +356,6 @@ const sanitizeMiddleware = (req, res, next) => {
 
 module.exports = {
   auditLog: AuditMiddleware.auditMiddleware,
-  rateLimitMiddleware: AuditMiddleware.rateLimitMiddleware,
+  rateLimitMiddleware: rateLimitMiddleware,
   sanitizeMiddleware: AuditMiddleware.sanitizeMiddleware,
 };

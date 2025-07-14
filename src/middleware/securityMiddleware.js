@@ -160,6 +160,18 @@ class SecurityMiddleware {
         standardHeaders: true,
         legacyHeaders: false,
       }),
+
+      // GDPR endpoints - moderado para derechos de usuarios
+      gdpr: rateLimit({
+        windowMs: 15 * 60 * 1000, // 15 minutos
+        max: 30, // 30 requests por 15 minutos
+        message: {
+          error: "Too many GDPR requests",
+          retryAfter: "15 minutes",
+        },
+        standardHeaders: true,
+        legacyHeaders: false,
+      }),
     };
   }
 
@@ -196,7 +208,7 @@ class SecurityMiddleware {
       // Comparar firmas de forma segura
       const isValid = crypto.timingSafeEqual(
         Buffer.from(twilioSignature),
-        Buffer.from(expectedSignature),
+        Buffer.from(expectedSignature)
       );
 
       if (!isValid) {
@@ -275,7 +287,7 @@ class SecurityMiddleware {
       // Comparación segura
       const isValid = crypto.timingSafeEqual(
         Buffer.from(apiKey),
-        Buffer.from(validApiKey),
+        Buffer.from(validApiKey)
       );
 
       if (!isValid) {

@@ -12,10 +12,70 @@ const path = require("path");
 
 // Importar modelos al inicio
 const serviceModel = require("./models/serviceModel");
-const autonomousWhatsAppController = require("./controllers/autonomousWhatsAppController");
+const autonomousWhatsAppController = require("./controllers/autonomousWhatsAppController_simple");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Función para inicializar la aplicación y los servicios
+async function initializeApplication() {
+  try {
+    console.log(
+      "[DEBUG] Iniciando proceso de inicialización de la aplicación..."
+    );
+
+    // Asegurarse de que las variables de entorno de Supabase estén cargadas
+    console.log("[DEBUG] Verificando configuración de Supabase...");
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+      console.error(
+        "[ERROR] Faltan variables de entorno de Supabase (SUPABASE_URL o SUPABASE_ANON_KEY)."
+      );
+      process.exit(1); // Salir si no hay configuración crítica
+    }
+    console.log(
+      "[DEBUG] Supabase URL:",
+      process.env.SUPABASE_URL ? "Configurada" : "FALTA"
+    );
+    console.log(
+      "[DEBUG] Supabase ANON_KEY:",
+      process.env.SUPABASE_ANON_KEY ? "Configurada" : "FALTA"
+    );
+
+    // Llamar a la inicialización de servicios de Ricardo
+    // Esto insertará los servicios predefinidos en tu tabla 'services' de Supabase
+    console.log(
+      "[DEBUG] Llamando a serviceModel.initializeRicardoServices()..."
+    );
+    const initResult = await serviceModel.initializeRicardoServices();
+
+    if (initResult.success) {
+      console.log("[DEBUG] Inicialización de servicios de Ricardo: ÉXITO.");
+      console.log("[DEBUG] Mensaje de inicialización:", initResult.message);
+    } else {
+      console.error("[ERROR] Inicialización de servicios de Ricardo: FALLÓ.");
+      console.error(
+        "[ERROR] Detalles del fallo de inicialización:",
+        initResult.error
+      );
+      // Si la inicialización falla, el servidor puede seguir, pero los servicios no estarán disponibles.
+      // Podrías decidir salir aquí con process.exit(1) si es crítico.
+    }
+
+    console.log(
+      "[DEBUG] Proceso de inicialización de la aplicación completado."
+    );
+  } catch (initError) {
+    console.error(
+      "[ERROR] Excepción crítica durante la inicialización de la aplicación:",
+      initError.message
+    );
+    console.error("[ERROR] Detalles completos de la excepción:", initError);
+    process.exit(1); // Salir si hay una excepción crítica al inicio
+  }
+}
+
+// Llamar a la función de inicialización ANTES de que el servidor empiece a escuchar
+initializeApplication();
 
 // CORS seguro
 const corsOptions = {
@@ -55,7 +115,12 @@ app.use(
         imgSrc: ["'self'", "data:", "https:"],
       },
     },
-  }),
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+      preload: true,
+    },
+  })
 );
 app.use(cors(corsOptions));
 app.use(generalLimiter);
@@ -85,9 +150,20 @@ app.get("/health", (req, res) => {
 // API SERVICIOS
 app.get("/api/servicios", async (req, res) => {
   try {
-    const result = await serviceModel.getAll();
+    console.log(
+      "[DEBUG] Intentando obtener todos los servicios desde serviceModel.getAll()..."
+    ); // Nuevo log
+    const result = await serviceModel.getAll(); // Línea original
+    console.log(
+      "[DEBUG] Resultado crudo de serviceModel.getAll():",
+      JSON.stringify(result, null, 2)
+    ); // Nuevo log
 
     if (!result.success) {
+      console.error(
+        "[DEBUG] serviceModel.getAll() no fue exitoso. Error:",
+        result.error
+      ); // Nuevo log
       return res.status(500).json({
         success: false,
         error: "Error obteniendo servicios",
@@ -95,8 +171,9 @@ app.get("/api/servicios", async (req, res) => {
     }
 
     const activeServices = result.data.filter(
-      (service) => service.activo === true,
+      (service) => service.activo === true
     );
+    console.log("[DEBUG] Servicios activos obtenidos:", activeServices.length); // Nuevo log
 
     res.json({
       success: true,
@@ -105,7 +182,8 @@ app.get("/api/servicios", async (req, res) => {
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error("Error en /api/servicios:", error);
+    console.error("[DEBUG] EXCEPCIÓN en /api/servicios:", error.message); // Nuevo log
+    console.error("[DEBUG] Detalles completos del error:", error); // Nuevo log, para ver el stack completo
     res.status(500).json({
       success: false,
       error: "Error interno del servidor",

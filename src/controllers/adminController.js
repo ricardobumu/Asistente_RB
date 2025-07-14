@@ -8,6 +8,8 @@ const supabase = require("../integrations/supabaseClient");
 const openaiClient = require("../integrations/openaiClient");
 const twilioClient = require("../integrations/twilioClient");
 const calendlyClient = require("../integrations/calendlyClient");
+const gdprCleanupWorker = require("../workers/gdprCleanupWorker");
+const gdprService = require("../services/gdprService");
 
 class AdminController {
   /**
@@ -22,6 +24,7 @@ class AdminController {
       const recentActivity = await AdminController.getRecentActivity();
       const todayStats = await AdminController.getTodayStats();
       const integrationStatus = await AdminController.getIntegrationStatus();
+      const gdprStatus = await AdminController.getGDPRStatus();
 
       const dashboard = {
         timestamp: new Date().toISOString(),
@@ -29,6 +32,7 @@ class AdminController {
         recentActivity,
         todayStats,
         integrationStatus,
+        gdprStatus,
         responseTime: Date.now() - startTime,
       };
 
@@ -39,7 +43,7 @@ class AdminController {
         {
           ip: req.ip,
           userAgent: req.headers["user-agent"],
-        },
+        }
       );
 
       res.json({
@@ -128,7 +132,7 @@ class AdminController {
           `
           *,
           whatsapp_conversations(phone_number, client_name)
-        `,
+        `
         )
         .order("created_at", { ascending: false })
         .limit(parseInt(limit));
@@ -164,7 +168,7 @@ class AdminController {
           limit,
           phone: phone ? "[FILTERED]" : "all",
           status,
-        },
+        }
       );
 
       res.json({
@@ -228,7 +232,7 @@ class AdminController {
         {
           status,
           limit,
-        },
+        }
       );
 
       res.json({
@@ -272,7 +276,7 @@ class AdminController {
       logger.audit(
         "OpenAI status accessed",
         req.user?.email || "admin",
-        "openai",
+        "openai"
       );
 
       res.json({
@@ -314,7 +318,7 @@ class AdminController {
       logger.audit(
         "Twilio status accessed",
         req.user?.email || "admin",
-        "twilio",
+        "twilio"
       );
 
       res.json({
@@ -350,7 +354,7 @@ class AdminController {
           *,
           whatsapp_messages(count),
           bookings(count)
-        `,
+        `
         )
         .order("last_activity", { ascending: false })
         .limit(parseInt(limit));
@@ -373,7 +377,7 @@ class AdminController {
         {
           limit,
           phone: phone ? "[FILTERED]" : "all",
-        },
+        }
       );
 
       res.json({
@@ -414,7 +418,7 @@ class AdminController {
       logger.audit(
         "Security status accessed",
         req.user?.email || "admin",
-        "security",
+        "security"
       );
 
       res.json({
@@ -446,7 +450,7 @@ class AdminController {
         logger.audit(
           "System health accessed",
           req.user?.email || "admin",
-          "health",
+          "health"
         );
 
         res.json({
@@ -506,19 +510,19 @@ class AdminController {
         logs = logs.filter((log) =>
           JSON.stringify(log)
             .toLowerCase()
-            .includes(options.search.toLowerCase()),
+            .includes(options.search.toLowerCase())
         );
       }
 
       if (options.startDate) {
         logs = logs.filter(
-          (log) => new Date(log.timestamp) >= new Date(options.startDate),
+          (log) => new Date(log.timestamp) >= new Date(options.startDate)
         );
       }
 
       if (options.endDate) {
         logs = logs.filter(
-          (log) => new Date(log.timestamp) <= new Date(options.endDate),
+          (log) => new Date(log.timestamp) <= new Date(options.endDate)
         );
       }
 
@@ -761,6 +765,67 @@ class AdminController {
   static async getCalendlyEvents() {
     // Implementar eventos de Calendly
     return [];
+  }
+
+  /**
+   * Obtener estado de compliance RGPD
+   */
+  static async getGDPRStatus() {
+    try {
+      const workerStats = gdprCleanupWorker.getStats();
+
+      // Obtener estadísticas de compliance de los últimos 7 días
+      const endDate = new Date().toISOString().split("T")[0];
+      const startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split("T")[0];
+
+      const complianceReport = await gdprService.generateComplianceReport(
+        startDate,
+        endDate
+      );
+
+      return {
+        worker: {
+          enabled: workerStats.enabled,
+          isRunning: workerStats.isRunning,
+          lastRun: workerStats.lastRun,
+          nextRun: workerStats.nextRun,
+          totalRuns: workerStats.totalRuns,
+          successfulRuns: workerStats.successfulRuns,
+          failedRuns: workerStats.failedRuns,
+          successRate:
+            workerStats.totalRuns > 0
+              ? (
+                  (workerStats.successfulRuns / workerStats.totalRuns) *
+                  100
+                ).toFixed(2) + "%"
+              : "N/A",
+        },
+        compliance: complianceReport.success
+          ? {
+              period: `${startDate} to ${endDate}`,
+              summary: complianceReport.report.summary,
+              status: "compliant",
+            }
+          : {
+              status: "error",
+              error: complianceReport.error,
+            },
+        dataRetention: {
+          enabled: process.env.GDPR_CLEANUP_ENABLED === "true",
+          retentionDays: parseInt(process.env.GDPR_DATA_RETENTION_DAYS) || 365,
+        },
+        lastUpdated: new Date().toISOString(),
+      };
+    } catch (error) {
+      logger.error("Error getting GDPR status", { error: error.message });
+      return {
+        status: "error",
+        error: error.message,
+        lastUpdated: new Date().toISOString(),
+      };
+    }
   }
 }
 

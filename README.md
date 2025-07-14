@@ -104,6 +104,10 @@ Los logs se guardan en la carpeta `logs/`:
 
 MIT License - ver archivo LICENSE para detalles.
 
+## 🤖 Desarrollo Asistido por IA
+
+Este proyecto ha sido desarrollado con asistencia de herramientas de IA incluyendo GitHub Copilot, ZenCoder.ai y Google Gemini. Ver [AI_ATTRIBUTION.md](./AI_ATTRIBUTION.md) para detalles completos sobre el uso ético de IA en el desarrollo.
+
 ---
 
 **Desarrollado para optimizar la gestión de reservas**

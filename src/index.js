@@ -34,6 +34,12 @@ const adminRoutes = require("./routes/adminRoutes");
 const calendlyWebhookRoutes = require("./routes/calendlyWebhookRoutes");
 const clientPortalRoutes = require("./routes/clientPortalRoutes");
 const googleCalendarRoutes = require("./routes/googleCalendarRoutes");
+const widgetRoutes = require("./routes/widgetRoutes");
+const gdprRoutes = require("./routes/gdprRoutes");
+
+// Importar servicios de background
+const notificationScheduler = require("./services/notificationScheduler");
+const gdprCleanupWorker = require("./workers/gdprCleanupWorker");
 
 // Inicializar manejadores de errores globales
 ErrorHandler.initialize();
@@ -57,8 +63,8 @@ app.use(SecurityMiddleware.corsConfig());
 // 3. Logging de seguridad
 app.use(SecurityMiddleware.securityLogger);
 
-// 4. Timeout para requests
-app.use(SecurityMiddleware.timeoutHandler(30000)); // 30 segundos
+// 4. Timeout para requests (comentado - método no disponible)
+// app.use(SecurityMiddleware.timeoutHandler(30000)); // 30 segundos
 
 // 5. Sanitización de entrada
 app.use(SecurityMiddleware.sanitizeInput);
@@ -83,14 +89,14 @@ app.use(
         throw new Error("Malicious content detected");
       }
     },
-  }),
+  })
 );
 app.use(
   express.urlencoded({
     extended: true,
     limit: "1mb",
     parameterLimit: 100, // Limitar parámetros
-  }),
+  })
 );
 
 // Middleware de logging existente (mejorado)
@@ -145,7 +151,7 @@ app.use(
     }
     next();
   },
-  autonomousWhatsAppRoutes,
+  autonomousWhatsAppRoutes
 );
 
 // 3. Widget de reservas con rate limiting específico
@@ -159,7 +165,7 @@ app.use(
     }
     next();
   },
-  bookingWidgetRoutes,
+  bookingWidgetRoutes
 );
 
 // 4. Dashboard administrativo con máxima seguridad
@@ -174,6 +180,12 @@ app.use("/client", rateLimiters.general, clientPortalRoutes);
 // 7. Google Calendar con rate limiting específico
 app.use("/api/google", rateLimiters.general, googleCalendarRoutes);
 
+// 8. Widget público de reservas (sin autenticación)
+app.use("/widget", widgetRoutes);
+
+// 9. RGPD y compliance (acceso público para derechos de usuarios)
+app.use("/gdpr", rateLimiters.gdpr, gdprRoutes);
+
 // ===== ARCHIVOS ESTÁTICOS =====
 
 // Importar path para archivos estáticos
@@ -182,7 +194,7 @@ const path = require("path");
 // Servir dashboard administrativo (solo con autenticación)
 app.use(
   "/admin/static",
-  express.static(path.join(__dirname, "../public/admin")),
+  express.static(path.join(__dirname, "../public/admin"))
 );
 
 // Ruta para acceder al dashboard
@@ -195,12 +207,23 @@ app.get("/admin/login.html", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/admin/login.html"));
 });
 
+// ===== WIDGET PÚBLICO =====
+
+// Servir archivos estáticos del widget (CSS, JS, imágenes)
+app.use(
+  "/widget/static",
+  express.static(path.join(__dirname, "../public/widget"), {
+    maxAge: "1h", // Cache por 1 hora
+    etag: true,
+  })
+);
+
 // ===== PORTAL CLIENTE =====
 
 // Servir archivos estáticos del portal cliente
 app.use(
   "/portal/static",
-  express.static(path.join(__dirname, "../public/client")),
+  express.static(path.join(__dirname, "../public/client"))
 );
 
 // Ruta principal del portal cliente
@@ -276,12 +299,12 @@ app.use((req, res) => {
 // Manejo de señales del sistema
 process.on("SIGTERM", () => {
   logger.info("Señal SIGTERM recibida, cerrando servidor...");
-  process.exit(0);
+  gracefulShutdown();
 });
 
 process.on("SIGINT", () => {
   logger.info("Señal SIGINT recibida, cerrando servidor...");
-  process.exit(0);
+  gracefulShutdown();
 });
 
 process.on("uncaughtException", (error) => {
@@ -294,15 +317,111 @@ process.on("unhandledRejection", (reason, promise) => {
   process.exit(1);
 });
 
-// Puerto de escucha
+// Puerto de escucha con manejo de errores mejorado
 const serverPort = PORT || 3000;
-app.listen(serverPort, () => {
+const serverHost = "0.0.0.0"; // Escuchar en todas las interfaces
+const server = app.listen(serverPort, serverHost, () => {
   logger.info(`🚀 Servidor iniciado exitosamente`, {
     port: serverPort,
+    host: serverHost,
     environment: NODE_ENV,
     url: `http://localhost:${serverPort}`,
     pid: process.pid,
   });
+
+  // Inicializar servicios de background después de que el servidor esté listo
+  try {
+    notificationScheduler.start();
+    logger.info("📅 Notification scheduler started successfully");
+  } catch (error) {
+    logger.error("❌ Error starting notification scheduler", {
+      error: error.message,
+    });
+  }
+
+  // Inicializar worker de limpieza RGPD
+  try {
+    gdprCleanupWorker.start();
+    logger.info("🔒 GDPR cleanup worker started successfully");
+  } catch (error) {
+    logger.error("❌ Error starting GDPR cleanup worker", {
+      error: error.message,
+    });
+  }
 });
+
+// Manejo de errores del servidor
+server.on("error", (error) => {
+  if (error.code === "EADDRINUSE") {
+    logger.error(`Puerto ${serverPort} ya está en uso`, {
+      port: serverPort,
+      error: error.message,
+    });
+
+    // Intentar con puerto alternativo
+    const alternativePort = serverPort + 1;
+    logger.info(`Intentando puerto alternativo: ${alternativePort}`);
+
+    const alternativeServer = app.listen(alternativePort, () => {
+      logger.info(`🚀 Servidor iniciado en puerto alternativo`, {
+        port: alternativePort,
+        environment: NODE_ENV,
+        url: `http://localhost:${alternativePort}`,
+        pid: process.pid,
+      });
+    });
+
+    alternativeServer.on("error", (altError) => {
+      logger.error("Error crítico: No se pudo iniciar el servidor", {
+        originalPort: serverPort,
+        alternativePort: alternativePort,
+        error: altError.message,
+      });
+      process.exit(1);
+    });
+  } else {
+    logger.error("Error del servidor", {
+      error: error.message,
+      code: error.code,
+    });
+    process.exit(1);
+  }
+});
+
+// Manejo graceful de cierre del servidor
+const gracefulShutdown = () => {
+  logger.info("Iniciando cierre graceful del servidor...");
+
+  // Detener servicios de background
+  try {
+    notificationScheduler.stop();
+    logger.info("📅 Notification scheduler stopped");
+  } catch (error) {
+    logger.error("❌ Error stopping notification scheduler", {
+      error: error.message,
+    });
+  }
+
+  // Detener worker de limpieza RGPD
+  try {
+    gdprCleanupWorker.stop();
+    logger.info("🔒 GDPR cleanup worker stopped");
+  } catch (error) {
+    logger.error("❌ Error stopping GDPR cleanup worker", {
+      error: error.message,
+    });
+  }
+
+  server.close(() => {
+    logger.info("Servidor cerrado correctamente");
+    process.exit(0);
+  });
+
+  // Forzar cierre después de 10 segundos
+  setTimeout(() => {
+    logger.error("Forzando cierre del servidor");
+    process.exit(1);
+  }, 10000);
+};
 
 module.exports = app;

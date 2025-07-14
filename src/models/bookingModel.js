@@ -50,28 +50,8 @@ class BookingModel {
    * Construir query base con joins
    */
   _buildBaseQuery() {
-    return supabase.from(this.tableName).select(`
-      *,
-      clients (
-        id,
-        name,
-        email,
-        phone,
-        whatsapp_number,
-        preferred_contact_method,
-        is_vip
-      ),
-      services (
-        id,
-        name,
-        description,
-        price,
-        duration,
-        category,
-        cancellation_policy_hours,
-        requires_deposit
-      )
-    `);
+    // Usar consulta simple sin joins por ahora para evitar errores de relación
+    return supabase.from(this.tableName).select('*');
   }
 
   /**
@@ -95,7 +75,7 @@ class BookingModel {
       const availability = await this.checkAvailability(
         bookingData.booking_date,
         bookingData.booking_time,
-        bookingData.service_id,
+        bookingData.service_id
       );
 
       if (!availability.success || !availability.available) {
@@ -389,7 +369,7 @@ class BookingModel {
       // Aplicar paginación
       query = query.range(
         pagination.offset,
-        pagination.offset + pagination.limit - 1,
+        pagination.offset + pagination.limit - 1
       );
 
       const { data, error } = await query;
@@ -461,7 +441,7 @@ class BookingModel {
         newDate,
         newTime,
         booking.service_id,
-        bookingId,
+        bookingId
       );
       if (!availability.success || !availability.available) {
         return { success: false, error: "El nuevo horario no está disponible" };
@@ -557,7 +537,7 @@ class BookingModel {
       const { data: service, error: serviceError } = await supabase
         .from("services")
         .select(
-          "available_days, available_time_slots, min_advance_booking_hours, max_advance_booking_days",
+          "available_days, available_time_slots, min_advance_booking_hours, max_advance_booking_days"
         )
         .eq("id", serviceId)
         .eq("is_active", true)
@@ -673,7 +653,7 @@ class BookingModel {
           created_at,
           services (name, category),
           clients (is_vip)
-        `,
+        `
         )
         .gte("booking_date", startDate)
         .lte("booking_date", endDate);
@@ -689,7 +669,7 @@ class BookingModel {
         cancelledBookings: data.filter((b) => b.status === "cancelled").length,
         totalRevenue: data
           .filter(
-            (b) => b.status === "completed" && b.payment_status === "paid",
+            (b) => b.status === "completed" && b.payment_status === "paid"
           )
           .reduce((sum, b) => sum + (b.total_price || 0), 0),
         pendingPayments: data
@@ -726,7 +706,7 @@ class BookingModel {
             (b) =>
               b.clients?.is_vip &&
               b.status === "completed" &&
-              b.payment_status === "paid",
+              b.payment_status === "paid"
           )
           .reduce((sum, b) => sum + (b.total_price || 0), 0),
       };
@@ -878,7 +858,7 @@ class BookingModel {
   async cancelBookingAdvanced(
     bookingId,
     cancellationReason = null,
-    cancelledBy = "client",
+    cancelledBy = "client"
   ) {
     const startTime = Date.now();
 
@@ -898,7 +878,7 @@ class BookingModel {
             cancellation_policy_hours,
             requires_deposit
           )
-        `,
+        `
         )
         .eq("id", bookingId)
         .single();
@@ -922,7 +902,7 @@ class BookingModel {
 
       // Verificar política de cancelación
       const bookingDateTime = new Date(
-        `${booking.booking_date}T${booking.booking_time}`,
+        `${booking.booking_date}T${booking.booking_time}`
       );
       const now = new Date();
       const hoursUntilBooking = (bookingDateTime - now) / (1000 * 60 * 60);
@@ -1020,7 +1000,7 @@ class BookingModel {
         booking.booking_date,
         booking.booking_time,
         booking.service_id,
-        bookingId,
+        bookingId
       );
 
       if (!availability.success || !availability.available) {
@@ -1077,7 +1057,7 @@ class BookingModel {
   async completeBookingAdvanced(
     bookingId,
     completedBy = "system",
-    notes = null,
+    notes = null
   ) {
     const startTime = Date.now();
 
@@ -1289,7 +1269,7 @@ class BookingModel {
           newDate,
           newTime,
           newServiceId,
-          bookingId,
+          bookingId
         );
         if (!availability.success || !availability.available) {
           return {
@@ -1476,6 +1456,71 @@ class BookingModel {
     }
     return result;
   }
+
+  /**
+   * Obtener reservas próximas para el programador de notificaciones
+   */
+  async getUpcoming(fromDate, toDate) {
+    const startTime = Date.now();
+
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .select(
+          `
+          id,
+          client_id,
+          service_id,
+          service_name,
+          appointment_date,
+          appointment_time,
+          status,
+          clients (
+            id,
+            name,
+            phone,
+            whatsapp_number,
+            preferred_contact_method
+          ),
+          services (
+            id,
+            name,
+            category,
+            duration
+          )
+        `
+        )
+        .gte("appointment_date", fromDate.toISOString().split("T")[0])
+        .lte("appointment_date", toDate.toISOString().split("T")[0])
+        .in("status", ["pending", "confirmed"])
+        .order("appointment_date")
+        .order("appointment_time");
+
+      if (error) throw error;
+
+      const duration = Date.now() - startTime;
+      logger.info("Reservas próximas obtenidas para notificaciones", {
+        fromDate: fromDate.toISOString(),
+        toDate: toDate.toISOString(),
+        count: data.length,
+        duration: `${duration}ms`,
+      });
+
+      return { success: true, data };
+    } catch (error) {
+      const duration = Date.now() - startTime;
+      logger.error(
+        "Error obteniendo reservas próximas para notificaciones",
+        error,
+        {
+          fromDate: fromDate.toISOString(),
+          toDate: toDate.toISOString(),
+          duration: `${duration}ms`,
+        }
+      );
+      return { success: false, error: error.message };
+    }
+  }
 }
 
-module.exports = new BookingModel();
+module.exports = BookingModel;

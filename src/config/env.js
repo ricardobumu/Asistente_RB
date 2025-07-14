@@ -28,7 +28,7 @@ const validateEnvVars = () => {
 
   if (missing.length > 0) {
     const errorMsg = `Variables de entorno requeridas faltantes: ${missing.join(
-      ", ",
+      ", "
     )}`;
     logger.error(errorMsg);
     throw new Error(errorMsg);
@@ -95,6 +95,28 @@ const env = {
   APP_NAME: process.env.APP_NAME || "Asistente RB",
   APP_VERSION: process.env.APP_VERSION || "1.0.0",
 
+  // Configuración RGPD
+  GDPR_DATA_RETENTION_DAYS:
+    parseInt(process.env.GDPR_DATA_RETENTION_DAYS) || 365,
+  GDPR_CLEANUP_ENABLED: process.env.GDPR_CLEANUP_ENABLED === "true",
+  GDPR_NOTIFICATION_EMAIL:
+    process.env.GDPR_NOTIFICATION_EMAIL || "info@ricardoburitica.eu",
+  GDPR_DPO_EMAIL: process.env.GDPR_DPO_EMAIL || "info@ricardoburitica.eu",
+  GDPR_COMPANY_NAME:
+    process.env.GDPR_COMPANY_NAME || "Ricardo Buriticá Beauty Consulting",
+  GDPR_COMPANY_ADDRESS: process.env.GDPR_COMPANY_ADDRESS || "España",
+  GDPR_SUPERVISORY_AUTHORITY:
+    process.env.GDPR_SUPERVISORY_AUTHORITY ||
+    "Agencia Española de Protección de Datos (AEPD)",
+
+  // Configuración de IA
+  AI_ANALYSIS_MODEL: process.env.AI_ANALYSIS_MODEL || "gpt-4-turbo-preview",
+  AI_RESPONSE_MODEL: process.env.AI_RESPONSE_MODEL || "gpt-3.5-turbo",
+  AI_MAX_TOKENS: parseInt(process.env.AI_MAX_TOKENS) || 800,
+  AI_TEMPERATURE: parseFloat(process.env.AI_TEMPERATURE) || 0.1,
+  AI_CONFIDENCE_THRESHOLD:
+    parseFloat(process.env.AI_CONFIDENCE_THRESHOLD) || 0.6,
+
   // Helpers
   isDevelopment: () => env.NODE_ENV === "development",
   isProduction: () => env.NODE_ENV === "production",
@@ -121,6 +143,12 @@ logger.info("Configuración cargada", {
   hasOpenAIConfig: !!env.OPENAI_API_KEY,
   hasJWTConfig: !!(env.JWT_SECRET && env.JWT_REFRESH_SECRET),
   hasAdminConfig: !!(env.ADMIN_USERNAME && env.ADMIN_PASSWORD),
+  hasGDPRConfig: !!(env.GDPR_NOTIFICATION_EMAIL && env.GDPR_COMPANY_NAME),
+  gdprCleanupEnabled: env.GDPR_CLEANUP_ENABLED,
+  aiModels: {
+    analysis: env.AI_ANALYSIS_MODEL,
+    response: env.AI_RESPONSE_MODEL,
+  },
 });
 
 module.exports = env;

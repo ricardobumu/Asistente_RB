@@ -1,11 +1,8 @@
 // src/api/routes/authRoutes.js
 const express = require("express");
 const AuthController = require("../controllers/authController");
-const {
-  authenticate,
-  requireRole,
-} = require("../../middleware/authMiddleware");
-const AuditMiddleware = require("../../middleware/auditMiddleware");
+const { authenticate } = require("../../middleware/authMiddleware");
+const { rateLimitMiddleware } = require("../../middleware/auditMiddleware");
 
 const router = express.Router();
 const authController = new AuthController();
@@ -15,11 +12,8 @@ const authController = new AuthController();
  */
 
 // Rate limiting más estricto para rutas de autenticación
-const authRateLimit = AuditMiddleware.rateLimitMiddleware(5, 15 * 60 * 1000); // 5 intentos por 15 minutos
-const registerRateLimit = AuditMiddleware.rateLimitMiddleware(
-  3,
-  60 * 60 * 1000,
-); // 3 registros por hora
+const authRateLimit = rateLimitMiddleware(5, 15 * 60 * 1000); // 5 intentos por 15 minutos
+const registerRateLimit = rateLimitMiddleware(3, 60 * 60 * 1000); // 3 registros por hora
 
 /**
  * @route POST /api/auth/login/client

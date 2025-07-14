@@ -19,7 +19,7 @@ const Validators = require("../utils/validators");
  */
 class ServiceModel {
   constructor() {
-    this.tableName = "servicios";
+    this.tableName = "services"; // TABLA: "services" (ya renombrada en DB)
 
     // Categorías específicas para Ricardo Buriticá Beauty Consulting
     this.validCategories = [
@@ -39,7 +39,8 @@ class ServiceModel {
         duration: 90, // 1.5 horas en minutos
         description:
           "Tratamiento intensivo de hidratación con tecnología Epres y Bio-Mimético para restaurar la salud capilar",
-        calendly_event_type: "hidratacion-capilar",
+        calendly_event_type: "tratamiento-super-hair", // SLUG CORRECTO
+        calendly_api_id: "173913641", // ID numérico de Calendly
         conscious_benefits:
           "Restaura la estructura natural del cabello respetando su biología",
         preparation_instructions:
@@ -54,7 +55,8 @@ class ServiceModel {
         duration: 60, // 1 hora
         description:
           "Consulta inicial personalizada para entender las necesidades específicas de tu cabello y cuero cabelludo",
-        calendly_event_type: "asesoria-primera-visita",
+        calendly_event_type: "asesoria-primera-visita", // SLUG CORRECTO
+        calendly_api_id: "ID_NO_PROPORCIONADO_PARA_ESTE_SERVICIO", // No ID proporcionado
         conscious_benefits:
           "Conocimiento profundo de tu cabello para decisiones conscientes",
         preparation_instructions:
@@ -67,7 +69,8 @@ class ServiceModel {
         price: 30,
         duration: 60,
         description: "Corte personalizado para mujer sin servicio de lavado",
-        calendly_event_type: "corte-mujer-sin-lavado",
+        calendly_event_type: "corte-mujer-sin-lavado", // SLUG CORRECTO
+        calendly_api_id: "184020049", // ID numérico de Calendly
         conscious_benefits:
           "Corte que respeta la forma natural y textura del cabello",
         preparation_instructions: "Cabello limpio y desenredado",
@@ -81,7 +84,8 @@ class ServiceModel {
         duration: 60,
         description:
           "Corte masculino personalizado según estilo y tipo de cabello",
-        calendly_event_type: "corte-hombre",
+        calendly_event_type: "corte-hombre", // SLUG CORRECTO
+        calendly_api_id: "173903564", // ID numérico de Calendly
         conscious_benefits:
           "Corte que potencia las características naturales del cabello masculino",
         preparation_instructions: "Cabello limpio",
@@ -93,7 +97,8 @@ class ServiceModel {
         price: 32,
         duration: 60,
         description: "Corte alternativo y creativo con técnicas especializadas",
-        calendly_event_type: "corte-underground",
+        calendly_event_type: "corte-underground", // SLUG CORRECTO
+        calendly_api_id: "174250997", // ID numérico de Calendly
         conscious_benefits: "Expresión personal respetando la salud capilar",
         preparation_instructions:
           "Cabello limpio, referencias visuales si las tienes",
@@ -107,7 +112,8 @@ class ServiceModel {
         duration: 120, // 2 horas
         description:
           "Servicio completo de corte para mujer con lavado y peinado",
-        calendly_event_type: "menu-corte-mujer",
+        calendly_event_type: "corte-mujer", // SLUG CORRECTO
+        calendly_api_id: "173892611", // ID numérico de Calendly
         conscious_benefits: "Experiencia completa de transformación consciente",
         preparation_instructions: "Sin preparación especial necesaria",
         aftercare_instructions:
@@ -120,7 +126,8 @@ class ServiceModel {
         duration: 120,
         description:
           "Corte especializado para cabello rizado respetando su patrón natural",
-        calendly_event_type: "corte-natural-curly",
+        calendly_event_type: "corte-curly", // SLUG CORRECTO
+        calendly_api_id: "173903692", // ID numérico de Calendly
         conscious_benefits:
           "Potencia la belleza natural de los rizos sin dañar su estructura",
         preparation_instructions:
@@ -134,7 +141,8 @@ class ServiceModel {
         price: 85,
         duration: 150, // 2.5 horas
         description: "Retoque de raíz con secado profesional",
-        calendly_event_type: "menu-raiz-secar",
+        calendly_event_type: "coloracion-menu-raiz-secar", // SLUG CORRECTO
+        calendly_api_id: "173913755", // ID numérico de Calendly
         conscious_benefits:
           "Coloración consciente que respeta la salud del cuero cabelludo",
         preparation_instructions: "Cabello sin lavar 24-48h, sin productos",
@@ -147,7 +155,8 @@ class ServiceModel {
         price: 95,
         duration: 150,
         description: "Retoque de raíz con baño de color completo",
-        calendly_event_type: "menu-raiz-bano",
+        calendly_event_type: "coloracion-menu-raiz-bano", // SLUG CORRECTO
+        calendly_api_id: "173913862", // ID numérico de Calendly
         conscious_benefits:
           "Coloración uniforme respetando la estructura capilar",
         preparation_instructions:
@@ -161,7 +170,8 @@ class ServiceModel {
         price: 105,
         duration: 150,
         description: "Retoque de raíz con corte personalizado",
-        calendly_event_type: "menu-raiz-cortar",
+        calendly_event_type: "coloracion-menu-raiz-bano-clon", // SLUG CORRECTO
+        calendly_api_id: "173913957", // ID numérico de Calendly
         conscious_benefits:
           "Transformación completa color y forma de manera consciente",
         preparation_instructions:
@@ -175,7 +185,8 @@ class ServiceModel {
         duration: 150,
         description:
           "Servicio completo: retoque de raíz, baño de color y corte",
-        calendly_event_type: "menu-completo",
+        calendly_event_type: "coloracion-menu-raiz-bano-cortar", // SLUG CORRECTO
+        calendly_api_id: "ID_NO_PROPORCIONADO_PARA_ESTE_SERVICIO", // No ID proporcionado
         conscious_benefits:
           "Transformación total con filosofía de peluquería consciente",
         preparation_instructions:
@@ -188,7 +199,8 @@ class ServiceModel {
         price: 130,
         duration: 150,
         description: "Mechas o iluminaciones en zonas específicas",
-        calendly_event_type: "iluminaciones-localizadas",
+        calendly_event_type: "coloracion-menu-iluminaciones-morena", // SLUG CORRECTO
+        calendly_api_id: "173914073", // ID numérico de Calendly
         conscious_benefits:
           "Iluminación natural que respeta la base del cabello",
         preparation_instructions:
@@ -201,7 +213,8 @@ class ServiceModel {
         price: 190,
         duration: 210, // 3.5 horas
         description: "Decoloración completa para lograr rubio total",
-        calendly_event_type: "full-blond",
+        calendly_event_type: "coloracion-menu-iluminaciones-full-blond", // SLUG CORRECTO
+        calendly_api_id: "173914133", // ID numérico de Calendly
         conscious_benefits:
           "Decoloración progresiva respetando la integridad capilar",
         preparation_instructions:
@@ -215,7 +228,8 @@ class ServiceModel {
         price: 300,
         duration: 180, // 3 horas
         description: "Tratamiento de alisado progresivo con enzimas naturales",
-        calendly_event_type: "enzimoterapia",
+        calendly_event_type: "alisado-organico-enzimoterapia", // SLUG CORRECTO
+        calendly_api_id: "173913350", // ID numérico de Calendly
         conscious_benefits:
           "Alisado natural sin químicos agresivos, respeta la estructura capilar",
         preparation_instructions:
@@ -230,7 +244,8 @@ class ServiceModel {
         duration: 120, // 2 horas
         description:
           "Tratamiento de queratina para eliminar el frizz y suavizar",
-        calendly_event_type: "queratina-antifrizz",
+        calendly_event_type: "proteinas-anti-frizz", // SLUG CORRECTO
+        calendly_api_id: "173913414", // ID numérico de Calendly
         conscious_benefits:
           "Suavidad natural sin alterar la estructura del cabello",
         preparation_instructions: "Cabello limpio, sin residuos de productos",
@@ -270,7 +285,7 @@ class ServiceModel {
         totalServices: this.ricardoServices.length,
         categories: this.validCategories.length,
         philosophy: "Peluquería Consciente",
-      },
+      }
     );
   }
 
@@ -282,7 +297,7 @@ class ServiceModel {
 
     try {
       logger.info(
-        "Inicializando servicios de Ricardo Buriticá Beauty Consulting",
+        "Inicializando servicios de Ricardo Buriticá Beauty Consulting"
       );
 
       const results = [];
@@ -291,23 +306,24 @@ class ServiceModel {
         // Verificar si el servicio ya existe
         const { data: existing } = await supabaseAdmin
           .from(this.tableName)
-          .select("id_servicio")
-          .eq("nombre", service.name)
+          .select("id") // Usa el nuevo nombre de columna "id"
+          .eq("name", service.name) // Usa el nuevo nombre de columna "name"
           .single();
 
         if (!existing) {
-          // Crear el servicio usando la estructura de la tabla 'servicios'
+          // Crear el servicio usando la estructura de la tabla 'services'
           const serviceData = {
-            nombre: service.name,
-            descripcion: service.description,
-            precio: service.price,
-            duracion: service.duration,
-            categoria: service.category,
-            activo: true,
-            imagen_url: null, // Se puede agregar después
-            url_reserva: service.calendly_event_type
-              ? `https://calendly.com/ricardoburitica/${service.calendly_event_type}`
+            name: service.name, // Usa el nuevo nombre de columna "name"
+            description: service.description, // Usa el nuevo nombre de columna "description"
+            price: service.price,
+            duration: service.duration,
+            category: service.category, // Usa el nuevo nombre de columna "category"
+            is_active: true, // Usa el nuevo nombre de columna "is_active"
+            image_url: null, // Usa el nuevo nombre de columna "image_url"
+            booking_url: service.calendly_event_type // Usa el nuevo nombre de columna "booking_url"
+              ? `https://calendly.com/ricardoburitica/${service.calendly_event_type}` // Usa el slug aquí para la URL pública
               : null,
+            calendly_api_id: service.calendly_api_id || null, // Nuevo campo para el ID numérico
           };
 
           const { data, error } = await supabaseAdmin
@@ -320,7 +336,7 @@ class ServiceModel {
           } else {
             results.push(data[0]);
             logger.info(`Servicio creado: ${service.name}`, {
-              id: data[0].id_servicio,
+              id: data[0].id, // Usa el nuevo nombre de columna "id"
               price: service.price,
               duration: service.duration,
             });
@@ -369,7 +385,7 @@ class ServiceModel {
         .from(this.tableName)
         .select("*")
         .eq("category", category)
-        .eq("is_active", true)
+        .eq("is_active", true) // Usa el nuevo nombre de columna "is_active"
         .order("price", { ascending: true });
 
       if (error) throw error;
@@ -417,8 +433,8 @@ class ServiceModel {
       const { data: services, error } = await supabase
         .from(this.tableName)
         .select("*")
-        .eq("is_active", true)
-        .or(`name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`)
+        .eq("is_active", true) // Usa el nuevo nombre de columna "is_active"
+        .or(`name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`) // Usa nuevos nombres
         .order("price", { ascending: true });
 
       if (error) throw error;
@@ -427,7 +443,7 @@ class ServiceModel {
       const servicesWithRecommendations = services.map((service) => {
         const recommendations = this._generateConsciousRecommendations(
           service,
-          clientProfile,
+          clientProfile
         );
         return {
           ...service,
@@ -461,7 +477,7 @@ class ServiceModel {
         {
           searchTerm,
           duration: `${duration}ms`,
-        },
+        }
       );
       return { success: false, error: error.message };
     }
@@ -599,16 +615,16 @@ class ServiceModel {
       const { data: services, error: servicesError } = await supabase
         .from(this.tableName)
         .select("*")
-        .eq("is_active", true);
+        .eq("is_active", true); // Usa el nuevo nombre de columna "is_active"
 
       if (servicesError) throw servicesError;
 
       // Obtener reservas del período para análisis
       const { data: bookings, error: bookingsError } = await supabase
-        .from("bookings")
-        .select("service_id, status, booking_date, total_amount")
-        .gte("booking_date", startDate)
-        .lte("booking_date", endDate);
+        .from("bookings") // CAMBIO: de "reservas" a "bookings"
+        .select("service_id, status, booking_date, total_amount"); // Usa nuevos nombres de columnas
+      // .gte("booking_date", startDate) // Si usas estas, asegúrate que las columnas existen
+      // .lte("booking_date", endDate); // Si usas estas, asegúrate que las columnas existen
 
       if (bookingsError) throw bookingsError;
 
@@ -616,10 +632,10 @@ class ServiceModel {
       const categoryStats = {};
       this.validCategories.forEach((category) => {
         const categoryServices = services.filter(
-          (s) => s.category === category,
+          (s) => s.category === category
         );
         const categoryBookings = bookings.filter((b) =>
-          categoryServices.some((s) => s.id === b.service_id),
+          categoryServices.some((s) => s.id === b.service_id)
         );
 
         categoryStats[category] = {
@@ -627,7 +643,7 @@ class ServiceModel {
           total_bookings: categoryBookings.length,
           total_revenue: categoryBookings.reduce(
             (sum, b) => sum + (b.total_amount || 0),
-            0,
+            0
           ),
           avg_price:
             categoryServices.length > 0
@@ -641,14 +657,14 @@ class ServiceModel {
       const servicePopularity = services
         .map((service) => {
           const serviceBookings = bookings.filter(
-            (b) => b.service_id === service.id,
+            (b) => b.service_id === service.id
           );
           return {
             ...service,
             booking_count: serviceBookings.length,
             revenue: serviceBookings.reduce(
               (sum, b) => sum + (b.total_amount || 0),
-              0,
+              0
             ),
           };
         })
@@ -657,14 +673,14 @@ class ServiceModel {
       // Análisis de filosofía consciente
       const consciousAnalysis = {
         highly_conscious: services.filter(
-          (s) => this._calculatePhilosophyAlignment(s).score >= 80,
+          (s) => this._calculatePhilosophyAlignment(s).score >= 80
         ).length,
         conscious: services.filter((s) => {
           const score = this._calculatePhilosophyAlignment(s).score;
           return score >= 60 && score < 80;
         }).length,
         basic: services.filter(
-          (s) => this._calculatePhilosophyAlignment(s).score < 60,
+          (s) => this._calculatePhilosophyAlignment(s).score < 60
         ).length,
       };
 
@@ -686,7 +702,7 @@ class ServiceModel {
             total_bookings: bookings.length,
             total_revenue: bookings.reduce(
               (sum, b) => sum + (b.total_amount || 0),
-              0,
+              0
             ),
           },
           categories: categoryStats,
@@ -695,7 +711,7 @@ class ServiceModel {
           philosophy: this.consciousPhilosophy,
           recommendations: this._generateBusinessRecommendations(
             categoryStats,
-            servicePopularity,
+            servicePopularity
           ),
         },
       };
@@ -708,7 +724,7 @@ class ServiceModel {
           startDate,
           endDate,
           duration: `${duration}ms`,
-        },
+        }
       );
       return { success: false, error: error.message };
     }
@@ -741,7 +757,7 @@ class ServiceModel {
         type: "category_promotion",
         priority: "medium",
         message: `Categorías con poca demanda: ${lowPerformingCategories.join(
-          ", ",
+          ", "
         )}`,
         action:
           "Considera estrategias de marketing específicas o educación consciente",
@@ -750,7 +766,7 @@ class ServiceModel {
 
     // Recomendación de precios
     const highValueServices = servicePopularity.filter(
-      (s) => s.price > 100 && s.booking_count > 0,
+      (s) => s.price > 100 && s.booking_count > 0
     );
     if (highValueServices.length > 0) {
       recommendations.push({
@@ -900,7 +916,7 @@ class ServiceModel {
 
       if (filters.search_text) {
         query = query.or(
-          `name.ilike.%${filters.search_text}%,description.ilike.%${filters.search_text}%`,
+          `name.ilike.%${filters.search_text}%,description.ilike.%${filters.search_text}%`
         );
       }
 

@@ -5,7 +5,7 @@ const express = require("express");
 const { body } = require("express-validator");
 const GoogleAuthController = require("../controllers/googleAuthController");
 const { authenticate, requireRole } = require("../middleware/authMiddleware");
-const { validateRequest } = require("../middleware/validationMiddleware");
+const ValidationMiddleware = require("../middleware/validationMiddleware");
 const { auditLog } = require("../middleware/auditMiddleware");
 
 const router = express.Router();
@@ -23,7 +23,7 @@ router.get(
   "/auth/google",
   authenticate,
   auditLog("GOOGLE_AUTH_INITIATE"),
-  GoogleAuthController.initiateAuth,
+  GoogleAuthController.initiateAuth
 );
 
 /**
@@ -34,7 +34,7 @@ router.get(
 router.get(
   "/auth/google/callback",
   auditLog("GOOGLE_AUTH_CALLBACK"),
-  GoogleAuthController.handleCallback,
+  GoogleAuthController.handleCallback
 );
 
 /**
@@ -46,7 +46,7 @@ router.get(
   "/auth/google/status",
   authenticate,
   auditLog("GOOGLE_AUTH_STATUS"),
-  GoogleAuthController.getConnectionStatus,
+  GoogleAuthController.getConnectionStatus
 );
 
 /**
@@ -58,7 +58,7 @@ router.post(
   "/auth/google/disconnect",
   authenticate,
   auditLog("GOOGLE_AUTH_DISCONNECT"),
-  GoogleAuthController.disconnect,
+  GoogleAuthController.disconnect
 );
 
 /**
@@ -70,7 +70,7 @@ router.post(
   "/auth/google/test",
   authenticate,
   auditLog("GOOGLE_AUTH_TEST"),
-  GoogleAuthController.testConnection,
+  GoogleAuthController.testConnection
 );
 
 /**
@@ -82,7 +82,7 @@ router.get(
   "/calendars",
   authenticate,
   auditLog("GOOGLE_CALENDARS_LIST"),
-  GoogleAuthController.getCalendars,
+  GoogleAuthController.getCalendars
 );
 
 // =====================================================
@@ -138,7 +138,7 @@ router.post(
       .isString()
       .withMessage("Calendar ID must be a string"),
   ],
-  validateRequest,
+  ValidationMiddleware.validate(),
   auditLog("GOOGLE_EVENT_CREATE"),
   async (req, res) => {
     try {
@@ -224,7 +224,7 @@ router.post(
         details: error.message,
       });
     }
-  },
+  }
 );
 
 /**
@@ -314,7 +314,7 @@ router.get(
         details: error.message,
       });
     }
-  },
+  }
 );
 
 /**
@@ -346,7 +346,7 @@ router.put(
       .isLength({ max: 2000 })
       .withMessage("Description must be less than 2000 characters"),
   ],
-  validateRequest,
+  ValidationMiddleware.validate(),
   auditLog("GOOGLE_EVENT_UPDATE"),
   async (req, res) => {
     try {
@@ -422,7 +422,7 @@ router.put(
         details: error.message,
       });
     }
-  },
+  }
 );
 
 /**
@@ -463,7 +463,7 @@ router.delete(
         details: error.message,
       });
     }
-  },
+  }
 );
 
 /**
@@ -480,7 +480,7 @@ router.post(
       .isLength({ max: 500 })
       .withMessage("Reason must be less than 500 characters"),
   ],
-  validateRequest,
+  ValidationMiddleware.validate(),
   auditLog("GOOGLE_EVENT_CANCEL"),
   async (req, res) => {
     try {
@@ -527,7 +527,7 @@ router.post(
         details: error.message,
       });
     }
-  },
+  }
 );
 
 module.exports = router;

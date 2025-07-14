@@ -55,23 +55,24 @@ class NotificationService {
   /**
    * Enviar recordatorio de cita
    */
-  async sendBookingReminder(booking, client) {
+  async sendBookingReminder(booking, client, timeframe = '24 horas') {
     try {
       logger.info("⏰ Enviando recordatorio de cita", {
-        bookingId: booking.id_reserva,
-        clientPhone: client.telefono,
+        bookingId: booking.id || booking.id_reserva,
+        clientPhone: client.phone || client.telefono,
+        timeframe
       });
 
-      const message = this.buildBookingReminderMessage(booking, client);
+      const message = this.buildBookingReminderMessage(booking, client, timeframe);
 
-      const result = await this.sendWhatsAppMessage(client.telefono, message);
+      const result = await this.sendWhatsAppMessage(client.phone || client.telefono, message);
 
       await notificationModel.create({
-        recipient_phone: client.telefono,
-        message_type: this.templates.BOOKING_REMINDER,
+        recipient_phone: client.phone || client.telefono,
+        message_type: timeframe === '24 horas' ? 'booking_reminder_24h' : 'booking_reminder_2h',
         content: message,
         status: result.success ? "sent" : "failed",
-        booking_id: booking.id_reserva,
+        booking_id: booking.id || booking.id_reserva,
       });
 
       return result;
@@ -244,24 +245,51 @@ Si necesitas cancelar o reprogramar, contáctame con al menos 24h de antelación
   /**
    * Construir mensaje de recordatorio
    */
-  buildBookingReminderMessage(booking, client) {
-    const fecha = new Date(booking.fecha_hora).toLocaleDateString("es-ES");
-    const hora = new Date(booking.fecha_hora).toLocaleTimeString("es-ES", {
+  buildBookingReminderMessage(booking, client, timeframe = '24 horas') {
+    // Manejar diferentes formatos de fecha
+    let appointmentDate;
+    if (booking.appointment_date && booking.appointment_time) {
+      appointmentDate = new Date(booking.appointment_date + ' ' + booking.appointment_time);
+    } else if (booking.fecha_hora) {
+      appointmentDate = new Date(booking.fecha_hora);
+    } else {
+      appointmentDate = new Date();
+    }
+
+    const fecha = appointmentDate.toLocaleDateString("es-ES", {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    const hora = appointmentDate.toLocaleTimeString("es-ES", {
       hour: "2-digit",
       minute: "2-digit",
     });
 
+    const clientName = client.name || client.nombre;
+    const serviceName = booking.service_name || booking.servicio_nombre;
+    const timeText = timeframe === '24 horas' ? 'mañana' : 'en 2 horas';
+
     return `⏰ *RECORDATORIO DE CITA*
 
-Hola ${client.nombre}, te recuerdo tu cita:
+Hola ${clientName}, te recuerdo tu cita ${timeText}:
 
-📅 *Mañana ${fecha}*
+📅 *${fecha}*
 🕐 *Hora:* ${hora}
-💇‍♀️ *Servicio:* ${booking.servicio_nombre}
+💇‍♀️ *Servicio:* ${serviceName}
 
-Por favor, confirma tu asistencia respondiendo a este mensaje.
+${timeframe === '2 horas' ? 
+  '🚨 *¡Tu cita es en 2 horas!*\n\nPor favor, confirma tu asistencia.' : 
+  'Por favor, confirma tu asistencia respondiendo a este mensaje.'
+}
 
-¡Te espero! ✨`;
+📍 *Ubicación:* Ricardo Buriticá Beauty Studio
+
+¡Te espero! ✨
+
+_Ricardo Buriticá Beauty Consulting_
+_Peluquería Consciente_`;
   }
 
   /**

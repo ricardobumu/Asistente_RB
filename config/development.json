@@ -1,0 +1,32 @@
+{
+  "server": {
+    "port": 3000,
+    "host": "localhost",
+    "cors": {
+      "origin": [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000"
+      ],
+      "credentials": true
+    }
+  },
+  "tunnel": {
+    "preferred": "ngrok",
+    "alternatives": [
+      "localtunnel",
+      "serveo",
+      "cloudflare"
+    ]
+  },
+  "endpoints": {
+    "health": "/health",
+    "admin": "/admin",
+    "api": "/api",
+    "webhook": "/autonomous/whatsapp/webhook"
+  },
+  "development": {
+    "hotReload": true,
+    "debugMode": true,
+    "logLevel": "debug"
+  }
+}

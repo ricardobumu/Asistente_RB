@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reservar Cita - Ricardo Buriticá Beauty Consulting</title>
+    <link rel="stylesheet" href="booking-widget.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div id="booking-widget" class="booking-widget">
+      <!-- Header del Widget -->
+      <div class="widget-header">
+        <div class="brand">
+          <i class="fas fa-cut"></i>
+          <h2>Ricardo Buriticá</h2>
+          <p>Peluquería Consciente</p>
+        </div>
+        <button class="close-btn" onclick="closeWidget()" aria-label="Cerrar">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Contenido del Widget -->
+      <div class="widget-content">
+        <!-- Paso 1: Selección de Servicio -->
+        <div id="step-service" class="step active">
+          <div class="step-header">
+            <h3><i class="fas fa-scissors"></i> Selecciona tu servicio</h3>
+            <p>Elige el servicio que deseas reservar</p>
+          </div>
+
+          <div class="services-grid" id="services-list">
+            <!-- Los servicios se cargarán dinámicamente -->
+            <div class="loading">
+              <i class="fas fa-spinner fa-spin"></i>
+              <p>Cargando servicios...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 2: Selección de Fecha -->
+        <div id="step-date" class="step">
+          <div class="step-header">
+            <h3><i class="fas fa-calendar"></i> Selecciona la fecha</h3>
+            <p>Elige el día que mejor te convenga</p>
+          </div>
+
+          <div class="calendar-container">
+            <div class="calendar-header">
+              <button class="nav-btn" onclick="previousMonth()">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <h4 id="current-month"></h4>
+              <button class="nav-btn" onclick="nextMonth()">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid">
+              <!-- El calendario se generará dinámicamente -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 3: Selección de Hora -->
+        <div id="step-time" class="step">
+          <div class="step-header">
+            <h3><i class="fas fa-clock"></i> Selecciona la hora</h3>
+            <p>
+              Horarios disponibles para <span id="selected-date-display"></span>
+            </p>
+          </div>
+
+          <div class="time-slots" id="time-slots">
+            <!-- Los horarios se cargarán dinámicamente -->
+            <div class="loading">
+              <i class="fas fa-spinner fa-spin"></i>
+              <p>Cargando horarios...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 4: Datos del Cliente -->
+        <div id="step-client" class="step">
+          <div class="step-header">
+            <h3><i class="fas fa-user"></i> Tus datos</h3>
+            <p>Necesitamos algunos datos para confirmar tu reserva</p>
+          </div>
+
+          <form id="client-form" class="client-form">
+            <div class="form-group">
+              <label for="client-name">
+                <i class="fas fa-user"></i>
+                Nombre completo *
+              </label>
+              <input
+                type="text"
+                id="client-name"
+                name="name"
+                required
+                placeholder="Tu nombre completo"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="client-phone">
+                <i class="fas fa-phone"></i>
+                Teléfono / WhatsApp *
+              </label>
+              <input
+                type="tel"
+                id="client-phone"
+                name="phone"
+                required
+                placeholder="+34 600 000 000"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="client-email">
+                <i class="fas fa-envelope"></i>
+                Email
+              </label>
+              <input
+                type="email"
+                id="client-email"
+                name="email"
+                placeholder="tu@email.com"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="client-notes">
+                <i class="fas fa-comment"></i>
+                Comentarios adicionales
+              </label>
+              <textarea
+                id="client-notes"
+                name="notes"
+                rows="3"
+                placeholder="¿Algo específico que debamos saber?"
+              ></textarea>
+            </div>
+
+            <div class="form-group checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="accept-terms" required />
+                <span class="checkmark"></span>
+                Acepto los
+                <a href="#" onclick="showTerms()">términos y condiciones</a> *
+              </label>
+            </div>
+
+            <div class="form-group checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="accept-whatsapp" />
+                <span class="checkmark"></span>
+                Acepto recibir recordatorios por WhatsApp
+              </label>
+            </div>
+          </form>
+        </div>
+
+        <!-- Paso 5: Confirmación -->
+        <div id="step-confirmation" class="step">
+          <div class="step-header">
+            <h3><i class="fas fa-check-circle"></i> Confirmar reserva</h3>
+            <p>Revisa los detalles de tu cita antes de confirmar</p>
+          </div>
+
+          <div class="booking-summary">
+            <div class="summary-card">
+              <div class="summary-item">
+                <i class="fas fa-scissors"></i>
+                <div>
+                  <strong>Servicio</strong>
+                  <span id="summary-service"></span>
+                </div>
+              </div>
+
+              <div class="summary-item">
+                <i class="fas fa-calendar"></i>
+                <div>
+                  <strong>Fecha</strong>
+                  <span id="summary-date"></span>
+                </div>
+              </div>
+
+              <div class="summary-item">
+                <i class="fas fa-clock"></i>
+                <div>
+                  <strong>Hora</strong>
+                  <span id="summary-time"></span>
+                </div>
+              </div>
+
+              <div class="summary-item">
+                <i class="fas fa-euro-sign"></i>
+                <div>
+                  <strong>Precio</strong>
+                  <span id="summary-price"></span>
+                </div>
+              </div>
+
+              <div class="summary-item">
+                <i class="fas fa-clock"></i>
+                <div>
+                  <strong>Duración</strong>
+                  <span id="summary-duration"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="client-summary">
+              <h4><i class="fas fa-user"></i> Datos del cliente</h4>
+              <p>
+                <strong>Nombre:</strong> <span id="summary-client-name"></span>
+              </p>
+              <p>
+                <strong>Teléfono:</strong>
+                <span id="summary-client-phone"></span>
+              </p>
+              <p id="summary-client-email-row" style="display: none">
+                <strong>Email:</strong> <span id="summary-client-email"></span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 6: Éxito -->
+        <div id="step-success" class="step">
+          <div class="success-content">
+            <div class="success-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>¡Reserva confirmada!</h3>
+            <p>Tu cita ha sido reservada exitosamente</p>
+
+            <div class="success-details">
+              <p>
+                <strong>Número de reserva:</strong>
+                <span id="booking-id"></span>
+              </p>
+              <p>Recibirás una confirmación por WhatsApp en breve</p>
+              <p>Te enviaremos recordatorios 24h y 2h antes de tu cita</p>
+            </div>
+
+            <div class="success-actions">
+              <button class="btn btn-primary" onclick="addToCalendar()">
+                <i class="fas fa-calendar-plus"></i>
+                Añadir al calendario
+              </button>
+              <button class="btn btn-secondary" onclick="shareBooking()">
+                <i class="fas fa-share"></i>
+                Compartir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navegación -->
+      <div class="widget-navigation">
+        <button
+          id="back-btn"
+          class="btn btn-secondary"
+          onclick="previousStep()"
+          style="display: none"
+        >
+          <i class="fas fa-arrow-left"></i>
+          Anterior
+        </button>
+
+        <div class="step-indicators">
+          <span class="indicator active" data-step="1"></span>
+          <span class="indicator" data-step="2"></span>
+          <span class="indicator" data-step="3"></span>
+          <span class="indicator" data-step="4"></span>
+          <span class="indicator" data-step="5"></span>
+        </div>
+
+        <button id="next-btn" class="btn btn-primary" onclick="nextStep()">
+          Siguiente
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Loading Overlay -->
+      <div id="loading-overlay" class="loading-overlay" style="display: none">
+        <div class="loading-content">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>Procesando tu reserva...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="booking-widget.js"></script>
+  </body>
+</html>

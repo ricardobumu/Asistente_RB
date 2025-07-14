@@ -2,10 +2,10 @@
 const express = require("express");
 const router = express.Router();
 const adminBookingController = require("../controllers/adminBookingController");
-const authMiddleware = require("../middleware/authMiddleware");
+const { authenticate } = require("../middleware/authMiddleware");
 
 // Aplicar autenticación a todas las rutas administrativas
-router.use(authMiddleware.requireAuth);
+router.use(authenticate);
 
 /**
  * GET /admin/bookings/dashboard

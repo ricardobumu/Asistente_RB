@@ -273,7 +273,7 @@ Ricardo Buriticá Beauty Consulting`,
         validTypes: this.validTypes.length,
         validChannels: this.validChannels.length,
         consciousTemplates: Object.keys(this.consciousTemplates).length,
-      },
+      }
     );
   }
 
@@ -293,7 +293,7 @@ Ricardo Buriticá Beauty Consulting`,
       const { data: client, error: clientError } = await supabase
         .from("clients")
         .select(
-          "id, name, email, phone, whatsapp_number, preferred_contact_method, metadata",
+          "id, name, email, phone, whatsapp_number, preferred_contact_method, metadata"
         )
         .eq("id", notificationData.client_id)
         .single();
@@ -314,7 +314,7 @@ Ricardo Buriticá Beauty Consulting`,
             services (
               id, name, category, price, duration, metadata
             )
-          `,
+          `
           )
           .eq("id", notificationData.booking_id)
           .single();
@@ -336,7 +336,7 @@ Ricardo Buriticá Beauty Consulting`,
           service,
           booking,
           customData: notificationData.custom_data || {},
-        },
+        }
       );
 
       // Preparar datos para inserción
@@ -553,7 +553,7 @@ Ricardo Buriticá Beauty Consulting`,
           services (
             id, name, category, price, duration, metadata
           )
-        `,
+        `
         )
         .eq("id", bookingId)
         .single();
@@ -564,7 +564,7 @@ Ricardo Buriticá Beauty Consulting`,
 
       // Calcular cuándo enviar el recordatorio
       const bookingDateTime = new Date(
-        `${booking.booking_date}T${booking.booking_time}`,
+        `${booking.booking_date}T${booking.booking_time}`
       );
       let reminderTime = new Date(bookingDateTime);
 
@@ -605,7 +605,7 @@ Ricardo Buriticá Beauty Consulting`,
 
       const result = await this.create(
         notificationData,
-        "ricardo_reminder_system",
+        "ricardo_reminder_system"
       );
 
       if (result.success) {
@@ -654,7 +654,7 @@ Ricardo Buriticá Beauty Consulting`,
 
       const result = await this.create(
         notificationData,
-        "ricardo_education_system",
+        "ricardo_education_system"
       );
 
       if (result.success) {
@@ -714,7 +714,7 @@ Ricardo Buriticá Beauty Consulting`,
 
       const result = await this.create(
         notificationData,
-        "ricardo_maintenance_system",
+        "ricardo_maintenance_system"
       );
 
       if (result.success) {
@@ -779,7 +779,7 @@ Ricardo Buriticá Beauty Consulting`,
           clients (
             id, name, email, phone, whatsapp_number, preferred_contact_method
           )
-        `,
+        `
         )
         .eq("id", notificationId)
         .single();
@@ -823,7 +823,7 @@ Ricardo Buriticá Beauty Consulting`,
           clients (
             id, name, email, phone, whatsapp_number, preferred_contact_method
           )
-        `,
+        `
         )
         .eq("status", "pending")
         .lte("scheduled_for", now)
@@ -881,6 +881,192 @@ Ricardo Buriticá Beauty Consulting`,
       return { success: false, error: error.message };
     }
   }
+
+  /**
+   * Buscar notificación existente para evitar duplicados
+   */
+  async findExisting(bookingId, clientId, notificationType) {
+    const startTime = Date.now();
+
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .select("*")
+        .eq("booking_id", bookingId)
+        .eq("client_id", clientId)
+        .eq("notification_type", notificationType)
+        .in("status", ["sent", "pending"])
+        .single();
+
+      if (error && error.code !== "PGRST116") {
+        // PGRST116 = no rows found
+        throw error;
+      }
+
+      const duration = Date.now() - startTime;
+      logger.debug("Búsqueda de notificación existente", {
+        bookingId,
+        clientId,
+        notificationType,
+        found: !!data,
+        duration: `${duration}ms`,
+      });
+
+      return { success: true, data };
+    } catch (error) {
+      const duration = Date.now() - startTime;
+      logger.error("Error buscando notificación existente", error, {
+        bookingId,
+        clientId,
+        notificationType,
+        duration: `${duration}ms`,
+      });
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Actualizar estado de notificación
+   */
+  async updateStatus(notificationId, status, errorMessage = null) {
+    const startTime = Date.now();
+
+    try {
+      const updateData = {
+        status,
+        updated_at: new Date().toISOString(),
+      };
+
+      if (status === "sent") {
+        updateData.sent_at = new Date().toISOString();
+      } else if (status === "failed" || status === "failed_max_retries") {
+        updateData.error_message = errorMessage;
+        updateData.failed_at = new Date().toISOString();
+      }
+
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .update(updateData)
+        .eq("id", notificationId)
+        .select();
+
+      if (error) throw error;
+
+      const duration = Date.now() - startTime;
+      logger.info("Estado de notificación actualizado", {
+        notificationId,
+        status,
+        duration: `${duration}ms`,
+      });
+
+      return { success: true, data: data[0] };
+    } catch (error) {
+      const duration = Date.now() - startTime;
+      logger.error("Error actualizando estado de notificación", error, {
+        notificationId,
+        status,
+        duration: `${duration}ms`,
+      });
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Eliminar notificaciones antiguas
+   */
+  async deleteOldNotifications(beforeDate) {
+    const startTime = Date.now();
+
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .delete()
+        .lt("created_at", beforeDate.toISOString())
+        .in("status", ["sent", "failed", "failed_max_retries"]);
+
+      if (error) throw error;
+
+      const duration = Date.now() - startTime;
+      const deletedCount = data ? data.length : 0;
+
+      logger.info("Notificaciones antiguas eliminadas", {
+        deletedCount,
+        beforeDate: beforeDate.toISOString(),
+        duration: `${duration}ms`,
+      });
+
+      return { success: true, deletedCount };
+    } catch (error) {
+      const duration = Date.now() - startTime;
+      logger.error("Error eliminando notificaciones antiguas", error, {
+        beforeDate: beforeDate.toISOString(),
+        duration: `${duration}ms`,
+      });
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Obtener estadísticas de notificaciones
+   */
+  async getStats(dateFrom, dateTo) {
+    const startTime = Date.now();
+
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .select("status, notification_type, channel, created_at")
+        .gte("created_at", dateFrom.toISOString())
+        .lte("created_at", dateTo.toISOString());
+
+      if (error) throw error;
+
+      // Procesar estadísticas
+      const stats = {
+        total: data.length,
+        by_status: {},
+        by_type: {},
+        by_channel: {},
+        success_rate: 0,
+      };
+
+      data.forEach((notification) => {
+        // Por estado
+        stats.by_status[notification.status] =
+          (stats.by_status[notification.status] || 0) + 1;
+
+        // Por tipo
+        stats.by_type[notification.notification_type] =
+          (stats.by_type[notification.notification_type] || 0) + 1;
+
+        // Por canal
+        stats.by_channel[notification.channel] =
+          (stats.by_channel[notification.channel] || 0) + 1;
+      });
+
+      // Calcular tasa de éxito
+      const sent = stats.by_status.sent || 0;
+      stats.success_rate =
+        stats.total > 0 ? Math.round((sent / stats.total) * 100) : 0;
+
+      const duration = Date.now() - startTime;
+      logger.info("Estadísticas de notificaciones obtenidas", {
+        total: stats.total,
+        success_rate: stats.success_rate,
+        duration: `${duration}ms`,
+      });
+
+      return { success: true, data: stats };
+    } catch (error) {
+      const duration = Date.now() - startTime;
+      logger.error("Error obteniendo estadísticas de notificaciones", error, {
+        dateFrom: dateFrom.toISOString(),
+        dateTo: dateTo.toISOString(),
+        duration: `${duration}ms`,
+      });
+      return { success: false, error: error.message };
+    }
+  }
 }
 
-module.exports = new NotificationModel();
+module.exports = NotificationModel;

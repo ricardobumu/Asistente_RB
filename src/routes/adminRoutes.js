@@ -8,6 +8,8 @@ const AuthController = require("../controllers/authController");
 const SecurityMiddleware = require("../middleware/securityMiddleware");
 const ErrorHandler = require("../middleware/errorHandler");
 const adminBookingRoutes = require("./adminBookingRoutes");
+const gdprCleanupWorker = require("../workers/gdprCleanupWorker");
+const gdprService = require("../services/gdprService");
 
 // ===== RUTAS DE AUTENTICACIÓN (SIN PROTECCIÓN) =====
 
@@ -351,6 +353,132 @@ router.get(
       throw error;
     }
   }),
+);
+
+// ===== RUTAS RGPD =====
+
+/**
+ * GET /admin/gdpr/stats
+ * Estadísticas de compliance RGPD
+ */
+router.get(
+  "/gdpr/stats",
+  ErrorHandler.asyncWrapper(async (req, res) => {
+    const logger = require("../utils/logger");
+    const { startDate, endDate } = req.query;
+    
+    try {
+      const report = await gdprService.generateComplianceReport(
+        startDate || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        endDate || new Date().toISOString().split('T')[0]
+      );
+
+      if (report.success) {
+        logger.audit("GDPR stats accessed", req.user?.email || "admin", "gdpr_stats", {
+          startDate, endDate, ip: req.ip
+        });
+
+        res.json({
+          success: true,
+          data: report.report
+        });
+      } else {
+        throw new Error(report.error);
+      }
+    } catch (error) {
+      logger.error("Error getting GDPR stats", error);
+      throw error;
+    }
+  })
+);
+
+/**
+ * GET /admin/gdpr/worker/stats
+ * Estadísticas del worker de limpieza RGPD
+ */
+router.get(
+  "/gdpr/worker/stats",
+  ErrorHandler.asyncWrapper(async (req, res) => {
+    const logger = require("../utils/logger");
+    
+    try {
+      const stats = gdprCleanupWorker.getStats();
+      
+      logger.audit("GDPR worker stats accessed", req.user?.email || "admin", "gdpr_worker_stats", {
+        ip: req.ip
+      });
+
+      res.json({
+        success: true,
+        data: stats
+      });
+    } catch (error) {
+      logger.error("Error getting GDPR worker stats", error);
+      throw error;
+    }
+  })
+);
+
+/**
+ * POST /admin/gdpr/cleanup/manual
+ * Ejecutar limpieza manual de datos RGPD
+ */
+router.post(
+  "/gdpr/cleanup/manual",
+  ErrorHandler.asyncWrapper(async (req, res) => {
+    const logger = require("../utils/logger");
+    
+    try {
+      const result = await gdprCleanupWorker.runManualCleanup();
+      
+      logger.audit("Manual GDPR cleanup executed", req.user?.email || "admin", "gdpr_manual_cleanup", {
+        result: result.stats, ip: req.ip
+      });
+
+      res.json({
+        success: true,
+        message: "Limpieza manual ejecutada correctamente",
+        data: result
+      });
+    } catch (error) {
+      logger.error("Error in manual GDPR cleanup", error);
+      throw error;
+    }
+  })
+);
+
+/**
+ * POST /admin/gdpr/export/:clientId
+ * Exportar datos de cliente (admin)
+ */
+router.post(
+  "/gdpr/export/:clientId",
+  ErrorHandler.asyncWrapper(async (req, res) => {
+    const logger = require("../utils/logger");
+    const { clientId } = req.params;
+    const { format = 'json' } = req.body;
+
+    try {
+      const result = await gdprService.exportUserData(clientId, format);
+
+      if (result.success) {
+        logger.audit("Admin data export", req.user?.email || "admin", "gdpr_admin_export", {
+          clientId, format, ip: req.ip
+        });
+
+        res.json({
+          success: true,
+          message: "Datos exportados correctamente",
+          data: result.data
+        });
+      } else {
+        throw new Error(result.error);
+      }
+    } catch (error) {
+      logger.error("Error in admin data export", error);
+      throw error;
+    }
+  })
 );
 
 // ===== RUTAS DE CONFIGURACIÓN =====
