@@ -16,11 +16,11 @@ const server = http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS",
+    "GET, POST, PUT, DELETE, OPTIONS"
   );
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, X-Requested-With",
+    "Content-Type, Authorization, X-Requested-With"
   );
   res.setHeader("Content-Type", "application/json");
   res.setHeader("X-Content-Type-Options", "nosniff");
@@ -69,8 +69,8 @@ const server = http.createServer((req, res) => {
           ],
         },
         null,
-        2,
-      ),
+        2
+      )
     );
   } else if (path === "/health" && method === "GET") {
     // Health check
@@ -81,7 +81,7 @@ const server = http.createServer((req, res) => {
         uptime: process.uptime(),
         timestamp: new Date().toISOString(),
         port: PORT,
-      }),
+      })
     );
   } else if (path === "/webhook/whatsapp" && method === "POST") {
     // Webhook de WhatsApp
@@ -102,7 +102,7 @@ const server = http.createServer((req, res) => {
           message: "WhatsApp webhook recibido correctamente",
           received_data: body,
           timestamp: new Date().toISOString(),
-        }),
+        })
       );
     });
   } else if (
@@ -127,7 +127,7 @@ const server = http.createServer((req, res) => {
           message: "Calendly webhook recibido correctamente",
           received_data: body,
           timestamp: new Date().toISOString(),
-        }),
+        })
       );
     });
   } else {
@@ -145,7 +145,7 @@ const server = http.createServer((req, res) => {
           "POST /webhook/calendly",
           "POST /api/calendly/webhook",
         ],
-      }),
+      })
     );
   }
 });
@@ -159,7 +159,7 @@ server.listen(PORT, () => {
   console.log(`🌐 Si tienes ngrok activo, usa estas URLs:`);
   console.log(`   - WhatsApp: https://tu-url.ngrok-free.app/webhook/whatsapp`);
   console.log(
-    `   - Calendly: https://tu-url.ngrok-free.app/api/calendly/webhook`,
+    `   - Calendly: https://tu-url.ngrok-free.app/api/calendly/webhook`
   );
   console.log(`\n⚡ Servidor funcionando correctamente`);
 });

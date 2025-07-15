@@ -39,22 +39,23 @@ timeout /t 5 /nobreak >nul
 echo.
 echo ✅ Aplicacion Node.js iniciada (ver ventana separada para logs).
 
-REM Iniciar ngrok en una nueva ventana de CMD
+REM Iniciar ngrok en una nueva ventana de CMD con URL FIJA
 echo.
 echo ==============================================
-echo = INICIANDO NGROK Y OBTENIENDO URL PUBLICA =
+echo = INICIANDO NGROK CON URL FIJA =
 echo ==============================================
 echo.
 REM El comando ngrok debe ejecutarse desde la carpeta C:\ngrok
-start cmd /k "cd /d C:\ngrok && ngrok http 3000"
+REM ** CAMBIO CLAVE AQUI: USAR --url PARA TU DOMINIO FIJO **
+start cmd /k "cd /d C:\ngrok && ngrok http --url ricardoburitica.ngrok.app 3000"
 
 echo.
 echo ==============================================
 echo = PROCESO DE INICIO AUTOMATIZADO COMPLETADO =
 echo ==============================================
 echo.
-echo ** ATENCION: La URL de NGROK aparecera en la VENTANA DE NGROK. **
-echo ** Busca la linea "Forwarding" y la URL HTTPS. **
+echo ** ATENCION: Tu URL FIJA de NGROK es: https://ricardoburitica.ngrok.app **
+echo ** La veras en la VENTANA DE NGROK que se abrio. **
 echo.
 echo Puedes probar tu API local en: http://localhost:3000/api/servicios
 echo.
