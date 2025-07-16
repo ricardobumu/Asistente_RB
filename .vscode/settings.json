@@ -2,6 +2,7 @@
   "zencoder.enableRepoIndexing": true,
   "editor.formatOnSave": true,
   "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "javascript.validate.enable": true,
   "javascript.suggest.autoImports": true,
@@ -11,9 +12,54 @@
   "eslint.enable": false,
   "javascript.preferences.includePackageJsonAutoImports": "auto",
   "files.associations": {
-    "*.js": "javascript"
+    "*.js": "javascript",
+    "*.env*": "dotenv",
+    "*.log": "log",
+    "*.bat": "batch"
   },
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
+  },
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/logs": true,
+    "**/*.log": true,
+    "**/.env": true,
+    "**/.env.local": true,
+    "**/.env.production": true,
+    "**/credentials.json": true,
+    "**/client_secret_*.json": true,
+    "**/.ngrok*": true,
+    "**/ngrok.yml": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/logs": true,
+    "**/*.log": true,
+    "**/.env*": true,
+    "**/credentials.json": true,
+    "**/client_secret_*.json": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "javascript.format.enable": true,
+  "javascript.format.semicolons": "insert",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.detectIndentation": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.wordWrap": "on",
+  "editor.rulers": [80, 120],
+  "editor.minimap.enabled": true,
+  "workbench.colorCustomizations": {
+    "editorRuler.foreground": "#333333"
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/logs/**": true,
+    "**/.env*": true
   }
 }
