@@ -11,7 +11,7 @@ const TABLE_MAPPING = {
   users: "clientes", // Usaremos clientes como usuarios por ahora
   clients: "clientes",
   services: "servicios",
-  bookings: "reservas",
+  appointments: "reservas",
   conversations: "conversations", // Ya existe
   whatsapp_conversations: "conversations",
   whatsapp_messages: "conversaciones",
@@ -37,15 +37,15 @@ const FIELD_MAPPING = {
   category: "categoria",
   is_active: "activo",
   image_url: "imagen_url",
-  booking_url: "url_reserva",
+  calendly_url: "url_calendly",
 
-  // BOOKINGS/RESERVAS
-  booking_id: "id_reserva",
+  // APPOINTMENTS/RESERVAS
+  appointment_id: "id_reserva",
   client_id: "id_cliente",
   scheduled_at: "fecha_reserva",
   status: "estado",
   notes: "notas",
-  booking_url: "url_reserva",
+  calendly_event_uri: "uri_evento_calendly",
 };
 
 // Mapeo inverso: BD -> código
@@ -70,13 +70,14 @@ const REVERSE_FIELD_MAPPING = {
   categoria: "category",
   activo: "is_active",
   imagen_url: "image_url",
-  url_reserva: "booking_url",
+  url_calendly: "calendly_url",
 
-  // RESERVAS -> BOOKINGS
+  // RESERVAS -> APPOINTMENTS
   id_reserva: "id",
   fecha_reserva: "scheduled_at",
   estado: "status",
   notas: "notes",
+  uri_evento_calendly: "calendly_event_uri",
 
   // Campos comunes
   created_at: "created_at",

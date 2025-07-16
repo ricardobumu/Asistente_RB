@@ -1,5 +1,5 @@
 // src/controllers/calendlyWebhookController.js
-const BookingService = require("../services/bookingService");
+const AppointmentService = require("../services/appointmentService");
 const ClientService = require("../services/clientService");
 const ServiceService = require("../services/serviceService");
 const DatabaseAdapter = require("../adapters/databaseAdapter");
@@ -87,7 +87,7 @@ class CalendlyWebhookController {
         if (!clientResult.success) {
           logger.error(
             "Error creating client from Calendly:",
-            clientResult.error,
+            clientResult.error
           );
           return;
         }
@@ -100,35 +100,37 @@ class CalendlyWebhookController {
       if (!serviceResult.success) {
         logger.warn(
           "Could not map Calendly event type to service:",
-          eventTypeUri,
+          eventTypeUri
         );
         return;
       }
 
-      // Crear reserva
-      const bookingData = {
-        client_phone: clientResult.data.phone || email, // Usar email como fallback
+      // Crear cita
+      const appointmentData = {
+        client_id: clientResult.data.id,
         service_id: serviceResult.data.id,
         scheduled_at: startTime,
-        status: "confirmada",
-        booking_url: scheduled_event?.uri,
-        notes: `Reserva creada desde Calendly - Evento: ${
+        status: "confirmed",
+        calendly_event_uri: scheduled_event?.uri,
+        notes: `Cita creada desde Calendly - Evento: ${
           eventData?.name || "N/A"
         }`,
+        source: "calendly_webhook",
       };
 
-      const bookingResult = await BookingService.createBooking(bookingData);
+      const appointmentResult =
+        await AppointmentService.createAppointment(appointmentData);
 
-      if (bookingResult.success) {
-        logger.info("Booking created from Calendly webhook:", {
-          bookingId: bookingResult.data.id,
+      if (appointmentResult.success) {
+        logger.info("Appointment created from Calendly webhook:", {
+          appointmentId: appointmentResult.data.id,
           clientEmail: email,
           scheduledAt: startTime,
         });
       } else {
         logger.error(
-          "Error creating booking from Calendly:",
-          bookingResult.error,
+          "Error creating appointment from Calendly:",
+          appointmentResult.error
         );
       }
     } catch (error) {
@@ -155,7 +157,7 @@ class CalendlyWebhookController {
         "*",
         {
           booking_url: eventUri,
-        },
+        }
       );
 
       if (error || !bookings || bookings.length === 0) {
@@ -168,7 +170,7 @@ class CalendlyWebhookController {
       // Cancelar reserva
       const cancelResult = await BookingService.cancelBooking(
         booking.id,
-        "Cancelada desde Calendly",
+        "Cancelada desde Calendly"
       );
 
       if (cancelResult.success) {
@@ -179,7 +181,7 @@ class CalendlyWebhookController {
       } else {
         logger.error(
           "Error cancelling booking from Calendly:",
-          cancelResult.error,
+          cancelResult.error
         );
       }
     } catch (error) {
@@ -206,7 +208,7 @@ class CalendlyWebhookController {
         "*",
         {
           booking_url: eventUri,
-        },
+        }
       );
 
       if (error || !bookings || bookings.length === 0) {
@@ -220,7 +222,7 @@ class CalendlyWebhookController {
       const updateResult = await BookingService.updateBookingStatus(
         booking.id,
         "no_show",
-        "Cliente no se presentó (marcado desde Calendly)",
+        "Cliente no se presentó (marcado desde Calendly)"
       );
 
       if (updateResult.success) {
@@ -231,7 +233,7 @@ class CalendlyWebhookController {
       } else {
         logger.error(
           "Error marking booking as no-show from Calendly:",
-          updateResult.error,
+          updateResult.error
         );
       }
     } catch (error) {

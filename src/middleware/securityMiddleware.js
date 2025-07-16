@@ -180,12 +180,32 @@ class SecurityMiddleware {
    */
   static validateTwilioSignature(req, res, next) {
     try {
+      // En desarrollo con ngrok, permitir webhooks sin validación de firma
+      const isDevelopment =
+        process.env.NODE_ENV === "development" ||
+        process.env.NODE_ENV === "dev";
+      const isNgrok =
+        req.get("host")?.includes("ngrok") ||
+        req.get("host")?.includes("localhost");
+
+      if (isDevelopment && isNgrok) {
+        logger.info(
+          "Desarrollo con ngrok detectado - omitiendo validación de firma Twilio",
+          {
+            host: req.get("host"),
+            environment: process.env.NODE_ENV,
+          }
+        );
+        return next();
+      }
+
       const twilioSignature = req.headers["x-twilio-signature"];
 
       if (!twilioSignature) {
         logger.warn("Missing Twilio signature", {
           ip: req.ip,
           userAgent: req.headers["user-agent"],
+          host: req.get("host"),
         });
         return res.status(401).json({ error: "Unauthorized" });
       }
@@ -199,10 +219,23 @@ class SecurityMiddleware {
       // Construir URL completa
       const url = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
 
-      // Crear firma esperada
+      // Crear firma esperada usando el cuerpo como string
+      let bodyString = "";
+      if (req.body) {
+        if (typeof req.body === "string") {
+          bodyString = req.body;
+        } else {
+          // Para webhooks de Twilio, el cuerpo viene como form-urlencoded
+          bodyString = Object.keys(req.body)
+            .sort()
+            .map((key) => `${key}=${req.body[key]}`)
+            .join("&");
+        }
+      }
+
       const expectedSignature = crypto
         .createHmac("sha1", authToken)
-        .update(url + JSON.stringify(req.body))
+        .update(url + bodyString)
         .digest("base64");
 
       // Comparar firmas de forma segura
@@ -214,17 +247,20 @@ class SecurityMiddleware {
       if (!isValid) {
         logger.warn("Invalid Twilio signature", {
           ip: req.ip,
+          url: url,
           expectedSignature: expectedSignature.substring(0, 10) + "...",
           receivedSignature: twilioSignature.substring(0, 10) + "...",
         });
         return res.status(401).json({ error: "Unauthorized" });
       }
 
+      logger.info("Twilio signature validated successfully");
       next();
     } catch (error) {
       logger.error("Error validating Twilio signature", {
         error: error.message,
         ip: req.ip,
+        stack: error.stack,
       });
       res.status(500).json({ error: "Signature validation failed" });
     }

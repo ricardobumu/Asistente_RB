@@ -2,7 +2,7 @@
 // Servicio especializado para WhatsApp con IA y gestión de conversaciones
 
 const openaiClient = require("../integrations/openaiClient");
-const bookingService = require("./bookingService");
+const appointmentService = require("./appointmentService");
 const notificationService = require("./notificationService");
 const clientModel = require("../models/clientModel");
 const serviceModel = require("../models/serviceModel");
@@ -51,7 +51,7 @@ class WhatsAppService {
         client.id_cliente,
         cleanMessage,
         response,
-        intent,
+        intent
       );
 
       return { success: true, intent, response };
@@ -61,13 +61,13 @@ class WhatsAppService {
       // Enviar mensaje de error al usuario
       await this.sendResponse(
         from,
-        "Lo siento, ha ocurrido un error técnico. Por favor, inténtalo de nuevo en unos minutos o contacta directamente conmigo.",
+        "Lo siento, ha ocurrido un error técnico. Por favor, inténtalo de nuevo en unos minutos o contacta directamente conmigo."
       );
 
       // Alertar al administrador
       await notificationService.sendAdminAlert(
         `Error procesando mensaje WhatsApp de ${from}: ${error.message}`,
-        "high",
+        "high"
       );
 
       return { success: false, error: error.message };
@@ -270,7 +270,7 @@ Por favor, dime:
       // Notificar al administrador
       await notificationService.sendAdminAlert(
         `Cliente ${client.nombre} (${client.telefono}) quiere hablar contigo:\n\n"${message}"`,
-        "normal",
+        "normal"
       );
 
       return `Perfecto ${client.nombre}, he notificado a Ricardo sobre tu solicitud. Te contactará lo antes posible.

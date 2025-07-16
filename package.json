@@ -29,6 +29,7 @@
     "verify:integration": "node scripts/verify-integration.js",
     "project:summary": "node scripts/project-summary.js",
     "final:verify": "node scripts/final-verification.js",
+    "production:ready": "node scripts/verify-production-readiness.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "metrics": "curl -s http://localhost:3000/metrics?summary=true",
     "metrics:full": "curl -s http://localhost:3000/metrics",

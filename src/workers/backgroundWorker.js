@@ -31,7 +31,7 @@ class BackgroundWorker {
       send_whatsapp: this.handleSendWhatsApp.bind(this),
       send_sms: this.handleSendSMS.bind(this),
       sync_calendar: this.handleSyncCalendar.bind(this),
-      process_booking: this.handleProcessBooking.bind(this),
+      process_appointment: this.handleProcessAppointment.bind(this),
       send_reminder: this.handleSendReminder.bind(this),
       cleanup_data: this.handleCleanupData.bind(this),
       generate_report: this.handleGenerateReport.bind(this),
@@ -266,7 +266,7 @@ class BackgroundWorker {
   }
 
   async handleSyncCalendar(data) {
-    const { bookingId, action } = data;
+    const { appointmentId, action } = data;
 
     if (!googleCalendarClient.isInitialized()) {
       throw new Error("Google Calendar not configured");
@@ -275,57 +275,57 @@ class BackgroundWorker {
     // Implementar sincronización según la acción
     switch (action) {
       case "create":
-        await this.createCalendarEvent(bookingId);
+        await this.createCalendarEvent(appointmentId);
         break;
       case "update":
-        await this.updateCalendarEvent(bookingId);
+        await this.updateCalendarEvent(appointmentId);
         break;
       case "delete":
-        await this.deleteCalendarEvent(bookingId);
+        await this.deleteCalendarEvent(appointmentId);
         break;
       default:
         throw new Error(`Unknown calendar action: ${action}`);
     }
   }
 
-  async handleProcessBooking(data) {
-    const { bookingId, action } = data;
+  async handleProcessAppointment(data) {
+    const { appointmentId, action } = data;
 
-    // Procesar reserva según la acción
+    // Procesar cita según la acción
     switch (action) {
       case "confirm":
-        await this.confirmBooking(bookingId);
+        await this.confirmAppointment(appointmentId);
         break;
       case "cancel":
-        await this.cancelBooking(bookingId);
+        await this.cancelAppointment(appointmentId);
         break;
       case "reminder":
-        await this.sendBookingReminder(bookingId);
+        await this.sendAppointmentReminder(appointmentId);
         break;
       default:
-        throw new Error(`Unknown booking action: ${action}`);
+        throw new Error(`Unknown appointment action: ${action}`);
     }
   }
 
   async handleSendReminder(data) {
-    const { bookingId, type, timeBeforeBooking } = data;
+    const { appointmentId, type, timeBeforeAppointment } = data;
 
-    // Obtener información de la reserva
-    const booking = await this.getBookingDetails(bookingId);
-    if (!booking) {
-      throw new Error("Booking not found");
+    // Obtener información de la cita
+    const appointment = await this.getAppointmentDetails(appointmentId);
+    if (!appointment) {
+      throw new Error("Appointment not found");
     }
 
     // Enviar recordatorio según el tipo
     switch (type) {
       case "email":
-        await this.sendEmailReminder(booking);
+        await this.sendEmailReminder(appointment);
         break;
       case "whatsapp":
-        await this.sendWhatsAppReminder(booking);
+        await this.sendWhatsAppReminder(appointment);
         break;
       case "sms":
-        await this.sendSMSReminder(booking);
+        await this.sendSMSReminder(appointment);
         break;
       default:
         throw new Error(`Unknown reminder type: ${type}`);

@@ -1,82 +1,82 @@
 // src/routes/adminBookingRoutes.js
 const express = require("express");
 const router = express.Router();
-const adminBookingController = require("../controllers/adminBookingController");
+const adminAppointmentController = require("../controllers/adminAppointmentController");
 const { authenticate } = require("../middleware/authMiddleware");
 
 // Aplicar autenticación a todas las rutas administrativas
 router.use(authenticate);
 
 /**
- * GET /admin/bookings/dashboard
+ * GET /admin/appointments/dashboard
  * Dashboard principal con resumen del día
  */
-router.get("/dashboard", adminBookingController.getDashboard);
+router.get("/dashboard", adminAppointmentController.getDashboard);
 
 /**
- * GET /admin/bookings/search
- * Buscar reservas con filtros
+ * GET /admin/appointments/search
+ * Buscar citas con filtros
  */
-router.get("/search", adminBookingController.searchBookings);
+router.get("/search", adminAppointmentController.searchAppointments);
 
 /**
- * POST /admin/bookings/create
- * Crear reserva manual
+ * POST /admin/appointments/create
+ * Crear cita manual
  */
-router.post("/create", adminBookingController.createManualBooking);
+router.post("/create", adminAppointmentController.createManualAppointment);
 
 /**
- * PUT /admin/bookings/:id/status
- * Actualizar estado de reserva
+ * PUT /admin/appointments/:id/status
+ * Actualizar estado de cita
  */
-router.put("/:id/status", adminBookingController.updateBookingStatus);
+router.put("/:id/status", adminAppointmentController.updateAppointmentStatus);
 
 /**
- * PUT /admin/bookings/:id/reschedule
- * Reprogramar reserva
+ * PUT /admin/appointments/:id/reschedule
+ * Reprogramar cita
  */
-router.put("/:id/reschedule", adminBookingController.rescheduleBooking);
+router.put("/:id/reschedule", adminAppointmentController.rescheduleAppointment);
 
 /**
- * DELETE /admin/bookings/:id
- * Cancelar reserva
+ * DELETE /admin/appointments/:id
+ * Cancelar cita
  */
-router.delete("/:id", adminBookingController.cancelBooking);
+router.delete("/:id", adminAppointmentController.cancelAppointment);
 
 /**
- * GET /admin/bookings/stats
- * Obtener estadísticas de reservas
+ * GET /admin/appointments/stats
+ * Obtener estadísticas de citas
  */
-router.get("/stats", adminBookingController.getBookingStats);
+router.get("/stats", adminAppointmentController.getAppointmentStats);
 
 /**
- * POST /admin/bookings/sync-calendar
+ * POST /admin/appointments/sync-calendar
  * Sincronizar con Google Calendar
  */
-router.post("/sync-calendar", adminBookingController.syncWithGoogleCalendar);
+router.post("/sync-calendar", adminAppointmentController.syncWithGoogleCalendar);
 
 /**
- * GET /admin/bookings/calendar-events
+ * GET /admin/appointments/calendar-events
  * Obtener eventos de Google Calendar
  */
-router.get("/calendar-events", adminBookingController.getCalendarEvents);
+router.get("/calendar-events", adminAppointmentController.getCalendarEvents);
 
 /**
- * GET /admin/bookings/export
- * Exportar reservas a CSV
+ * GET /admin/appointments/export
+ * Exportar citas a CSV
  */
-router.get("/export", adminBookingController.exportBookings);
+router.get("/export", adminAppointmentController.exportAppointments);
 
 /**
- * GET /admin/bookings/today
- * Reservas de hoy
+ * GET /admin/appointments/today
+ * Citas de hoy
  */
-router.get("/today", adminBookingController.getTodayBookings);
+router.get("/today", adminAppointmentController.getTodayAppointments);
 
 /**
- * GET /admin/bookings/upcoming
- * Próximas reservas
+ * GET /admin/appointments/upcoming
+ * Próximas citas
  */
-router.get("/upcoming", adminBookingController.getUpcomingBookings);
+router.get("/upcoming", adminAppointmentController.getUpcomingAppointments);
 
 module.exports = router;

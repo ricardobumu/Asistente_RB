@@ -2,7 +2,7 @@
 // Controlador para gestión de clientes con validaciones y lógica de negocio
 
 const clientModel = require("../models/clientModel");
-const bookingService = require("../services/bookingService");
+const appointmentService = require("../services/appointmentService");
 const logger = require("../utils/logger");
 const {
   validateClientData,
@@ -342,7 +342,7 @@ class ClientController {
 
         // Verificar que el teléfono no esté en uso por otro cliente
         const existingByPhone = await clientModel.findByPhone(
-          updateData.telefono,
+          updateData.telefono
         );
         if (
           existingByPhone.success &&
@@ -408,7 +408,7 @@ class ClientController {
       }
 
       // Verificar si tiene reservas activas
-      const activeBookings = await bookingService.getBookings({
+      const activeBookings = await appointmentService.getAppointments({
         client_id: id,
         status: ["pending", "confirmed"],
       });
@@ -480,7 +480,7 @@ class ClientController {
         limit: parseInt(limit),
       };
 
-      const result = await bookingService.getBookings(filters, options);
+      const result = await appointmentService.getAppointments(filters, options);
 
       if (result.success) {
         res.json({

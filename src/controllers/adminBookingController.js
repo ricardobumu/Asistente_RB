@@ -1,6 +1,6 @@
 // src/controllers/adminBookingController.js
 const AdminBookingService = require("../services/adminBookingService");
-const BookingService = require("../services/bookingService");
+const AppointmentService = require("../services/appointmentService");
 const logger = require("../utils/logger");
 
 class AdminBookingController {
@@ -110,10 +110,10 @@ class AdminBookingController {
         });
       }
 
-      const result = await BookingService.updateBookingStatus(
+      const result = await AppointmentService.updateAppointmentStatus(
         bookingId,
         status,
-        notes,
+        notes
       );
 
       if (result.success) {
@@ -145,10 +145,10 @@ class AdminBookingController {
         });
       }
 
-      const result = await BookingService.rescheduleBooking(
+      const result = await AppointmentService.rescheduleAppointment(
         bookingId,
         newDateTime,
-        reason,
+        reason
       );
 
       if (result.success) {
@@ -173,7 +173,10 @@ class AdminBookingController {
       const bookingId = req.params.id;
       const { reason } = req.body;
 
-      const result = await BookingService.cancelBooking(bookingId, reason);
+      const result = await AppointmentService.cancelAppointment(
+        bookingId,
+        reason
+      );
 
       if (result.success) {
         res.status(200).json(result);
@@ -270,7 +273,7 @@ class AdminBookingController {
         res.setHeader("Content-Type", "text/csv");
         res.setHeader(
           "Content-Disposition",
-          `attachment; filename="${result.filename}"`,
+          `attachment; filename="${result.filename}"`
         );
         res.status(200).send(result.data);
       } else {
@@ -293,7 +296,7 @@ class AdminBookingController {
    */
   static async getTodayBookings(req, res) {
     try {
-      const result = await BookingService.getTodayBookings();
+      const result = await AppointmentService.getTodayAppointments();
 
       res.status(200).json(result);
     } catch (error) {
@@ -312,7 +315,7 @@ class AdminBookingController {
   static async getUpcomingBookings(req, res) {
     try {
       const days = parseInt(req.query.days) || 7;
-      const result = await BookingService.getUpcomingBookings(days);
+      const result = await AppointmentService.getUpcomingAppointments(days);
 
       res.status(200).json(result);
     } catch (error) {

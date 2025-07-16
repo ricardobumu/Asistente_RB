@@ -32,7 +32,7 @@ echo = INICIANDO APLICACION NODE.JS (ASISTENTE RB) =
 echo ==============================================
 echo.
 REM El %~dp0 es la ruta del directorio actual del script. Asegura que npm start se ejecuta desde la raiz del proyecto.
-start cmd /k "cd /d "%~dp0" && npm start"
+start "ASISTENTE RB - NODE.JS" cmd /k "cd /d "%~dp0" && npm start"
 
 REM Dar tiempo a la aplicación para que inicie y ocupe el puerto 3000
 timeout /t 5 /nobreak >nul
@@ -47,7 +47,7 @@ echo ==============================================
 echo.
 REM El comando ngrok debe ejecutarse desde la carpeta C:\ngrok
 REM ** CAMBIO CLAVE AQUI: USAR --url PARA TU DOMINIO FIJO **
-start cmd /k "cd /d C:\ngrok && ngrok http --url ricardoburitica.ngrok.app 3000"
+start "ASISTENTE RB - NGROK TUNNEL" cmd /k "cd /d C:\ngrok && ngrok http --url ricardoburitica.ngrok.app 3000"
 
 echo.
 echo ==============================================

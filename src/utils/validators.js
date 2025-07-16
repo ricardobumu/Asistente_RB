@@ -35,8 +35,8 @@ class Validators {
 
     // Validaciones obligatorias para creación
     if (isFullValidation) {
-      if (!clientData.first_name || clientData.first_name.trim().length < 2) {
-        errors.push("El nombre debe tener al menos 2 caracteres");
+      if (!clientData.full_name || clientData.full_name.trim().length < 2) {
+        errors.push("El nombre completo debe tener al menos 2 caracteres");
       }
 
       if (!clientData.phone || !this.isValidPhone(clientData.phone)) {
@@ -45,12 +45,8 @@ class Validators {
     }
 
     // Validaciones opcionales pero si están presentes deben ser válidas
-    if (clientData.first_name && clientData.first_name.trim().length < 2) {
-      errors.push("El nombre debe tener al menos 2 caracteres");
-    }
-
-    if (clientData.last_name && clientData.last_name.trim().length < 1) {
-      errors.push("El apellido no puede estar vacío si se proporciona");
+    if (clientData.full_name && clientData.full_name.trim().length < 2) {
+      errors.push("El nombre completo debe tener al menos 2 caracteres");
     }
 
     if (clientData.email && !this.isValidEmail(clientData.email)) {
@@ -71,7 +67,7 @@ class Validators {
     if (
       clientData.preferred_contact_method &&
       !["whatsapp", "email", "sms", "phone"].includes(
-        clientData.preferred_contact_method,
+        clientData.preferred_contact_method
       )
     ) {
       errors.push("Método de contacto inválido");
@@ -84,7 +80,7 @@ class Validators {
     if (
       clientData.gender &&
       !["male", "female", "other", "prefer_not_to_say"].includes(
-        clientData.gender,
+        clientData.gender
       )
     ) {
       errors.push("Género inválido");
@@ -155,7 +151,7 @@ class Validators {
 
     if (clientData.emergency_contact_name) {
       sanitized.emergency_contact_name = this.sanitizeText(
-        clientData.emergency_contact_name,
+        clientData.emergency_contact_name
       );
     }
 
@@ -187,44 +183,44 @@ class Validators {
     return sanitized;
   }
 
-  // Validar datos de reserva (estructura real)
-  static validateBookingData(bookingData, isFullValidation = true) {
+  // Validar datos de cita (estructura real)
+  static validateAppointmentData(appointmentData, isFullValidation = true) {
     const errors = [];
 
     // Validaciones obligatorias
     if (isFullValidation) {
       // Debe tener client_id O client_phone
-      if (!bookingData.client_id && !bookingData.client_phone) {
+      if (!appointmentData.client_id && !appointmentData.client_phone) {
         errors.push("client_id o client_phone es requerido");
       }
 
-      if (!bookingData.service_id) {
+      if (!appointmentData.service_id) {
         errors.push("service_id es requerido");
       }
 
-      if (!bookingData.start_time) {
+      if (!appointmentData.start_time) {
         errors.push("start_time es requerido");
       }
     }
 
     // Validar start_time si está presente
-    if (bookingData.start_time) {
-      const startTime = new Date(bookingData.start_time);
+    if (appointmentData.start_time) {
+      const startTime = new Date(appointmentData.start_time);
       if (isNaN(startTime.getTime())) {
         errors.push("start_time debe ser una fecha válida");
       }
     }
 
     // Validar end_time si está presente
-    if (bookingData.end_time) {
-      const endTime = new Date(bookingData.end_time);
+    if (appointmentData.end_time) {
+      const endTime = new Date(appointmentData.end_time);
       if (isNaN(endTime.getTime())) {
         errors.push("end_time debe ser una fecha válida");
       }
 
       // Validar que end_time sea después de start_time
-      if (bookingData.start_time) {
-        const startTime = new Date(bookingData.start_time);
+      if (appointmentData.start_time) {
+        const startTime = new Date(appointmentData.start_time);
         if (endTime <= startTime) {
           errors.push("end_time debe ser posterior a start_time");
         }
@@ -232,20 +228,20 @@ class Validators {
     }
 
     // Validar precios
-    if (bookingData.original_price !== undefined) {
-      if (isNaN(bookingData.original_price) || bookingData.original_price < 0) {
+    if (appointmentData.original_price !== undefined) {
+      if (isNaN(appointmentData.original_price) || appointmentData.original_price < 0) {
         errors.push("original_price debe ser un número positivo");
       }
     }
 
-    if (bookingData.final_price !== undefined) {
-      if (isNaN(bookingData.final_price) || bookingData.final_price < 0) {
+    if (appointmentData.final_price !== undefined) {
+      if (isNaN(appointmentData.final_price) || appointmentData.final_price < 0) {
         errors.push("final_price debe ser un número positivo");
       }
     }
 
     // Validar estado
-    if (bookingData.status) {
+    if (appointmentData.status) {
       const validStatuses = [
         "pending",
         "confirmed",
@@ -253,28 +249,28 @@ class Validators {
         "completed",
         "no_show",
       ];
-      if (!validStatuses.includes(bookingData.status)) {
+      if (!validStatuses.includes(appointmentData.status)) {
         errors.push("status inválido");
       }
     }
 
     // Validar timezone
-    if (bookingData.timezone && typeof bookingData.timezone !== "string") {
+    if (appointmentData.timezone && typeof appointmentData.timezone !== "string") {
       errors.push("timezone debe ser una cadena válida");
     }
 
     // Validar email del cliente si se proporciona
     if (
-      bookingData.client_email &&
-      !this.isValidEmail(bookingData.client_email)
+      appointmentData.client_email &&
+      !this.isValidEmail(appointmentData.client_email)
     ) {
       errors.push("client_email inválido");
     }
 
     // Validar teléfono del cliente si se proporciona
     if (
-      bookingData.client_phone &&
-      !this.isValidPhone(bookingData.client_phone)
+      appointmentData.client_phone &&
+      !this.isValidPhone(appointmentData.client_phone)
     ) {
       errors.push("client_phone inválido");
     }
@@ -285,83 +281,83 @@ class Validators {
     };
   }
 
-  // Sanitizar datos de reserva
-  static sanitizeBookingData(bookingData) {
+  // Sanitizar datos de cita
+  static sanitizeAppointmentData(appointmentData) {
     const sanitized = {};
 
     // IDs y referencias
-    if (bookingData.client_id) {
-      sanitized.client_id = bookingData.client_id;
+    if (appointmentData.client_id) {
+      sanitized.client_id = appointmentData.client_id;
     }
 
-    if (bookingData.service_id) {
-      sanitized.service_id = bookingData.service_id;
+    if (appointmentData.service_id) {
+      sanitized.service_id = appointmentData.service_id;
     }
 
-    if (bookingData.staff_id) {
-      sanitized.staff_id = bookingData.staff_id;
+    if (appointmentData.staff_id) {
+      sanitized.staff_id = appointmentData.staff_id;
     }
 
     // Fechas y horarios
-    if (bookingData.start_time) {
-      sanitized.start_time = new Date(bookingData.start_time).toISOString();
+    if (appointmentData.start_time) {
+      sanitized.start_time = new Date(appointmentData.start_time).toISOString();
     }
 
-    if (bookingData.end_time) {
-      sanitized.end_time = new Date(bookingData.end_time).toISOString();
+    if (appointmentData.end_time) {
+      sanitized.end_time = new Date(appointmentData.end_time).toISOString();
     }
 
-    if (bookingData.timezone) {
-      sanitized.timezone = this.sanitizeText(bookingData.timezone);
+    if (appointmentData.timezone) {
+      sanitized.timezone = this.sanitizeText(appointmentData.timezone);
     }
 
     // Información del cliente (para creación automática)
-    if (bookingData.client_phone) {
-      sanitized.client_phone = bookingData.client_phone
+    if (appointmentData.client_phone) {
+      sanitized.client_phone = appointmentData.client_phone
         .replace(/\s+/g, "")
         .replace(/^\+/, "");
     }
 
-    if (bookingData.client_email) {
-      sanitized.client_email = bookingData.client_email.toLowerCase().trim();
+    if (appointmentData.client_email) {
+      sanitized.client_email = appointmentData.client_email.toLowerCase().trim();
     }
 
-    if (bookingData.client_name) {
-      sanitized.client_name = this.sanitizeText(bookingData.client_name);
+    if (appointmentData.client_name) {
+      sanitized.client_name = this.sanitizeText(appointmentData.client_name);
     }
 
-    if (bookingData.client_last_name) {
+    if (appointmentData.client_last_name) {
       sanitized.client_last_name = this.sanitizeText(
-        bookingData.client_last_name,
+        appointmentData.client_last_name
       );
     }
 
     // Textos
-    if (bookingData.notes) {
-      sanitized.notes = this.sanitizeText(bookingData.notes);
+    if (appointmentData.notes) {
+      sanitized.notes = this.sanitizeText(appointmentData.notes);
     }
 
-    if (bookingData.client_notes) {
-      sanitized.client_notes = this.sanitizeText(bookingData.client_notes);
+    if (appointmentData.client_notes) {
+      sanitized.client_notes = this.sanitizeText(appointmentData.client_notes);
     }
 
-    if (bookingData.staff_notes) {
-      sanitized.staff_notes = this.sanitizeText(bookingData.staff_notes);
+    if (appointmentData.staff_notes) {
+      sanitized.staff_notes = this.sanitizeText(appointmentData.staff_notes);
     }
 
-    if (bookingData.cancellation_reason) {
+    if (appointmentData.cancellation_reason) {
       sanitized.cancellation_reason = this.sanitizeText(
-        bookingData.cancellation_reason,
+        appointmentData.cancellation_reason
       );
     }
 
     // Precios
-    if (bookingData.original_price !== undefined) {
-      sanitized.original_price = parseFloat(bookingData.original_price);
+    if (appointmentData.original_price !== undefined) {
+      sanitized.original_price = parseFloat(appointmentData.original_price);
     }
 
-    if (bookingData.final_price !== undefined) {
-      sanitized.final_price = parseFloat(bookingData.final_price);
+    if (appointmentData.final_price !== undefined) {
+      sanitized.final_price = parseFloat(appointmentData.final_price);
     }
 
     // Campos directos
@@ -377,8 +373,8 @@ class Validators {
     ];
 
     directCopyFields.forEach((field) => {
-      if (bookingData[field] !== undefined) {
-        sanitized[field] = bookingData[field];
+      if (appointmentData[field] !== undefined) {
+        sanitized[field] = appointmentData[field];
       }
     });
 
@@ -439,20 +435,20 @@ class Validators {
     }
 
     if (
-      serviceData.max_advance_booking_days &&
-      (isNaN(serviceData.max_advance_booking_days) ||
-        serviceData.max_advance_booking_days < 1)
+      serviceData.max_advance_appointment_days &&
+      (isNaN(serviceData.max_advance_appointment_days) ||
+        serviceData.max_advance_appointment_days < 1)
     ) {
       errors.push("Los días máximos de anticipación deben ser mayor a 0");
     }
 
     if (
-      serviceData.min_advance_booking_hours &&
-      (isNaN(serviceData.min_advance_booking_hours) ||
-        serviceData.min_advance_booking_hours < 0)
+      serviceData.min_advance_appointment_hours &&
+      (isNaN(serviceData.min_advance_appointment_hours) ||
+        serviceData.min_advance_appointment_hours < 0)
     ) {
       errors.push(
-        "Las horas mínimas de anticipación deben ser mayor o igual a 0",
+        "Las horas mínimas de anticipación deben ser mayor o igual a 0"
       );
     }
 
@@ -462,7 +458,7 @@ class Validators {
         serviceData.max_cancellation_hours < 0)
     ) {
       errors.push(
-        "Las horas máximas de cancelación deben ser mayor o igual a 0",
+        "Las horas máximas de cancelación deben ser mayor o igual a 0"
       );
     }
 
@@ -494,10 +490,10 @@ class Validators {
     }
 
     if (
-      typeof serviceData.online_booking_enabled !== "undefined" &&
-      typeof serviceData.online_booking_enabled !== "boolean"
+      typeof serviceData.online_appointment_enabled !== "undefined" &&
+      typeof serviceData.online_appointment_enabled !== "boolean"
     ) {
-      errors.push("El campo 'online_booking_enabled' debe ser boolean");
+      errors.push("El campo 'online_appointment_enabled' debe ser boolean");
     }
 
     if (
@@ -535,7 +531,7 @@ class Validators {
 
     if (serviceData.short_description) {
       sanitized.short_description = this.sanitizeText(
-        serviceData.short_description,
+        serviceData.short_description
       );
     }
 
@@ -556,28 +552,28 @@ class Validators {
       sanitized.price = parseFloat(serviceData.price);
     }
 
-    if (serviceData.max_advance_booking_days !== undefined) {
-      sanitized.max_advance_booking_days = parseInt(
-        serviceData.max_advance_booking_days,
+    if (serviceData.max_advance_appointment_days !== undefined) {
+      sanitized.max_advance_appointment_days = parseInt(
+        serviceData.max_advance_appointment_days
       );
     }
 
-    if (serviceData.min_advance_booking_hours !== undefined) {
-      sanitized.min_advance_booking_hours = parseInt(
-        serviceData.min_advance_booking_hours,
+    if (serviceData.min_advance_appointment_hours !== undefined) {
+      sanitized.min_advance_appointment_hours = parseInt(
+        serviceData.min_advance_appointment_hours
       );
     }
 
     if (serviceData.max_cancellation_hours !== undefined) {
       sanitized.max_cancellation_hours = parseInt(
-        serviceData.max_cancellation_hours,
+        serviceData.max_cancellation_hours
       );
     }
 
     // Campos que no necesitan sanitización pero se copian si están presentes
     const directCopyFields = [
       "active",
-      "online_booking_enabled",
+      "online_appointment_enabled",
       "requires_approval",
       "assigned_staff",
       "metadata",

@@ -10,17 +10,17 @@ const {
   servicesCache,
   availabilityCache,
   widgetInfoCache,
-  invalidateBookingCache,
+  invalidateAppointmentCache,
   httpCacheHeaders,
-  staticFileCache
+  staticFileCache,
 } = require("../middleware/cacheMiddleware");
 
 // Configurar CORS específico para el widget (permite embebido en otras webs)
 const widgetCorsOptions = {
   origin: true, // Permite cualquier origen para el widget
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: false
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: false,
 };
 
 // Aplicar CORS a todas las rutas del widget
@@ -32,28 +32,28 @@ const widgetRateLimit = rateLimiter.createLimiter({
   max: 50, // 50 requests por IP cada 15 minutos
   message: {
     success: false,
-    error: "Demasiadas solicitudes. Inténtalo de nuevo en unos minutos."
+    error: "Demasiadas solicitudes. Inténtalo de nuevo en unos minutos.",
   },
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
 });
 
-// Rate limiting más estricto para creación de reservas
-const bookingRateLimit = rateLimiter.createLimiter({
+// Rate limiting más estricto para creación de citas
+const appointmentRateLimit = rateLimiter.createLimiter({
   windowMs: 60 * 60 * 1000, // 1 hora
   max: 5, // 5 reservas por IP cada hora
   message: {
     success: false,
-    error: "Límite de reservas alcanzado. Inténtalo de nuevo en una hora."
-  }
+    error: "Límite de reservas alcanzado. Inténtalo de nuevo en una hora.",
+  },
 });
 
 /**
- * @route GET /widget/booking
+ * @route GET /widget/appointment
  * @desc Servir el widget HTML
  * @access Public
  */
-router.get("/booking", widgetRateLimit, widgetController.serveWidget);
+router.get("/appointment", widgetRateLimit, widgetController.serveWidget);
 
 /**
  * @route GET /widget/demo
@@ -61,8 +61,8 @@ router.get("/booking", widgetRateLimit, widgetController.serveWidget);
  * @access Public
  */
 router.get("/demo", widgetRateLimit, (req, res) => {
-  const path = require('path');
-  res.sendFile(path.join(__dirname, '../../public/widget/demo.html'));
+  const path = require("path");
+  res.sendFile(path.join(__dirname, "../../public/widget/demo.html"));
 });
 
 /**
@@ -70,28 +70,51 @@ router.get("/demo", widgetRateLimit, (req, res) => {
  * @desc Obtener información del negocio para el widget
  * @access Public
  */
-router.get("/info", widgetRateLimit, widgetInfoCache, httpCacheHeaders(1800), widgetController.getWidgetInfo);
+router.get(
+  "/info",
+  widgetRateLimit,
+  widgetInfoCache,
+  httpCacheHeaders(1800),
+  widgetController.getWidgetInfo
+);
 
 /**
  * @route GET /widget/services
  * @desc Obtener servicios públicos para el widget
  * @access Public
  */
-router.get("/services", widgetRateLimit, servicesCache, httpCacheHeaders(600), widgetController.getPublicServices);
+router.get(
+  "/services",
+  widgetRateLimit,
+  servicesCache,
+  httpCacheHeaders(600),
+  widgetController.getPublicServices
+);
 
 /**
  * @route GET /widget/availability/:serviceId
  * @desc Obtener disponibilidad para un servicio en una fecha específica
  * @access Public
  */
-router.get("/availability/:serviceId", widgetRateLimit, availabilityCache, httpCacheHeaders(120), widgetController.getAvailability);
+router.get(
+  "/availability/:serviceId",
+  widgetRateLimit,
+  availabilityCache,
+  httpCacheHeaders(120),
+  widgetController.getAvailability
+);
 
 /**
- * @route POST /widget/booking
- * @desc Crear nueva reserva desde el widget
+ * @route POST /widget/appointment
+ * @desc Crear nueva cita desde el widget
  * @access Public
  */
-router.post("/booking", bookingRateLimit, invalidateBookingCache, widgetController.createBooking);
+router.post(
+  "/appointment",
+  appointmentRateLimit,
+  invalidateAppointmentCache,
+  widgetController.createAppointment
+);
 
 /**
  * @route GET /widget/embed
@@ -103,10 +126,10 @@ router.get("/embed", widgetRateLimit, widgetController.getEmbedCode);
 // Middleware de manejo de errores específico para el widget
 router.use((error, req, res, next) => {
   console.error("Widget Error:", error);
-  
+
   res.status(500).json({
     success: false,
-    error: "Error interno del widget. Por favor, inténtalo de nuevo."
+    error: "Error interno del widget. Por favor, inténtalo de nuevo.",
   });
 });
 

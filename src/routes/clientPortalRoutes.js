@@ -4,7 +4,7 @@
 const express = require("express");
 const path = require("path");
 const router = express.Router();
-const BookingService = require("../services/bookingService");
+const AppointmentService = require("../services/appointmentService");
 const ServiceService = require("../services/serviceService");
 const ClientService = require("../services/clientService");
 const { supabaseClient } = require("../integrations/supabaseClient");
@@ -113,7 +113,7 @@ router.get(
         error: "Error al obtener detalles del servicio",
       });
     }
-  },
+  }
 );
 
 // =====================================================
@@ -149,7 +149,7 @@ router.get(
             p_service_id: serviceId,
             p_date: date,
             p_days_ahead: parseInt(days),
-          },
+          }
         );
 
         if (error) throw error;
@@ -167,7 +167,7 @@ router.get(
         const slots = await generateAvailableSlots(
           serviceId,
           date,
-          parseInt(days),
+          parseInt(days)
         );
         res.json({
           success: true,
@@ -190,20 +190,20 @@ router.get(
         error: "Error al obtener disponibilidad",
       });
     }
-  },
+  }
 );
 
 // =====================================================
 // API - RESERVAS
 // =====================================================
 
-// Crear nueva reserva
+// Crear nueva cita
 router.post(
-  "/api/bookings",
+  "/api/appointments",
   [
     body("service_id").isUUID().withMessage("ID de servicio inválido"),
-    body("booking_date").isISO8601().withMessage("Fecha de reserva inválida"),
-    body("booking_time")
+    body("appointment_date").isISO8601().withMessage("Fecha de cita inválida"),
+    body("appointment_time")
       .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)
       .withMessage("Hora inválida (formato HH:MM)"),
     body("client_name")
@@ -225,64 +225,64 @@ router.post(
     try {
       const {
         service_id,
-        booking_date,
-        booking_time,
+        appointment_date,
+        appointment_time,
         client_name,
         client_phone,
         client_email,
         notes,
       } = req.body;
 
-      logger.info("Client portal: Creating booking", {
+      logger.info("Client portal: Creating appointment", {
         service_id,
-        booking_date,
-        booking_time,
+        appointment_date,
+        appointment_time,
         client_phone: client_phone.substring(0, 3) + "***", // Log parcial por seguridad
       });
 
       // Usar función de Supabase si está disponible
       try {
-        const { data: booking, error } = await supabaseClient.rpc(
-          "create_automatic_booking",
+        const { data: appointment, error } = await supabaseClient.rpc(
+          "create_automatic_appointment",
           {
             p_client_phone: client_phone,
             p_client_name: client_name,
             p_client_email: client_email,
             p_service_id: service_id,
-            p_booking_date: booking_date,
-            p_booking_time: booking_time,
+            p_appointment_date: appointment_date,
+            p_appointment_time: appointment_time,
             p_notes: notes,
-          },
+          }
         );
 
         if (error) throw error;
 
-        if (!booking.success) {
+        if (!appointment.success) {
           return res.status(400).json({
             success: false,
-            error: booking.error || "No se pudo crear la reserva",
+            error: appointment.error || "No se pudo crear la cita",
           });
         }
 
-        logger.info("Booking created successfully via RPC", {
-          booking_id: booking.booking_id,
+        logger.info("Appointment created successfully via RPC", {
+          appointment_id: appointment.appointment_id,
         });
 
         res.json({
           success: true,
-          data: booking,
+          data: appointment,
         });
       } catch (rpcError) {
         // Fallback: método tradicional
         logger.warn(
-          "RPC function not available, using fallback booking creation",
-          { error: rpcError.message },
+          "RPC function not available, using fallback appointment creation",
+          { error: rpcError.message }
         );
 
-        const result = await BookingService.createBooking({
+        const result = await AppointmentService.createAppointment({
           service_id,
-          booking_date,
-          booking_time,
+          appointment_date,
+          appointment_time,
           client_name,
           client_phone,
           client_email,
@@ -297,7 +297,7 @@ router.post(
         }
       }
     } catch (error) {
-      logger.error("Error creating booking from client portal", {
+      logger.error("Error creating appointment from client portal", {
         error: error.message,
         body: {
           ...req.body,
@@ -306,15 +306,15 @@ router.post(
       });
       res.status(500).json({
         success: false,
-        error: "Error interno al crear la reserva",
+        error: "Error interno al crear la cita",
       });
     }
-  },
+  }
 );
 
-// Obtener reservas de un cliente por teléfono
+// Obtener citas de un cliente por teléfono
 router.get(
-  "/api/bookings/client/:phone",
+  "/api/appointments/client/:phone",
   param("phone")
     .trim()
     .isLength({ min: 9, max: 20 })
@@ -324,7 +324,7 @@ router.get(
     try {
       const { phone } = req.params;
 
-      logger.info("Client portal: Getting client bookings", {
+      logger.info("Client portal: Getting client appointments", {
         phone: phone.substring(0, 3) + "***",
       });
 
@@ -342,14 +342,14 @@ router.get(
         });
       }
 
-      // Obtener reservas del cliente
-      const { data: bookings, error: bookingsError } = await supabaseClient
-        .from("bookings")
+      // Obtener citas del cliente
+      const { data: appointments, error: appointmentsError } = await supabaseClient
+        .from("appointments")
         .select(
           `
           id,
-          booking_date,
-          booking_time,
+          appointment_date,
+          appointment_time,
           duration,
           status,
           notes,
@@ -358,91 +358,91 @@ router.get(
             name,
             price
           )
-        `,
+        `
         )
         .eq("client_id", client.id)
-        .order("booking_date", { ascending: false });
+        .order("appointment_date", { ascending: false });
 
-      if (bookingsError) throw bookingsError;
+      if (appointmentsError) throw appointmentsError;
 
       // Formatear respuesta
-      const formattedBookings = bookings.map((booking) => ({
-        id: booking.id,
-        service_name: booking.services.name,
-        price: booking.services.price,
-        booking_date: booking.booking_date,
-        booking_time: booking.booking_time,
-        duration: booking.duration,
-        status: booking.status,
-        notes: booking.notes,
-        created_at: booking.created_at,
+      const formattedAppointments = appointments.map((appointment) => ({
+        id: appointment.id,
+        service_name: appointment.services.name,
+        price: appointment.services.price,
+        appointment_date: appointment.appointment_date,
+        appointment_time: appointment.appointment_time,
+        duration: appointment.duration,
+        status: appointment.status,
+        notes: appointment.notes,
+        created_at: appointment.created_at,
       }));
 
       res.json({
         success: true,
-        data: formattedBookings,
+        data: formattedAppointments,
       });
     } catch (error) {
-      logger.error("Error getting client bookings", {
+      logger.error("Error getting client appointments", {
         error: error.message,
         phone: req.params.phone?.substring(0, 3) + "***",
       });
       res.status(500).json({
         success: false,
-        error: "Error al obtener las reservas",
+        error: "Error al obtener las citas",
       });
     }
-  },
+  }
 );
 
-// Cancelar reserva
+// Cancelar cita
 router.put(
-  "/api/bookings/:id/cancel",
-  param("id").isUUID().withMessage("ID de reserva inválido"),
+  "/api/appointments/:id/cancel",
+  param("id").isUUID().withMessage("ID de cita inválido"),
   handleValidationErrors,
   async (req, res) => {
     try {
       const { id } = req.params;
 
-      logger.info("Client portal: Cancelling booking", { booking_id: id });
+      logger.info("Client portal: Cancelling appointment", { appointment_id: id });
 
-      // Verificar que la reserva existe y se puede cancelar
-      const { data: booking, error: fetchError } = await supabaseClient
-        .from("bookings")
+      // Verificar que la cita existe y se puede cancelar
+      const { data: appointment, error: fetchError } = await supabaseClient
+        .from("appointments")
         .select("*")
         .eq("id", id)
         .single();
 
-      if (fetchError || !booking) {
+      if (fetchError || !appointment) {
         return res.status(404).json({
           success: false,
-          error: "Reserva no encontrada",
+          error: "Cita no encontrada",
         });
       }
 
-      // Verificar que la reserva se puede cancelar (no está en el pasado)
-      const bookingDateTime = new Date(
-        `${booking.booking_date}T${booking.booking_time}`,
+      // Verificar que la cita se puede cancelar (no está en el pasado)
+      const appointmentDateTime = new Date(
+        `${appointment.appointment_date}T${appointment.appointment_time}`
       );
       const now = new Date();
 
-      if (bookingDateTime < now) {
+      if (appointmentDateTime < now) {
         return res.status(400).json({
           success: false,
-          error: "No se puede cancelar una reserva pasada",
+          error: "No se puede cancelar una cita pasada",
         });
       }
 
-      if (booking.status === "cancelled") {
+      if (appointment.status === "cancelled") {
         return res.status(400).json({
           success: false,
-          error: "La reserva ya está cancelada",
+          error: "La cita ya está cancelada",
         });
       }
 
-      // Cancelar reserva
+      // Cancelar cita
       const { error: updateError } = await supabaseClient
-        .from("bookings")
+        .from("appointments")
         .update({
           status: "cancelled",
           updated_at: new Date().toISOString(),
@@ -451,23 +451,23 @@ router.put(
 
       if (updateError) throw updateError;
 
-      logger.info("Booking cancelled successfully", { booking_id: id });
+      logger.info("Appointment cancelled successfully", { appointment_id: id });
 
       res.json({
         success: true,
-        message: "Reserva cancelada correctamente",
+        message: "Cita cancelada correctamente",
       });
     } catch (error) {
-      logger.error("Error cancelling booking", {
+      logger.error("Error cancelling appointment", {
         error: error.message,
-        booking_id: req.params.id,
+        appointment_id: req.params.id,
       });
       res.status(500).json({
         success: false,
-        error: "Error al cancelar la reserva",
+        error: "Error al cancelar la cita",
       });
     }
-  },
+  }
 );
 
 // =====================================================
@@ -507,7 +507,7 @@ async function generateAvailableSlots(serviceId, startDate, days) {
               serviceId,
               currentDate.toISOString().split("T")[0],
               timeString,
-              service.duration_minutes,
+              service.duration_minutes
             );
 
             if (isAvailable) {
@@ -537,13 +537,13 @@ async function checkSlotAvailability(serviceId, date, time, duration) {
     const endTime = addMinutesToTime(time, duration);
 
     const { data: conflicts, error } = await supabaseClient
-      .from("bookings")
+      .from("appointments")
       .select("id")
       .eq("service_id", serviceId)
-      .eq("booking_date", date)
+      .eq("appointment_date", date)
       .in("status", ["confirmed", "pending"])
       .or(
-        `and(booking_time.lte.${time},booking_time.gte.${endTime}),and(booking_time.lt.${endTime},booking_time.gte.${time})`,
+        `and(appointment_time.lte.${time},appointment_time.gte.${endTime}),and(appointment_time.lt.${endTime},appointment_time.gte.${time})`
       );
 
     if (error) throw error;

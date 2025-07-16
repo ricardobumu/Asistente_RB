@@ -29,7 +29,7 @@ const apiRouter = require("./api");
 
 // Importar rutas del asistente autónomo
 const autonomousWhatsAppRoutes = require("./routes/autonomousWhatsAppRoutes");
-const bookingWidgetRoutes = require("./routes/bookingWidgetRoutes");
+const appointmentWidgetRoutes = require("./routes/appointmentWidgetRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const calendlyWebhookRoutes = require("./routes/calendlyWebhookRoutes");
 const clientPortalRoutes = require("./routes/clientPortalRoutes");
@@ -154,18 +154,30 @@ app.use(
   autonomousWhatsAppRoutes
 );
 
+// 2.1. Ruta directa para webhook de Twilio WhatsApp (para ngrok)
+app.use(
+  "/webhook/whatsapp",
+  rateLimiters.whatsapp,
+  SecurityMiddleware.validateTwilioSignature,
+  (req, res, next) => {
+    // Redirigir al controlador autónomo
+    req.url = "/webhook";
+    autonomousWhatsAppRoutes(req, res, next);
+  }
+);
+
 // 3. Widget de reservas con rate limiting específico
 app.use(
   "/api/widget",
   rateLimiters.widgetGeneral,
   // Rate limiting más estricto para creación de reservas
   (req, res, next) => {
-    if (req.method === "POST" && req.path === "/bookings") {
+    if (req.method === "POST" && req.path === "/appointments") {
       return rateLimiters.widgetBooking(req, res, next);
     }
     next();
   },
-  bookingWidgetRoutes
+  appointmentWidgetRoutes
 );
 
 // 4. Dashboard administrativo con máxima seguridad

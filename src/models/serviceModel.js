@@ -942,7 +942,8 @@ class ServiceModel {
 
       const duration = Date.now() - startTime;
       logger.info("Búsqueda avanzada de servicios completada", {
-        filtersApplied: Object.keys(filters).length,
+        filters,
+        options,
         resultsCount: data.length,
         duration: `${duration}ms`,
       });
@@ -953,15 +954,251 @@ class ServiceModel {
         pagination: {
           limit,
           offset,
-          count: data.length,
+          total: servicesWithConsciousInfo.length,
         },
-        filters,
       };
     } catch (error) {
       const duration = Date.now() - startTime;
       logger.error("Error en búsqueda avanzada de servicios", error, {
-        filters: Object.keys(filters),
+        filters,
+        options,
         duration: `${duration}ms`,
+      });
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Obtener todos los servicios activos (método requerido por el controlador)
+   */
+  async getAllActive() {
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .select("*")
+        .eq("is_active", true)
+        .order("name", { ascending: true });
+
+      if (error) {
+        throw error;
+      }
+
+      logger.info("Servicios activos obtenidos", {
+        count: data.length,
+      });
+
+      return { success: true, data };
+    } catch (error) {
+      logger.error("Error obteniendo servicios activos", {
+        errorMessage: error.message,
+      });
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Buscar servicio por URL de Calendly (método requerido por el controlador)
+   */
+  async findByCalendlyUrl(calendlyUrl) {
+    try {
+      // Extraer el event type de la URL
+      const eventTypeMatch = calendlyUrl.match(/\/([^\/]+)$/);
+      const eventType = eventTypeMatch ? eventTypeMatch[1] : null;
+
+      if (!eventType) {
+        return {
+          success: false,
+          error: "No se pudo extraer el tipo de evento de la URL de Calendly",
+        };
+      }
+
+      // Buscar en los servicios predefinidos
+      const service = this.ricardoServices.find(
+        (s) => s.calendly_event_type === eventType
+      );
+
+      if (!service) {
+        return {
+          success: false,
+          error: `Servicio no encontrado para el evento de Calendly: ${eventType}`,
+        };
+      }
+
+      // Buscar en la base de datos para obtener el ID
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .select("*")
+        .eq("name", service.name)
+        .eq("is_active", true)
+        .single();
+
+      if (error) {
+        if (error.code === "PGRST116") {
+          return {
+            success: false,
+            error: "Servicio no encontrado en la base de datos",
+          };
+        }
+        throw error;
+      }
+
+      logger.info("Servicio encontrado por URL de Calendly", {
+        calendlyUrl,
+        eventType,
+        serviceName: data.name,
+        serviceId: data.id,
+      });
+
+      return { success: true, data };
+    } catch (error) {
+      logger.error("Error buscando servicio por URL de Calendly", {
+        errorMessage: error.message,
+        calendlyUrl,
+      });
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Crear un nuevo servicio
+   */
+  async create(serviceData) {
+    try {
+      // Validar categoría
+      if (!this.validCategories.includes(serviceData.category)) {
+        return {
+          success: false,
+          error: `Categoría inválida. Debe ser una de: ${this.validCategories.join(", ")}`,
+        };
+      }
+
+      const serviceToCreate = {
+        ...serviceData,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        is_active:
+          serviceData.is_active !== undefined ? serviceData.is_active : true,
+      };
+
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .insert([serviceToCreate])
+        .select()
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      logger.info("Servicio creado exitosamente", {
+        serviceId: data.id,
+        name: data.name,
+        category: data.category,
+        price: data.price,
+      });
+
+      return { success: true, data };
+    } catch (error) {
+      logger.error("Error creando servicio", {
+        errorMessage: error.message,
+        serviceData,
+      });
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Actualizar un servicio
+   */
+  async update(id, updateData) {
+    try {
+      if (!id) {
+        return { success: false, error: "ID de servicio requerido" };
+      }
+
+      // Validar categoría si se está actualizando
+      if (
+        updateData.category &&
+        !this.validCategories.includes(updateData.category)
+      ) {
+        return {
+          success: false,
+          error: `Categoría inválida. Debe ser una de: ${this.validCategories.join(", ")}`,
+        };
+      }
+
+      const dataToUpdate = {
+        ...updateData,
+        updated_at: new Date().toISOString(),
+      };
+
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .update(dataToUpdate)
+        .eq("id", id)
+        .select()
+        .single();
+
+      if (error) {
+        if (error.code === "PGRST116") {
+          return { success: false, error: "Servicio no encontrado" };
+        }
+        throw error;
+      }
+
+      logger.info("Servicio actualizado exitosamente", {
+        serviceId: id,
+        updatedFields: Object.keys(updateData),
+      });
+
+      return { success: true, data };
+    } catch (error) {
+      logger.error(`Error actualizando servicio ID: ${id}`, {
+        errorMessage: error.message,
+        updateData,
+      });
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Desactivar un servicio (soft delete)
+   */
+  async deactivate(id, reason = "") {
+    try {
+      if (!id) {
+        return { success: false, error: "ID de servicio requerido" };
+      }
+
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .update({
+          is_active: false,
+          deactivated_at: new Date().toISOString(),
+          deactivation_reason: reason,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", id)
+        .select()
+        .single();
+
+      if (error) {
+        if (error.code === "PGRST116") {
+          return { success: false, error: "Servicio no encontrado" };
+        }
+        throw error;
+      }
+
+      logger.info("Servicio desactivado", {
+        serviceId: id,
+        reason,
+      });
+
+      return { success: true, data };
+    } catch (error) {
+      logger.error(`Error desactivando servicio ID: ${id}`, {
+        errorMessage: error.message,
+        reason,
       });
       return { success: false, error: error.message };
     }

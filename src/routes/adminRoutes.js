@@ -25,7 +25,7 @@ router.post("/auth/login", ErrorHandler.asyncWrapper(AuthController.login));
  */
 router.post(
   "/auth/verify",
-  ErrorHandler.asyncWrapper(AuthController.verifyToken),
+  ErrorHandler.asyncWrapper(AuthController.verifyToken)
 );
 
 /**
@@ -34,7 +34,7 @@ router.post(
  */
 router.get(
   "/auth/temp-token",
-  ErrorHandler.asyncWrapper(AuthController.generateTempToken),
+  ErrorHandler.asyncWrapper(AuthController.generateTempToken)
 );
 
 // ===== MIDDLEWARE DE SEGURIDAD PARA ADMIN =====
@@ -65,7 +65,7 @@ router.use((req, res, next) => {
       method: req.method,
       ip: req.ip,
       userAgent: req.headers["user-agent"],
-    },
+    }
   );
   next();
 });
@@ -78,7 +78,7 @@ router.use((req, res, next) => {
  */
 router.get(
   "/dashboard",
-  ErrorHandler.asyncWrapper(AdminController.getDashboard),
+  ErrorHandler.asyncWrapper(AdminController.getDashboard)
 );
 
 /**
@@ -95,25 +95,25 @@ router.get("/logs", ErrorHandler.asyncWrapper(AdminController.getSystemLogs));
  */
 router.get(
   "/messages",
-  ErrorHandler.asyncWrapper(AdminController.getBotMessages),
+  ErrorHandler.asyncWrapper(AdminController.getBotMessages)
 );
 
 // ===== RUTAS DE GESTIÓN DE RESERVAS =====
 
 /**
  * Montar rutas de gestión de reservas
- * /admin/bookings/* - Sistema completo de gestión de reservas
+ * /admin/appointments/* - Sistema completo de gestión de citas
  */
-router.use("/bookings", adminBookingRoutes);
+router.use("/appointments", adminBookingRoutes);
 
 /**
- * GET /admin/bookings-legacy
- * 📅 Reservas y citas de Calendly (legacy)
+ * GET /admin/appointments-legacy
+ * 📅 Citas de Calendly (legacy)
  * Query params: status, limit, startDate, endDate
  */
 router.get(
-  "/bookings-legacy",
-  ErrorHandler.asyncWrapper(AdminController.getBookings),
+  "/appointments-legacy",
+  ErrorHandler.asyncWrapper(AdminController.getAppointments)
 );
 
 /**
@@ -123,7 +123,7 @@ router.get(
  */
 router.get(
   "/openai",
-  ErrorHandler.asyncWrapper(AdminController.getOpenAIStatus),
+  ErrorHandler.asyncWrapper(AdminController.getOpenAIStatus)
 );
 
 /**
@@ -133,7 +133,7 @@ router.get(
  */
 router.get(
   "/twilio",
-  ErrorHandler.asyncWrapper(AdminController.getTwilioStatus),
+  ErrorHandler.asyncWrapper(AdminController.getTwilioStatus)
 );
 
 /**
@@ -143,7 +143,7 @@ router.get(
  */
 router.get(
   "/users",
-  ErrorHandler.asyncWrapper(AdminController.getUserActivity),
+  ErrorHandler.asyncWrapper(AdminController.getUserActivity)
 );
 
 /**
@@ -153,7 +153,7 @@ router.get(
  */
 router.get(
   "/security",
-  ErrorHandler.asyncWrapper(AdminController.getSecurityStatus),
+  ErrorHandler.asyncWrapper(AdminController.getSecurityStatus)
 );
 
 /**
@@ -162,7 +162,7 @@ router.get(
  */
 router.get(
   "/health",
-  ErrorHandler.asyncWrapper(AdminController.getSystemHealth),
+  ErrorHandler.asyncWrapper(AdminController.getSystemHealth)
 );
 
 // ===== RUTAS DE ACCIONES ADMINISTRATIVAS =====
@@ -185,7 +185,7 @@ router.post(
         "logs_rotate",
         {
           ip: req.ip,
-        },
+        }
       );
 
       res.json({
@@ -197,7 +197,7 @@ router.post(
       logger.error("Error rotating logs", error);
       throw error;
     }
-  }),
+  })
 );
 
 /**
@@ -220,7 +220,7 @@ router.post(
         {
           days: parseInt(days),
           ip: req.ip,
-        },
+        }
       );
 
       res.json({
@@ -232,7 +232,7 @@ router.post(
       logger.error("Error cleaning logs", error);
       throw error;
     }
-  }),
+  })
 );
 
 /**
@@ -257,7 +257,7 @@ router.post(
       "system_restart",
       {
         ip: req.ip,
-      },
+      }
     );
 
     res.json({
@@ -270,7 +270,7 @@ router.post(
     setTimeout(() => {
       process.exit(0);
     }, 1000);
-  }),
+  })
 );
 
 /**
@@ -301,7 +301,7 @@ router.get(
           "Content-Disposition",
           `attachment; filename="${type}-logs-${
             new Date().toISOString().split("T")[0]
-          }.csv"`,
+          }.csv"`
         );
         res.send(csv);
       } else {
@@ -311,7 +311,7 @@ router.get(
           "Content-Disposition",
           `attachment; filename="${type}-logs-${
             new Date().toISOString().split("T")[0]
-          }.json"`,
+          }.json"`
         );
         res.json({
           exportDate: new Date().toISOString(),
@@ -324,7 +324,7 @@ router.get(
       logger.error("Error exporting logs", error);
       throw error;
     }
-  }),
+  })
 );
 
 /**
@@ -352,7 +352,7 @@ router.get(
       logger.error("Error getting stats summary", error);
       throw error;
     }
-  }),
+  })
 );
 
 // ===== RUTAS RGPD =====
@@ -366,21 +366,31 @@ router.get(
   ErrorHandler.asyncWrapper(async (req, res) => {
     const logger = require("../utils/logger");
     const { startDate, endDate } = req.query;
-    
+
     try {
       const report = await gdprService.generateComplianceReport(
-        startDate || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        endDate || new Date().toISOString().split('T')[0]
+        startDate ||
+          new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+            .toISOString()
+            .split("T")[0],
+        endDate || new Date().toISOString().split("T")[0]
       );
 
       if (report.success) {
-        logger.audit("GDPR stats accessed", req.user?.email || "admin", "gdpr_stats", {
-          startDate, endDate, ip: req.ip
-        });
+        logger.audit(
+          "GDPR stats accessed",
+          req.user?.email || "admin",
+          "gdpr_stats",
+          {
+            startDate,
+            endDate,
+            ip: req.ip,
+          }
+        );
 
         res.json({
           success: true,
-          data: report.report
+          data: report.report,
         });
       } else {
         throw new Error(report.error);
@@ -400,17 +410,22 @@ router.get(
   "/gdpr/worker/stats",
   ErrorHandler.asyncWrapper(async (req, res) => {
     const logger = require("../utils/logger");
-    
+
     try {
       const stats = gdprCleanupWorker.getStats();
-      
-      logger.audit("GDPR worker stats accessed", req.user?.email || "admin", "gdpr_worker_stats", {
-        ip: req.ip
-      });
+
+      logger.audit(
+        "GDPR worker stats accessed",
+        req.user?.email || "admin",
+        "gdpr_worker_stats",
+        {
+          ip: req.ip,
+        }
+      );
 
       res.json({
         success: true,
-        data: stats
+        data: stats,
       });
     } catch (error) {
       logger.error("Error getting GDPR worker stats", error);
@@ -427,18 +442,24 @@ router.post(
   "/gdpr/cleanup/manual",
   ErrorHandler.asyncWrapper(async (req, res) => {
     const logger = require("../utils/logger");
-    
+
     try {
       const result = await gdprCleanupWorker.runManualCleanup();
-      
-      logger.audit("Manual GDPR cleanup executed", req.user?.email || "admin", "gdpr_manual_cleanup", {
-        result: result.stats, ip: req.ip
-      });
+
+      logger.audit(
+        "Manual GDPR cleanup executed",
+        req.user?.email || "admin",
+        "gdpr_manual_cleanup",
+        {
+          result: result.stats,
+          ip: req.ip,
+        }
+      );
 
       res.json({
         success: true,
         message: "Limpieza manual ejecutada correctamente",
-        data: result
+        data: result,
       });
     } catch (error) {
       logger.error("Error in manual GDPR cleanup", error);
@@ -456,20 +477,27 @@ router.post(
   ErrorHandler.asyncWrapper(async (req, res) => {
     const logger = require("../utils/logger");
     const { clientId } = req.params;
-    const { format = 'json' } = req.body;
+    const { format = "json" } = req.body;
 
     try {
       const result = await gdprService.exportUserData(clientId, format);
 
       if (result.success) {
-        logger.audit("Admin data export", req.user?.email || "admin", "gdpr_admin_export", {
-          clientId, format, ip: req.ip
-        });
+        logger.audit(
+          "Admin data export",
+          req.user?.email || "admin",
+          "gdpr_admin_export",
+          {
+            clientId,
+            format,
+            ip: req.ip,
+          }
+        );
 
         res.json({
           success: true,
           message: "Datos exportados correctamente",
-          data: result.data
+          data: result.data,
         });
       } else {
         throw new Error(result.error);
@@ -522,14 +550,14 @@ router.get(
       "config",
       {
         ip: req.ip,
-      },
+      }
     );
 
     res.json({
       success: true,
       data: config,
     });
-  }),
+  })
 );
 
 // ===== MIDDLEWARE DE MANEJO DE ERRORES =====

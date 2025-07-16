@@ -3,7 +3,7 @@
 
 const { calendlyClient } = require("../integrations/calendlyClient");
 const autonomousAssistant = require("./autonomousAssistant");
-const BookingModel = require("../models/bookingModel");
+const AppointmentModel = require("../models/appointmentModel");
 const ClientModel = require("../models/clientModel");
 const ServiceModel = require("../models/serviceModel");
 const logger = require("../utils/logger");
@@ -131,7 +131,7 @@ class BookingWidgetService {
       // Verificar disponibilidad
       const isAvailable = await this.verifySlotAvailability(
         serviceId,
-        datetime,
+        datetime
       );
       if (!isAvailable) {
         throw new Error("Selected time slot is no longer available");
@@ -283,7 +283,7 @@ Para cambios, responde a este WhatsApp con al menos 24h de antelación.
 
       await autonomousAssistant.sendWhatsAppMessage(
         client.phone,
-        confirmationMessage,
+        confirmationMessage
       );
     } catch (error) {
       logger.error("Error sending web booking confirmation", {
@@ -309,7 +309,7 @@ Para cambios, responde a este WhatsApp con al menos 24h de antelación.
       const formattedBookings = await Promise.all(
         bookings.map(async (booking) => {
           const service = this.services.find(
-            (s) => s.id === booking.service_id,
+            (s) => s.id === booking.service_id
           );
           return {
             id: booking.id,
@@ -325,7 +325,7 @@ Para cambios, responde a este WhatsApp con al menos 24h de antelación.
             canCancel: this.canCancelBooking(booking),
             createdVia: booking.created_via,
           };
-        }),
+        })
       );
 
       return {
@@ -387,7 +387,7 @@ Para cambios, responde a este WhatsApp con al menos 24h de antelación.
 
       if (!this.canCancelBooking(booking)) {
         throw new Error(
-          "Booking cannot be cancelled (less than 24h notice or invalid status)",
+          "Booking cannot be cancelled (less than 24h notice or invalid status)"
         );
       }
 
