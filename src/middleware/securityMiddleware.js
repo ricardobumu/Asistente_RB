@@ -114,7 +114,7 @@ class SecurityMiddleware {
       }),
 
       // Widget booking - moderado
-      widgetBooking: rateLimit({
+      widgetAppointment: rateLimit({
         windowMs: 15 * 60 * 1000, // 15 minutos
         max: 20, // 20 reservas por 15 minutos por IP
         message: {

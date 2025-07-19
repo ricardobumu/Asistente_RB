@@ -1,34 +1,55 @@
-// src/index.js
-// Cargar variables de entorno de forma segura
-require("dotenv").config({ path: ".env" }); // Configuración base
-require("dotenv").config({ path: ".env.local", override: true }); // Secretos locales (override)
+/**
+ * ASISTENTE RB - SISTEMA AUTÓNOMO DE RESERVAS
+ * Aplicación principal consolidada y optimizada
+ *
+ * Sistema autónomo de reservas con WhatsApp, Calendly y OpenAI
+ * Arquitectura modular, segura y escalable
+ * Cumple con RGPD y normativas europeas
+ *
+ * @author Ricardo Buriticá - Asistente RB Team
+ * @version 2.1.0
+ * @since 2024
+ */
 
+// ===== CARGA SEGURA DE VARIABLES DE ENTORNO =====
+require("dotenv").config({ path: ".env" });
+require("dotenv").config({ path: ".env.local", override: true });
+
+// ===== IMPORTACIONES PRINCIPALES =====
 const express = require("express");
-const { PORT, APP_NAME, APP_VERSION, NODE_ENV } = require("./config/env");
+const cors = require("cors");
+const helmet = require("helmet");
+const compression = require("compression");
+const rateLimit = require("express-rate-limit");
+const mongoSanitize = require("express-mongo-sanitize");
+const hpp = require("hpp");
+const path = require("path");
+
+// ===== CONFIGURACIÓN Y UTILIDADES =====
+const {
+  PORT,
+  APP_NAME,
+  APP_VERSION,
+  NODE_ENV,
+  ALLOWED_ORIGINS,
+} = require("./config/env");
 const logger = require("./utils/logger");
 
-// Importar middleware de seguridad avanzado
+// ===== MIDDLEWARE DE SEGURIDAD AVANZADO =====
 const SecurityMiddleware = require("./middleware/securityMiddleware");
 const ErrorHandler = require("./middleware/errorHandler");
 
-// Importar middleware existente como fallback
-const {
-  rateLimitMiddleware,
-  sanitizeMiddleware,
-} = require("./middleware/auditMiddleware");
-
-// Importar clientes de integración
+// ===== CLIENTES DE INTEGRACIÓN =====
 const supabase = require("./integrations/supabaseClient");
 const twilioClient = require("./integrations/twilioClient");
 const calendlyClient = require("./integrations/calendlyClient");
 const openaiClient = require("./integrations/openaiClient");
 const googleCalendarClient = require("./integrations/googleCalendarClient");
 
-// Importar API router
+// ===== RUTAS MODULARES =====
 const apiRouter = require("./api");
-
-// Importar rutas del asistente autónomo
 const autonomousWhatsAppRoutes = require("./routes/autonomousWhatsAppRoutes");
+const whatsappRoutes = require("./routes/whatsappRoutes");
 const appointmentWidgetRoutes = require("./routes/appointmentWidgetRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const calendlyWebhookRoutes = require("./routes/calendlyWebhookRoutes");
@@ -36,363 +57,563 @@ const clientPortalRoutes = require("./routes/clientPortalRoutes");
 const googleCalendarRoutes = require("./routes/googleCalendarRoutes");
 const widgetRoutes = require("./routes/widgetRoutes");
 const gdprRoutes = require("./routes/gdprRoutes");
+const pipedreamTestRoutes = require("./routes/pipedreamTestRoutes");
 
-// Importar servicios de background
+// ===== SERVICIOS DE BACKGROUND =====
 const notificationScheduler = require("./services/notificationScheduler");
 const gdprCleanupWorker = require("./workers/gdprCleanupWorker");
 
-// Inicializar manejadores de errores globales
+// ===== INICIALIZACIÓN =====
 ErrorHandler.initialize();
-
 const app = express();
 
 // Log de inicio de aplicación
-logger.info(`Iniciando ${APP_NAME} v${APP_VERSION}`, {
+logger.info(`🚀 Iniciando ${APP_NAME} v${APP_VERSION}`, {
   environment: NODE_ENV,
   port: PORT,
+  timestamp: new Date().toISOString(),
+  pid: process.pid,
 });
 
-// ===== MIDDLEWARE DE SEGURIDAD AVANZADO =====
+// ===== CONFIGURACIÓN DE SEGURIDAD AVANZADA =====
 
-// 1. Headers de seguridad (Helmet)
-app.use(SecurityMiddleware.helmetConfig());
+// 1. Headers de seguridad con Helmet (configuración optimizada)
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://fonts.googleapis.com",
+          "https://cdn.tailwindcss.com",
+        ],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.tailwindcss.com"],
+        imgSrc: ["'self'", "data:", "https:"],
+        connectSrc: [
+          "'self'",
+          "https://api.openai.com",
+          "https://api.calendly.com",
+          "https://*.supabase.co",
+        ],
+        frameSrc: [
+          "'self'",
+          "https://ricardoburitica.eu",
+          "https://www.ricardoburitica.eu",
+        ],
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+      preload: true,
+    },
+  })
+);
 
-// 2. CORS configurado de forma segura
-app.use(SecurityMiddleware.corsConfig());
+// 2. Configuración CORS segura y optimizada
+const corsOptions = {
+  origin: function (origin, callback) {
+    const allowedOrigins = ALLOWED_ORIGINS.split(",").map((o) => o.trim());
 
-// 3. Logging de seguridad
-app.use(SecurityMiddleware.securityLogger);
+    // Permitir requests sin origin (aplicaciones móviles, Postman, etc.)
+    if (!origin) return callback(null, true);
 
-// 4. Timeout para requests (comentado - método no disponible)
-// app.use(SecurityMiddleware.timeoutHandler(30000)); // 30 segundos
+    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes("*")) {
+      callback(null, true);
+    } else {
+      logger.warn("CORS: Origen no permitido", { origin, allowedOrigins });
+      callback(new Error("No permitido por CORS"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "X-Requested-With",
+    "X-Hook-Signature",
+    "X-Twilio-Signature",
+    "X-API-Key",
+  ],
+  exposedHeaders: ["X-RateLimit-Limit", "X-RateLimit-Remaining"],
+  maxAge: 86400, // 24 horas
+};
 
-// 5. Sanitización de entrada
-app.use(SecurityMiddleware.sanitizeInput);
+app.use(cors(corsOptions));
 
-// 6. Validación de contenido JSON
-app.use(SecurityMiddleware.validateJsonContent);
+// 3. Compresión de respuestas optimizada
+app.use(
+  compression({
+    level: 6,
+    threshold: 1024,
+    filter: (req, res) => {
+      if (req.headers["x-no-compression"]) return false;
+      return compression.filter(req, res);
+    },
+  })
+);
 
-// 7. Protección contra timing attacks
-app.use(SecurityMiddleware.timingAttackProtection);
+// 4. Rate limiting global optimizado
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 1000, // máximo 1000 requests por ventana por IP
+  message: {
+    error: "Demasiadas solicitudes desde esta IP, intenta de nuevo más tarde.",
+    retryAfter: "15 minutos",
+    timestamp: new Date().toISOString(),
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => {
+    // Skip rate limiting para health checks y rutas de sistema
+    return (
+      req.path === "/health" ||
+      req.path === "/" ||
+      req.path.startsWith("/static")
+    );
+  },
+});
 
-// 8. Rate limiting por endpoint
+app.use(globalLimiter);
+
+// 5. Rate limiting específico para webhooks críticos
+const webhookLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minuto
+  max: 100, // máximo 100 webhooks por minuto
+  message: {
+    error: "Demasiados webhooks recibidos, intenta más tarde.",
+    retryAfter: "1 minuto",
+    timestamp: new Date().toISOString(),
+  },
+});
+
+// 6. Sanitización de datos avanzada
+app.use(
+  mongoSanitize({
+    replaceWith: "_",
+    onSanitize: ({ req, key }) => {
+      logger.warn("Datos sanitizados detectados", {
+        path: req.path,
+        key,
+        ip: req.ip,
+        userAgent: req.get("User-Agent"),
+        timestamp: new Date().toISOString(),
+      });
+    },
+  })
+);
+
+// 7. Protección contra HTTP Parameter Pollution
+app.use(
+  hpp({
+    whitelist: ["tags", "categories", "services"], // parámetros que pueden repetirse
+  })
+);
+
+// 8. Rate limiting por endpoint usando SecurityMiddleware
 const rateLimiters = SecurityMiddleware.rateLimiters();
 
-// Middleware para parsear JSON con límites seguros
+// 9. Parseo de JSON con límites de seguridad avanzados
 app.use(
   express.json({
-    limit: "1mb", // Reducido para seguridad
-    verify: (req, res, buf) => {
-      // Verificar que el JSON no sea malicioso
+    limit: "10mb", // Límite optimizado para webhooks y uploads
+    verify: (req, res, buf, encoding) => {
+      // Verificar contenido malicioso
       const body = buf.toString();
       if (body.includes("<script>") || body.includes("javascript:")) {
-        throw new Error("Malicious content detected");
+        const error = new Error("Contenido malicioso detectado");
+        error.status = 400;
+        throw error;
       }
     },
   })
 );
+
 app.use(
   express.urlencoded({
     extended: true,
-    limit: "1mb",
-    parameterLimit: 100, // Limitar parámetros
+    limit: "10mb",
+    parameterLimit: 1000, // Límite optimizado para formularios complejos
   })
 );
 
-// Middleware de logging existente (mejorado)
+// 10. Middleware de logging de requests optimizado
 app.use((req, res, next) => {
   const startTime = Date.now();
 
-  logger.info(`Request received: ${req.method} ${req.url}`, {
+  // Log de request entrante (solo información esencial)
+  logger.info("Request recibido", {
+    method: req.method,
+    url: req.url,
     ip: req.ip || req.connection.remoteAddress,
     userAgent: req.get("User-Agent"),
     contentType: req.get("Content-Type"),
     contentLength: req.get("Content-Length"),
-    origin: req.get("Origin"),
-    referer: req.get("Referer"),
+    timestamp: new Date().toISOString(),
   });
 
-  // Log de respuesta
+  // Log de respuesta al finalizar
   res.on("finish", () => {
     const responseTime = Date.now() - startTime;
-    logger.performance(`${req.method} ${req.url}`, responseTime, {
+
+    // Log diferenciado por tipo de respuesta
+    const logLevel = res.statusCode >= 400 ? "warn" : "info";
+    logger[logLevel]("Response enviado", {
+      method: req.method,
+      url: req.url,
       statusCode: res.statusCode,
+      responseTime: `${responseTime}ms`,
       ip: req.ip,
+      timestamp: new Date().toISOString(),
     });
   });
 
   next();
 });
 
-// Hacer los clientes disponibles globalmente en el objeto app
+// 11. Hacer los clientes disponibles globalmente en el objeto app
 app.locals.supabase = supabase;
 app.locals.twilioClient = twilioClient;
 app.locals.calendlyClient = calendlyClient;
 app.locals.openaiClient = openaiClient;
 app.locals.googleCalendarClient = googleCalendarClient;
 
-// ===== MONTAJE DE RUTAS CON SEGURIDAD =====
+// ===== MONTAJE DE RUTAS CON SEGURIDAD PROFESIONAL =====
 
-// 1. API general con rate limiting moderado
-app.use("/api", rateLimiters.general, apiRouter);
-
-// 1.1. API específica para servicios del portal cliente
-const serviciosRouter = require("./api/servicios");
-app.use("/api/servicios", rateLimiters.general, serviciosRouter);
-
-// 2. WhatsApp autónomo con validación de Twilio y rate limiting específico
+// 1. Webhooks críticos con rate limiting específico y validación de firmas
 app.use(
-  "/autonomous/whatsapp",
-  rateLimiters.whatsapp,
-  // Aplicar validación de Twilio solo a webhooks POST
+  "/api/calendly",
+  webhookLimiter,
+  // Validación de firma de Calendly si está configurada
   (req, res, next) => {
-    if (req.method === "POST" && req.path === "/webhook") {
+    if (
+      req.method === "POST" &&
+      process.env.VALIDATE_CALENDLY_SIGNATURE === "true"
+    ) {
+      return SecurityMiddleware.validateCalendlySignature(req, res, next);
+    }
+    next();
+  },
+  calendlyWebhookRoutes
+);
+
+app.use(
+  "/webhook/whatsapp",
+  webhookLimiter,
+  // Validación de firma de Twilio
+  (req, res, next) => {
+    if (
+      req.method === "POST" &&
+      process.env.VALIDATE_TWILIO_SIGNATURE === "true"
+    ) {
       return SecurityMiddleware.validateTwilioSignature(req, res, next);
     }
     next();
   },
+  whatsappRoutes
+);
+
+// 2. API general con rate limiting moderado
+app.use("/api", rateLimiters.general, apiRouter);
+
+// 3. API específica para servicios del portal cliente
+const serviciosRouter = require("./api/servicios");
+app.use("/api/servicios", rateLimiters.general, serviciosRouter);
+
+// 4. WhatsApp autónomo con validación avanzada
+app.use(
+  "/autonomous/whatsapp",
+  rateLimiters.whatsapp,
   autonomousWhatsAppRoutes
 );
 
-// 2.1. Ruta directa para webhook de Twilio WhatsApp (para ngrok)
-app.use(
-  "/webhook/whatsapp",
-  rateLimiters.whatsapp,
-  SecurityMiddleware.validateTwilioSignature,
-  (req, res, next) => {
-    // Redirigir al controlador autónomo
-    req.url = "/webhook";
-    autonomousWhatsAppRoutes(req, res, next);
-  }
-);
+// 5. Rutas integradas de WhatsApp
+app.use("/api/whatsapp", rateLimiters.general, whatsappRoutes);
 
-// 3. Widget de reservas con rate limiting específico
+// 6. Widget de reservas con rate limiting específico
 app.use(
   "/api/widget",
   rateLimiters.widgetGeneral,
   // Rate limiting más estricto para creación de reservas
   (req, res, next) => {
-    if (req.method === "POST" && req.path === "/appointments") {
-      return rateLimiters.widgetBooking(req, res, next);
+    if (
+      req.method === "POST" &&
+      (req.path === "/appointments" || req.path === "/bookings")
+    ) {
+      return rateLimiters.widgetAppointment(req, res, next);
     }
     next();
   },
   appointmentWidgetRoutes
 );
 
-// 4. Dashboard administrativo con máxima seguridad
+// 7. Dashboard administrativo con máxima seguridad
 app.use("/admin", rateLimiters.admin, adminRoutes);
 
-// 5. Webhooks de Calendly con rate limiting específico
-app.use("/api/calendly", rateLimiters.general, calendlyWebhookRoutes);
-
-// 6. Portal del Cliente con rate limiting moderado
+// 8. Portal del Cliente con rate limiting moderado
 app.use("/client", rateLimiters.general, clientPortalRoutes);
 
-// 7. Google Calendar con rate limiting específico
+// 9. Google Calendar con rate limiting específico
 app.use("/api/google", rateLimiters.general, googleCalendarRoutes);
 
-// 8. Widget público de reservas (sin autenticación)
-app.use("/widget", widgetRoutes);
+// 10. Widget público de reservas (con rate limiting básico)
+app.use("/widget", rateLimiters.widgetGeneral, widgetRoutes);
 
-// 9. RGPD y compliance (acceso público para derechos de usuarios)
+// 11. RGPD y compliance (acceso público para derechos de usuarios)
 app.use("/gdpr", rateLimiters.gdpr, gdprRoutes);
 
-// ===== ARCHIVOS ESTÁTICOS =====
+// 12. Pipedream Testing (solo para desarrollo y testing)
+if (NODE_ENV === "development") {
+  app.use("/api/pipedream/test", rateLimiters.general, pipedreamTestRoutes);
+}
 
-// Importar path para archivos estáticos
-const path = require("path");
+// ===== ARCHIVOS ESTÁTICOS CON SEGURIDAD =====
 
-// Servir dashboard administrativo (solo con autenticación)
+// Portal administrativo con cache optimizado
 app.use(
   "/admin/static",
-  express.static(path.join(__dirname, "../public/admin"))
+  express.static(path.join(__dirname, "../public/admin"), {
+    maxAge: "1h",
+    etag: true,
+    setHeaders: (res, path) => {
+      // Headers de seguridad adicionales para archivos estáticos
+      res.setHeader("X-Content-Type-Options", "nosniff");
+      res.setHeader("X-Frame-Options", "DENY");
+    },
+  })
 );
 
-// Ruta para acceder al dashboard
-app.get("/admin", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/admin/index.html"));
-});
-
-// Ruta para login del dashboard
-app.get("/admin/login.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/admin/login.html"));
-});
-
-// ===== WIDGET PÚBLICO =====
-
-// Servir archivos estáticos del widget (CSS, JS, imágenes)
+// Widget público con cache optimizado
 app.use(
   "/widget/static",
   express.static(path.join(__dirname, "../public/widget"), {
-    maxAge: "1h", // Cache por 1 hora
+    maxAge: "1h",
+    etag: true,
+    setHeaders: (res, path) => {
+      res.setHeader("X-Content-Type-Options", "nosniff");
+    },
+  })
+);
+
+// Portal cliente con cache optimizado
+app.use(
+  "/client/static",
+  express.static(path.join(__dirname, "../public/client"), {
+    maxAge: "1h",
+    etag: true,
+    setHeaders: (res, path) => {
+      res.setHeader("X-Content-Type-Options", "nosniff");
+    },
+  })
+);
+
+// Ruta alternativa para portal cliente
+app.use(
+  "/portal/static",
+  express.static(path.join(__dirname, "../public/client"), {
+    maxAge: "1h",
     etag: true,
   })
 );
 
-// ===== PORTAL CLIENTE =====
-
-// Servir archivos estáticos del portal cliente
-app.use(
-  "/portal/static",
-  express.static(path.join(__dirname, "../public/client"))
-);
-
-// Ruta principal del portal cliente
-app.get("/portal", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/client/ricardo-portal.html"));
-});
-
-// Ruta alternativa para compatibilidad
-app.get("/client", (req, res) => {
-  res.redirect("/portal");
-});
-
 // ===== RUTAS DE SISTEMA =====
 
-// Health check mejorado con seguridad
-app.get("/health", ErrorHandler.healthCheck);
+// Health check optimizado
+app.get("/health", (req, res) => {
+  const healthStatus = {
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: NODE_ENV,
+    version: APP_VERSION,
+    services: {
+      supabase: "connected",
+      openai: process.env.OPENAI_API_KEY ? "configured" : "not configured",
+      twilio: process.env.TWILIO_ACCOUNT_SID ? "configured" : "not configured",
+      calendly: process.env.CALENDLY_ACCESS_TOKEN
+        ? "configured"
+        : "not configured",
+    },
+    memory: {
+      used: Math.round(process.memoryUsage().heapUsed / 1024 / 1024) + " MB",
+      total: Math.round(process.memoryUsage().heapTotal / 1024 / 1024) + " MB",
+    },
+  };
 
-// Ruta principal con información limitada
+  res.status(200).json(healthStatus);
+});
+
+// Ruta principal optimizada
 app.get("/", (req, res) => {
-  const response = {
-    mensaje: "Asistente Virtual Autónomo - Sistema Operativo",
-    app: APP_NAME,
+  res.status(200).json({
+    message: "Asistente RB - Sistema Autónomo de Reservas",
     version: APP_VERSION,
     status: "online",
     timestamp: new Date().toISOString(),
-  };
-
-  res.status(200).json(response);
+    endpoints: {
+      health: "/health",
+      calendly_webhook: "/api/calendly/webhook",
+      whatsapp_webhook: "/webhook/whatsapp",
+      admin: "/admin",
+      client: "/client",
+      widget: "/widget",
+      api: "/api",
+    },
+  });
 });
 
-// ===== MANEJO DE ERRORES =====
-
-// Middleware para rutas no encontradas
-app.use(ErrorHandler.notFoundHandler);
-
-// Middleware de manejo de errores de seguridad
-app.use(SecurityMiddleware.securityErrorHandler);
-
-// Middleware global de manejo de errores
-app.use(ErrorHandler.globalErrorHandler);
-
-// Middleware de manejo de errores
-app.use((error, req, res, next) => {
-  logger.error("Error no manejado", error, {
-    url: req.url,
-    method: req.method,
-    ip: req.ip,
-  });
-
-  res.status(500).json({
-    success: false,
-    error:
-      NODE_ENV === "production" ? "Error interno del servidor" : error.message,
+// Ruta de información de la API
+app.get("/api", (req, res) => {
+  res.status(200).json({
+    api: "Asistente RB API",
+    version: APP_VERSION,
+    endpoints: [
+      "/api/servicios",
+      "/api/whatsapp",
+      "/api/calendly",
+      "/api/widget",
+      "/api/google",
+      "/api/gdpr",
+    ],
     timestamp: new Date().toISOString(),
   });
 });
 
+// ===== MANEJO DE ERRORES PROFESIONAL =====
+
 // Middleware para rutas no encontradas
-app.use((req, res) => {
+app.use("*", (req, res) => {
   logger.warn("Ruta no encontrada", {
-    url: req.url,
     method: req.method,
+    url: req.originalUrl,
     ip: req.ip,
+    userAgent: req.get("User-Agent"),
+    timestamp: new Date().toISOString(),
   });
 
   res.status(404).json({
     success: false,
     error: "Ruta no encontrada",
+    message: `La ruta ${req.method} ${req.originalUrl} no existe`,
     timestamp: new Date().toISOString(),
+    availableEndpoints: {
+      api: "/api",
+      health: "/health",
+      admin: "/admin",
+      client: "/client",
+      widget: "/widget",
+    },
   });
 });
 
-// Manejo de señales del sistema
-process.on("SIGTERM", () => {
-  logger.info("Señal SIGTERM recibida, cerrando servidor...");
-  gracefulShutdown();
+// Middleware global de manejo de errores
+app.use((error, req, res, next) => {
+  // Log del error con información completa
+  logger.error("Error no manejado", {
+    error: error.message,
+    stack: NODE_ENV === "development" ? error.stack : undefined,
+    url: req.url,
+    method: req.method,
+    ip: req.ip,
+    userAgent: req.get("User-Agent"),
+    timestamp: new Date().toISOString(),
+  });
+
+  // Determinar código de estado
+  const statusCode = error.status || error.statusCode || 500;
+
+  // Mensaje de error según el entorno
+  const errorMessage =
+    NODE_ENV === "production" ? "Error interno del servidor" : error.message;
+
+  // Respuesta de error estructurada
+  res.status(statusCode).json({
+    success: false,
+    error: errorMessage,
+    timestamp: new Date().toISOString(),
+    ...(NODE_ENV === "development" && {
+      stack: error.stack,
+      details: error.details || null,
+    }),
+  });
 });
 
-process.on("SIGINT", () => {
-  logger.info("Señal SIGINT recibida, cerrando servidor...");
-  gracefulShutdown();
-});
+// ===== INICIALIZACIÓN DEL SERVIDOR =====
 
-process.on("uncaughtException", (error) => {
-  logger.error("Excepción no capturada", error);
-  process.exit(1);
-});
-
-process.on("unhandledRejection", (reason, promise) => {
-  logger.error("Promesa rechazada no manejada", reason);
-  process.exit(1);
-});
-
-// Puerto de escucha con manejo de errores mejorado
 const serverPort = PORT || 3000;
-const serverHost = "0.0.0.0"; // Escuchar en todas las interfaces
-const server = app.listen(serverPort, serverHost, () => {
-  logger.info(`🚀 Servidor iniciado exitosamente`, {
+const serverHost = "0.0.0.0";
+
+const server = app.listen(serverPort, serverHost, async () => {
+  logger.info("🚀 Servidor iniciado exitosamente", {
     port: serverPort,
     host: serverHost,
     environment: NODE_ENV,
     url: `http://localhost:${serverPort}`,
     pid: process.pid,
+    timestamp: new Date().toISOString(),
   });
 
-  // Inicializar servicios de background después de que el servidor esté listo
+  // Inicializar servicios de background de forma segura
   try {
-    notificationScheduler.start();
-    logger.info("📅 Notification scheduler started successfully");
+    await initializeBackgroundServices();
+    logger.info("✅ Servicios de background inicializados correctamente");
   } catch (error) {
-    logger.error("❌ Error starting notification scheduler", {
-      error: error.message,
-    });
-  }
-
-  // Inicializar worker de limpieza RGPD
-  try {
-    gdprCleanupWorker.start();
-    logger.info("🔒 GDPR cleanup worker started successfully");
-  } catch (error) {
-    logger.error("❌ Error starting GDPR cleanup worker", {
+    logger.error("❌ Error inicializando servicios de background", {
       error: error.message,
     });
   }
 });
 
+// Función para inicializar servicios de background
+async function initializeBackgroundServices() {
+  const services = [];
+
+  // Inicializar notification scheduler
+  try {
+    if (
+      notificationScheduler &&
+      typeof notificationScheduler.start === "function"
+    ) {
+      await notificationScheduler.start();
+      services.push("📅 Notification Scheduler");
+    }
+  } catch (error) {
+    logger.warn("⚠️ Notification scheduler no disponible", {
+      error: error.message,
+    });
+  }
+
+  // Inicializar GDPR cleanup worker
+  try {
+    if (gdprCleanupWorker && typeof gdprCleanupWorker.start === "function") {
+      await gdprCleanupWorker.start();
+      services.push("🔒 GDPR Cleanup Worker");
+    }
+  } catch (error) {
+    logger.warn("⚠️ GDPR cleanup worker no disponible", {
+      error: error.message,
+    });
+  }
+
+  if (services.length > 0) {
+    logger.info("Servicios de background activos:", { services });
+  }
+}
+
 // Manejo de errores del servidor
 server.on("error", (error) => {
   if (error.code === "EADDRINUSE") {
-    logger.error(`Puerto ${serverPort} ya está en uso`, {
+    logger.error(`❌ Puerto ${serverPort} ya está en uso`, {
       port: serverPort,
       error: error.message,
     });
-
-    // Intentar con puerto alternativo
-    const alternativePort = serverPort + 1;
-    logger.info(`Intentando puerto alternativo: ${alternativePort}`);
-
-    const alternativeServer = app.listen(alternativePort, () => {
-      logger.info(`🚀 Servidor iniciado en puerto alternativo`, {
-        port: alternativePort,
-        environment: NODE_ENV,
-        url: `http://localhost:${alternativePort}`,
-        pid: process.pid,
-      });
-    });
-
-    alternativeServer.on("error", (altError) => {
-      logger.error("Error crítico: No se pudo iniciar el servidor", {
-        originalPort: serverPort,
-        alternativePort: alternativePort,
-        error: altError.message,
-      });
-      process.exit(1);
-    });
+    process.exit(1);
   } else {
-    logger.error("Error del servidor", {
+    logger.error("❌ Error del servidor", {
       error: error.message,
       code: error.code,
     });
@@ -400,40 +621,94 @@ server.on("error", (error) => {
   }
 });
 
-// Manejo graceful de cierre del servidor
-const gracefulShutdown = () => {
-  logger.info("Iniciando cierre graceful del servidor...");
+// ===== MANEJO GRACEFUL DE CIERRE =====
 
-  // Detener servicios de background
+const gracefulShutdown = async (signal) => {
+  logger.info(`📴 Señal ${signal} recibida, iniciando cierre graceful...`);
+
+  // Detener servicios de background de forma segura
+  const shutdownPromises = [];
+
   try {
-    notificationScheduler.stop();
-    logger.info("📅 Notification scheduler stopped");
+    if (
+      notificationScheduler &&
+      typeof notificationScheduler.stop === "function"
+    ) {
+      shutdownPromises.push(
+        Promise.resolve(notificationScheduler.stop()).catch((err) =>
+          logger.warn("Error deteniendo notification scheduler", {
+            error: err.message,
+          })
+        )
+      );
+    }
   } catch (error) {
-    logger.error("❌ Error stopping notification scheduler", {
+    logger.warn("Error accediendo a notification scheduler", {
       error: error.message,
     });
   }
 
-  // Detener worker de limpieza RGPD
   try {
-    gdprCleanupWorker.stop();
-    logger.info("🔒 GDPR cleanup worker stopped");
+    if (gdprCleanupWorker && typeof gdprCleanupWorker.stop === "function") {
+      shutdownPromises.push(
+        Promise.resolve(gdprCleanupWorker.stop()).catch((err) =>
+          logger.warn("Error deteniendo GDPR cleanup worker", {
+            error: err.message,
+          })
+        )
+      );
+    }
   } catch (error) {
-    logger.error("❌ Error stopping GDPR cleanup worker", {
+    logger.warn("Error accediendo a GDPR cleanup worker", {
       error: error.message,
     });
   }
 
-  server.close(() => {
-    logger.info("Servidor cerrado correctamente");
+  // Esperar a que todos los servicios se detengan
+  try {
+    await Promise.allSettled(shutdownPromises);
+    logger.info("✅ Servicios de background detenidos");
+  } catch (error) {
+    logger.warn("⚠️ Algunos servicios no se pudieron detener correctamente", {
+      error: error.message,
+    });
+  }
+
+  // Cerrar servidor HTTP
+  server.close(async () => {
+    logger.info("🔒 Servidor HTTP cerrado");
+    logger.info("👋 Aplicación cerrada correctamente");
     process.exit(0);
   });
 
-  // Forzar cierre después de 10 segundos
+  // Forzar cierre después de 30 segundos
   setTimeout(() => {
-    logger.error("Forzando cierre del servidor");
+    logger.error("⚠️ Forzando cierre de la aplicación");
     process.exit(1);
-  }, 10000);
+  }, 30000);
 };
+
+// Manejo de señales del sistema
+process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
+process.on("SIGINT", () => gracefulShutdown("SIGINT"));
+
+// Manejo de excepciones no capturadas
+process.on("uncaughtException", (error) => {
+  logger.error("💥 Excepción no capturada", {
+    error: error.message,
+    stack: error.stack,
+    timestamp: new Date().toISOString(),
+  });
+  process.exit(1);
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  logger.error("💥 Promesa rechazada no manejada", {
+    reason: reason?.message || reason,
+    promise: promise.toString(),
+    timestamp: new Date().toISOString(),
+  });
+  process.exit(1);
+});
 
 module.exports = app;

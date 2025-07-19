@@ -1,17 +1,8 @@
-// src/controllers/adminBookingController.js
-const AdminBookingService = require("../services/adminBookingService");
-const AppointmentService = require("../services/appointmentService");
-const logger = require("../utils/logger");
+// ARCHIVO ELIMINADO - FUNCIONALIDAD CONSOLIDADA EN adminAppointmentController.js
+// Este archivo ha sido eliminado para evitar duplicaciones
+// Toda la funcionalidad se encuentra ahora en adminAppointmentController.js
 
-class AdminBookingController {
-  /**
-   * Dashboard principal
-   */
-  static async getDashboard(req, res) {
-    try {
-      const result = await AdminBookingService.getDashboardSummary();
-
-      if (result.success) {
+module.exports = require("./adminAppointmentController");
         res.status(200).json(result);
       } else {
         res.status(500).json({

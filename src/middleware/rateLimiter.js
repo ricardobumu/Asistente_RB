@@ -1,18 +1,8 @@
-// src/middleware/rateLimiter.js
-// Middleware de rate limiting para diferentes endpoints
+// ARCHIVO ELIMINADO - FUNCIONALIDAD CONSOLIDADA EN rateLimitMiddleware.js
+// Este archivo ha sido eliminado para evitar duplicaciones
+// Toda la funcionalidad se encuentra ahora en rateLimitMiddleware.js
 
-const rateLimit = require("express-rate-limit");
-const logger = require("../utils/logger");
-
-class RateLimiter {
-  constructor() {
-    this.limiters = new Map();
-
-    // Configuraciones predefinidas
-    this.configs = {
-      general: {
-        windowMs: 15 * 60 * 1000, // 15 minutos
-        max: 100, // 100 requests por IP
+module.exports = require("./rateLimitMiddleware");
         message: {
           success: false,
           error: "Demasiadas solicitudes. Inténtalo de nuevo en 15 minutos.",

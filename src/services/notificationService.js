@@ -3,6 +3,7 @@
 
 const twilioClient = require("../integrations/twilioClient");
 const notificationModel = require("../models/notificationModel");
+const whatsappValidationService = require("./whatsappValidationService");
 const logger = require("../utils/logger");
 
 class NotificationService {
@@ -14,10 +15,10 @@ class NotificationService {
     };
 
     this.templates = {
-      BOOKING_CONFIRMATION: "booking_confirmation",
-      BOOKING_REMINDER: "booking_reminder",
-      BOOKING_CANCELLATION: "booking_cancellation",
-      BOOKING_RESCHEDULED: "booking_rescheduled",
+      APPOINTMENT_CONFIRMATION: "appointment_confirmation",
+      APPOINTMENT_REMINDER: "appointment_reminder",
+      APPOINTMENT_CANCELLATION: "appointment_cancellation",
+      APPOINTMENT_RESCHEDULED: "appointment_rescheduled",
       ADMIN_ALERT: "admin_alert",
     };
   }
@@ -29,17 +30,20 @@ class NotificationService {
     try {
       logger.info("📧 Enviando confirmación de reserva", {
         bookingId: booking.id_reserva,
-        clientPhone: client.telefono,
+        clientPhone: client.phone || client.telefono,
       });
 
       const message = this.buildBookingConfirmationMessage(booking, client);
 
-      const result = await this.sendWhatsAppMessage(client.telefono, message);
+      const result = await this.sendWhatsAppMessage(
+        client.phone || client.telefono,
+        message
+      );
 
       // Registrar notificación en BD
       await notificationModel.create({
-        recipient_phone: client.telefono,
-        message_type: this.templates.BOOKING_CONFIRMATION,
+        recipient_phone: client.phone || client.telefono,
+        message_type: this.templates.APPOINTMENT_CONFIRMATION,
         content: message,
         status: result.success ? "sent" : "failed",
         booking_id: booking.id_reserva,
@@ -55,21 +59,31 @@ class NotificationService {
   /**
    * Enviar recordatorio de cita
    */
-  async sendBookingReminder(booking, client, timeframe = '24 horas') {
+  async sendBookingReminder(booking, client, timeframe = "24 horas") {
     try {
       logger.info("⏰ Enviando recordatorio de cita", {
         bookingId: booking.id || booking.id_reserva,
         clientPhone: client.phone || client.telefono,
-        timeframe
+        timeframe,
       });
 
-      const message = this.buildBookingReminderMessage(booking, client, timeframe);
+      const message = this.buildBookingReminderMessage(
+        booking,
+        client,
+        timeframe
+      );
 
-      const result = await this.sendWhatsAppMessage(client.phone || client.telefono, message);
+      const result = await this.sendWhatsAppMessage(
+        client.phone || client.telefono,
+        message
+      );
 
       await notificationModel.create({
         recipient_phone: client.phone || client.telefono,
-        message_type: timeframe === '24 horas' ? 'booking_reminder_24h' : 'booking_reminder_2h',
+        message_type:
+          timeframe === "24 horas"
+            ? "booking_reminder_24h"
+            : "booking_reminder_2h",
         content: message,
         status: result.success ? "sent" : "failed",
         booking_id: booking.id || booking.id_reserva,
@@ -89,20 +103,23 @@ class NotificationService {
     try {
       logger.info("❌ Enviando notificación de cancelación", {
         bookingId: booking.id_reserva,
-        clientPhone: client.telefono,
+        clientPhone: client.phone || client.telefono,
       });
 
       const message = this.buildBookingCancellationMessage(
         booking,
         client,
-        reason,
+        reason
       );
 
-      const result = await this.sendWhatsAppMessage(client.telefono, message);
+      const result = await this.sendWhatsAppMessage(
+        client.phone || client.telefono,
+        message
+      );
 
       await notificationModel.create({
-        recipient_phone: client.telefono,
-        message_type: this.templates.BOOKING_CANCELLATION,
+        recipient_phone: client.phone || client.telefono,
+        message_type: this.templates.APPOINTMENT_CANCELLATION,
         content: message,
         status: result.success ? "sent" : "failed",
         booking_id: booking.id_reserva,
@@ -122,21 +139,24 @@ class NotificationService {
     try {
       logger.info("🔄 Enviando notificación de reprogramación", {
         bookingId: booking.id_reserva,
-        clientPhone: client.telefono,
+        clientPhone: client.phone || client.telefono,
       });
 
       const message = this.buildBookingRescheduleMessage(
         booking,
         client,
         oldDate,
-        newDate,
+        newDate
       );
 
-      const result = await this.sendWhatsAppMessage(client.telefono, message);
+      const result = await this.sendWhatsAppMessage(
+        client.phone || client.telefono,
+        message
+      );
 
       await notificationModel.create({
-        recipient_phone: client.telefono,
-        message_type: this.templates.BOOKING_RESCHEDULED,
+        recipient_phone: client.phone || client.telefono,
+        message_type: this.templates.APPOINTMENT_RESCHEDULED,
         content: message,
         status: result.success ? "sent" : "failed",
         booking_id: booking.id_reserva,
@@ -159,7 +179,7 @@ class NotificationService {
       const adminPhone =
         process.env.ADMIN_PHONE || process.env.TWILIO_WHATSAPP_NUMBER;
       const alertMessage = `🚨 ALERTA SISTEMA\n\n${message}\n\nPrioridad: ${priority.toUpperCase()}\nFecha: ${new Date().toLocaleString(
-        "es-ES",
+        "es-ES"
       )}`;
 
       const result = await this.sendWhatsAppMessage(adminPhone, alertMessage);
@@ -180,12 +200,50 @@ class NotificationService {
   }
 
   /**
-   * Enviar mensaje de WhatsApp
+   * Enviar mensaje de WhatsApp con validaciones avanzadas
    */
   async sendWhatsAppMessage(phone, message) {
     try {
-      // Formatear número de teléfono
-      const formattedPhone = this.formatPhoneNumber(phone);
+      // 1. Validar mensaje
+      const messageValidation =
+        whatsappValidationService.validateMessage(message);
+      if (!messageValidation.valid) {
+        logger.warn("❌ Mensaje inválido", {
+          phone: this.sanitizePhoneForLog(phone),
+          error: messageValidation.error,
+        });
+        return {
+          success: false,
+          error: messageValidation.error,
+          type: "VALIDATION_ERROR",
+        };
+      }
+
+      // 2. Validar y formatear número de teléfono
+      const phoneValidation =
+        whatsappValidationService.validatePhoneNumber(phone);
+      if (!phoneValidation.valid) {
+        logger.warn("❌ Número de teléfono inválido", {
+          phone: this.sanitizePhoneForLog(phone),
+          error: phoneValidation.error,
+          code: phoneValidation.code,
+        });
+        return {
+          success: false,
+          error: phoneValidation.error,
+          type: "PHONE_VALIDATION_ERROR",
+          code: phoneValidation.code,
+        };
+      }
+
+      const formattedPhone = phoneValidation.formatted;
+
+      // 3. Intentar envío con Twilio
+      logger.info("📱 Enviando mensaje WhatsApp", {
+        to: this.sanitizePhoneForLog(formattedPhone),
+        messageLength: message.length,
+        countryCode: phoneValidation.countryCode,
+      });
 
       const result = await twilioClient.messages.create({
         from: process.env.TWILIO_WHATSAPP_NUMBER,
@@ -193,20 +251,54 @@ class NotificationService {
         body: message,
       });
 
-      logger.info("✅ Mensaje WhatsApp enviado", {
-        to: formattedPhone,
+      logger.info("✅ Mensaje WhatsApp enviado exitosamente", {
+        to: this.sanitizePhoneForLog(formattedPhone),
         sid: result.sid,
+        status: result.status,
       });
 
       return {
         success: true,
         messageId: result.sid,
         to: formattedPhone,
+        status: result.status,
       };
     } catch (error) {
-      logger.error("❌ Error enviando WhatsApp:", error);
-      return { success: false, error: error.message };
+      // 4. Interpretar error de Twilio y proporcionar información detallada
+      const errorInterpretation = whatsappValidationService.logWhatsAppError(
+        error,
+        {
+          phone: this.sanitizePhoneForLog(phone),
+          messageLength: message?.length,
+        }
+      );
+
+      return {
+        success: false,
+        error: errorInterpretation.message,
+        userMessage: errorInterpretation.userMessage,
+        type: errorInterpretation.type,
+        code: errorInterpretation.code,
+        canRetry: errorInterpretation.canRetry,
+        action: errorInterpretation.action,
+      };
     }
+  }
+
+  /**
+   * Sanitizar teléfono para logs (ocultar dígitos centrales)
+   */
+  sanitizePhoneForLog(phone) {
+    if (!phone || typeof phone !== "string") return "[INVALID]";
+
+    const cleaned = phone.replace(/\D/g, "");
+    if (cleaned.length < 6) return "[TOO_SHORT]";
+
+    const start = cleaned.substring(0, 3);
+    const end = cleaned.substring(cleaned.length - 2);
+    const middle = "*".repeat(cleaned.length - 5);
+
+    return `+${start}${middle}${end}`;
   }
 
   /**
@@ -227,7 +319,7 @@ class NotificationService {
 
     return `✅ *CITA CONFIRMADA*
 
-Hola ${client.nombre}, tu cita ha sido confirmada:
+Hola ${client.name || client.full_name}, tu cita ha sido confirmada:
 
 📅 *Fecha:* ${fecha}
 🕐 *Hora:* ${hora}
@@ -245,11 +337,13 @@ Si necesitas cancelar o reprogramar, contáctame con al menos 24h de antelación
   /**
    * Construir mensaje de recordatorio
    */
-  buildBookingReminderMessage(booking, client, timeframe = '24 horas') {
+  buildBookingReminderMessage(booking, client, timeframe = "24 horas") {
     // Manejar diferentes formatos de fecha
     let appointmentDate;
     if (booking.appointment_date && booking.appointment_time) {
-      appointmentDate = new Date(booking.appointment_date + ' ' + booking.appointment_time);
+      appointmentDate = new Date(
+        booking.appointment_date + " " + booking.appointment_time
+      );
     } else if (booking.fecha_hora) {
       appointmentDate = new Date(booking.fecha_hora);
     } else {
@@ -257,19 +351,19 @@ Si necesitas cancelar o reprogramar, contáctame con al menos 24h de antelación
     }
 
     const fecha = appointmentDate.toLocaleDateString("es-ES", {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
     const hora = appointmentDate.toLocaleTimeString("es-ES", {
       hour: "2-digit",
       minute: "2-digit",
     });
 
-    const clientName = client.name || client.nombre;
+    const clientName = client.name || client.full_name;
     const serviceName = booking.service_name || booking.servicio_nombre;
-    const timeText = timeframe === '24 horas' ? 'mañana' : 'en 2 horas';
+    const timeText = timeframe === "24 horas" ? "mañana" : "en 2 horas";
 
     return `⏰ *RECORDATORIO DE CITA*
 
@@ -279,9 +373,10 @@ Hola ${clientName}, te recuerdo tu cita ${timeText}:
 🕐 *Hora:* ${hora}
 💇‍♀️ *Servicio:* ${serviceName}
 
-${timeframe === '2 horas' ? 
-  '🚨 *¡Tu cita es en 2 horas!*\n\nPor favor, confirma tu asistencia.' : 
-  'Por favor, confirma tu asistencia respondiendo a este mensaje.'
+${
+  timeframe === "2 horas"
+    ? "🚨 *¡Tu cita es en 2 horas!*\n\nPor favor, confirma tu asistencia."
+    : "Por favor, confirma tu asistencia respondiendo a este mensaje."
 }
 
 📍 *Ubicación:* Ricardo Buriticá Beauty Studio
@@ -298,7 +393,7 @@ _Peluquería Consciente_`;
   buildBookingCancellationMessage(booking, client, reason) {
     return `❌ *CITA CANCELADA*
 
-Hola ${client.nombre}, tu cita ha sido cancelada:
+Hola ${client.name || client.full_name}, tu cita ha sido cancelada:
 
 📅 *Fecha:* ${new Date(booking.fecha_hora).toLocaleDateString("es-ES")}
 🕐 *Hora:* ${new Date(booking.fecha_hora).toLocaleTimeString("es-ES")}
@@ -316,7 +411,7 @@ Gracias por tu comprensión 🙏`;
   buildBookingRescheduleMessage(booking, client, oldDate, newDate) {
     return `🔄 *CITA REPROGRAMADA*
 
-Hola ${client.nombre}, tu cita ha sido reprogramada:
+Hola ${client.name || client.full_name}, tu cita ha sido reprogramada:
 
 ❌ *Fecha anterior:* ${new Date(oldDate).toLocaleDateString("es-ES")}
 ✅ *Nueva fecha:* ${new Date(newDate).toLocaleDateString("es-ES")}
@@ -351,7 +446,7 @@ Hola ${client.nombre}, tu cita ha sido reprogramada:
     } catch (error) {
       logger.error(
         "❌ Error obteniendo estadísticas de notificaciones:",
-        error,
+        error
       );
       return { success: false, error: error.message };
     }

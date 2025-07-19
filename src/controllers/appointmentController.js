@@ -64,7 +64,8 @@ class AppointmentController {
         duracion: serviceResult.data.duracion,
       };
 
-      const result = await appointmentService.createAppointment(appointmentData);
+      const result =
+        await appointmentService.createAppointment(appointmentData);
 
       if (result.success) {
         // Enviar notificación de confirmación
@@ -225,7 +226,8 @@ class AppointmentController {
       });
 
       // Obtener cita actual
-      const currentAppointment = await appointmentService.getAppointmentById(id);
+      const currentAppointment =
+        await appointmentService.getAppointmentById(id);
       if (!currentAppointment.success) {
         return res.status(404).json({
           success: false,
@@ -391,7 +393,8 @@ class AppointmentController {
       }
 
       // Obtener cita actual
-      const currentAppointment = await appointmentService.getAppointmentById(id);
+      const currentAppointment =
+        await appointmentService.getAppointmentById(id);
       if (!currentAppointment.success) {
         return res.status(404).json({
           success: false,
@@ -440,6 +443,68 @@ class AppointmentController {
       }
     } catch (error) {
       logger.error("❌ Error reprogramando cita:", error);
+      res.status(500).json({
+        success: false,
+        error: "Error interno del servidor",
+        message: error.message,
+      });
+    }
+  }
+
+  /**
+   * Eliminar cita
+   * DELETE /api/appointments/:id
+   */
+  async deleteAppointment(req, res) {
+    try {
+      const { id } = req.params;
+
+      logger.info("🗑️ Eliminando cita", {
+        appointmentId: id,
+        ip: req.ip,
+      });
+
+      // Obtener cita antes de eliminar para notificaciones
+      const appointmentResult = await appointmentService.getAppointmentById(id);
+      if (!appointmentResult.success) {
+        return res.status(404).json({
+          success: false,
+          error: "Cita no encontrada",
+        });
+      }
+
+      const result = await appointmentService.deleteAppointment(id);
+
+      if (result.success) {
+        // Obtener cliente para notificación
+        const clientResult = await clientModel.getById(
+          appointmentResult.data.client_id
+        );
+
+        if (clientResult.success) {
+          await notificationService.sendAppointmentCancellation(
+            appointmentResult.data,
+            clientResult.data,
+            "Cita eliminada del sistema"
+          );
+        }
+
+        logger.info("✅ Cita eliminada", {
+          appointmentId: id,
+        });
+
+        res.json({
+          success: true,
+          message: "Cita eliminada exitosamente",
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          error: result.error,
+        });
+      }
+    } catch (error) {
+      logger.error("❌ Error eliminando cita:", error);
       res.status(500).json({
         success: false,
         error: "Error interno del servidor",
@@ -506,7 +571,10 @@ class AppointmentController {
         ip: req.ip,
       });
 
-      const result = await appointmentService.getAppointmentStats(date_from, date_to);
+      const result = await appointmentService.getAppointmentStats(
+        date_from,
+        date_to
+      );
 
       if (result.success) {
         res.json({
@@ -550,7 +618,10 @@ class AppointmentController {
         });
       }
 
-      const result = await appointmentService.getAvailableSlots(fecha, service_id);
+      const result = await appointmentService.getAvailableSlots(
+        fecha,
+        service_id
+      );
 
       if (result.success) {
         res.json({

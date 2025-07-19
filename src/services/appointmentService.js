@@ -15,7 +15,7 @@ class AppointmentService {
    * Generar número de cita único
    */
   static async generateAppointmentNumber() {
-    const prefix = "BK";
+    const prefix = "AP";
     const timestamp = Date.now().toString().slice(-8);
     const random = Math.floor(Math.random() * 1000)
       .toString()
@@ -28,6 +28,58 @@ class AppointmentService {
    */
   static generateConfirmationCode() {
     return Math.random().toString(36).substring(2, 8).toUpperCase();
+  }
+
+  /**
+   * Buscar cita por URI de Calendly
+   */
+  static async findByCalendlyUri(calendlyUri) {
+    try {
+      const { createClient } = require("@supabase/supabase-js");
+      const { SUPABASE_URL, SUPABASE_SERVICE_KEY } = require("../config/env");
+
+      const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+
+      const { data, error } = await supabase
+        .from("appointments")
+        .select(
+          `
+          *,
+          clients:client_id(*),
+          services:service_id(*)
+        `
+        )
+        .eq("calendly_event_uri", calendlyUri)
+        .single();
+
+      if (error) {
+        logger.warn("Appointment not found by Calendly URI:", {
+          calendlyUri,
+          error: error.message,
+        });
+        return {
+          success: false,
+          error: "Appointment not found",
+        };
+      }
+
+      return {
+        success: true,
+        data: {
+          ...data,
+          client_name:
+            data.clients?.full_name ||
+            data.clients?.first_name + " " + data.clients?.last_name,
+          service_name: data.services?.name,
+        },
+      };
+    } catch (error) {
+      logger.error("Error finding appointment by Calendly URI:", error);
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
   }
   /**
    * Crear nueva cita con validaciones completas
@@ -309,7 +361,7 @@ ${appointment.notes ? `Notas: ${appointment.notes}` : ""}
       } = options;
 
       let query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -391,7 +443,7 @@ ${appointment.notes ? `Notas: ${appointment.notes}` : ""}
       } = options;
 
       let query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -565,7 +617,7 @@ ${appointment.notes ? `Notas: ${appointment.notes}` : ""}
       const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000);
 
       const query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -596,7 +648,9 @@ ${appointment.notes ? `Notas: ${appointment.notes}` : ""}
         count: appointments.length,
       };
     } catch (error) {
-      logger.error("Error getting today's appointments", { error: error.message });
+      logger.error("Error getting today's appointments", {
+        error: error.message,
+      });
       return {
         success: false,
         error: error.message,
@@ -615,7 +669,7 @@ ${appointment.notes ? `Notas: ${appointment.notes}` : ""}
       futureDate.setDate(today.getDate() + days);
 
       const query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -666,7 +720,11 @@ ${appointment.notes ? `Notas: ${appointment.notes}` : ""}
   /**
    * Cancelar cita con sincronización completa
    */
-  static async cancelAppointment(appointmentId, reason = null, cancelledBy = null) {
+  static async cancelAppointment(
+    appointmentId,
+    reason = null,
+    cancelledBy = null
+  ) {
     try {
       if (!appointmentId) {
         throw new Error("Appointment ID is required");
@@ -752,11 +810,15 @@ ${appointment.notes ? `Notas: ${appointment.notes}` : ""}
   /**
    * Reprogramar cita
    */
-  static async rescheduleAppointment(appointmentId, newDateTime, reason = null) {
+  static async rescheduleAppointment(
+    appointmentId,
+    newDateTime,
+    reason = null
+  ) {
     try {
       // Obtener la cita actual con datos del cliente y servicio
       const query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -897,7 +959,7 @@ ${reason ? `Reprogramada: ${reason}` : "Cita reprogramada"}`,
 
       // Obtener citas sin evento de calendario
       const query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes, s.description
@@ -1014,7 +1076,7 @@ ${appointment.description || ""}
       }
 
       const query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -1063,7 +1125,7 @@ ${appointment.description || ""}
       }
 
       const query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -1116,7 +1178,7 @@ ${appointment.description || ""}
       }
 
       const query = `
-        SELECT 
+        SELECT
           COUNT(*) as total_appointments,
           COUNT(CASE WHEN b.status = 'pending' THEN 1 END) as pending_appointments,
           COUNT(CASE WHEN b.status = 'confirmed' THEN 1 END) as confirmed_appointments,
@@ -1185,7 +1247,11 @@ ${appointment.description || ""}
   /**
    * Verificar disponibilidad de horario
    */
-  static async checkAvailability(startTime, endTime, excludeAppointmentId = null) {
+  static async checkAvailability(
+    startTime,
+    endTime,
+    excludeAppointmentId = null
+  ) {
     try {
       if (!startTime || !endTime) {
         throw new Error("Start time and end time are required");

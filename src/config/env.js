@@ -3,44 +3,67 @@ const logger = require("../utils/logger");
 
 // Validar variables de entorno críticas
 const validateEnvVars = () => {
-  const required = [
-    "SUPABASE_URL",
-    "SUPABASE_ANON_KEY",
-    "SUPABASE_SERVICE_KEY",
-    "JWT_SECRET",
-    "JWT_REFRESH_SECRET",
-  ];
+  const required = ["SUPABASE_URL", "SUPABASE_ANON_KEY"];
 
   const missing = required.filter((key) => !process.env[key]);
-  const weak = [];
+  const warnings = [];
 
-  // Validar que los secretos JWT sean lo suficientemente fuertes
-  if (process.env.JWT_SECRET && process.env.JWT_SECRET.length < 64) {
-    weak.push("JWT_SECRET debe tener al menos 64 caracteres");
-  }
+  // Validaciones de seguridad para producción
+  if (process.env.NODE_ENV === "production") {
+    const productionRequired = [
+      "SUPABASE_SERVICE_ROLE_KEY",
+      "JWT_SECRET",
+      "JWT_REFRESH_SECRET",
+      "TWILIO_ACCOUNT_SID",
+      "TWILIO_AUTH_TOKEN",
+      "OPENAI_API_KEY",
+      "CALENDLY_ACCESS_TOKEN",
+    ];
 
-  if (
-    process.env.JWT_REFRESH_SECRET &&
-    process.env.JWT_REFRESH_SECRET.length < 64
-  ) {
-    weak.push("JWT_REFRESH_SECRET debe tener al menos 64 caracteres");
+    const missingProd = productionRequired.filter((key) => !process.env[key]);
+    if (missingProd.length > 0) {
+      missing.push(...missingProd);
+    }
+
+    // Validar que los secretos JWT sean lo suficientemente fuertes en producción
+    if (process.env.JWT_SECRET && process.env.JWT_SECRET.length < 64) {
+      warnings.push(
+        "JWT_SECRET debe tener al menos 64 caracteres en producción"
+      );
+    }
+
+    if (
+      process.env.JWT_REFRESH_SECRET &&
+      process.env.JWT_REFRESH_SECRET.length < 64
+    ) {
+      warnings.push(
+        "JWT_REFRESH_SECRET debe tener al menos 64 caracteres en producción"
+      );
+    }
+
+    // Validar que no se usen secretos por defecto
+    if (process.env.JWT_SECRET && process.env.JWT_SECRET.includes("default")) {
+      warnings.push(
+        "JWT_SECRET no debe contener valores por defecto en producción"
+      );
+    }
   }
 
   if (missing.length > 0) {
-    const errorMsg = `Variables de entorno requeridas faltantes: ${missing.join(
-      ", "
-    )}`;
+    const errorMsg = `Variables de entorno requeridas faltantes: ${missing.join(", ")}`;
     logger.error(errorMsg);
     throw new Error(errorMsg);
   }
 
-  if (weak.length > 0) {
-    const errorMsg = `Variables de entorno débiles: ${weak.join(", ")}`;
-    logger.error(errorMsg);
-    throw new Error(errorMsg);
+  if (warnings.length > 0) {
+    warnings.forEach((warning) => logger.warn(warning));
   }
 
-  logger.info("Variables de entorno validadas correctamente");
+  logger.info("Variables de entorno validadas correctamente", {
+    environment: process.env.NODE_ENV || "development",
+    requiredCount: required.length,
+    warningsCount: warnings.length,
+  });
 };
 
 // Ejecutar validación
@@ -116,6 +139,12 @@ const env = {
   AI_TEMPERATURE: parseFloat(process.env.AI_TEMPERATURE) || 0.1,
   AI_CONFIDENCE_THRESHOLD:
     parseFloat(process.env.AI_CONFIDENCE_THRESHOLD) || 0.6,
+
+  // Pipedream Workflows
+  PIPEDREAM_CALENDLY_DISPATCHER_URL:
+    process.env.PIPEDREAM_CALENDLY_DISPATCHER_URL,
+  PIPEDREAM_WHATSAPP_INBOUND_HANDLER_URL:
+    process.env.PIPEDREAM_WHATSAPP_INBOUND_HANDLER_URL,
 
   // Helpers
   isDevelopment: () => env.NODE_ENV === "development",

@@ -1,10 +1,8 @@
-// src/services/adminBookingService.js
-const AppointmentService = require("./appointmentService");
-const ClientService = require("./clientService");
-const ServiceService = require("./serviceService");
-const googleCalendarClient = require("../integrations/googleCalendarClient");
-const DatabaseAdapter = require("../adapters/databaseAdapter");
-const logger = require("../utils/logger");
+// ARCHIVO ELIMINADO - FUNCIONALIDAD CONSOLIDADA EN adminAppointmentService.js
+// Este archivo ha sido eliminado para evitar duplicaciones
+// Toda la funcionalidad se encuentra ahora en adminAppointmentService.js
+
+module.exports = require("./adminAppointmentService");
 
 class AdminBookingService {
   /**

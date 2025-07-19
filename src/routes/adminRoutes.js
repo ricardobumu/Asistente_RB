@@ -7,7 +7,7 @@ const AdminController = require("../controllers/adminController");
 const AuthController = require("../controllers/authController");
 const SecurityMiddleware = require("../middleware/securityMiddleware");
 const ErrorHandler = require("../middleware/errorHandler");
-const adminBookingRoutes = require("./adminBookingRoutes");
+const adminAppointmentRoutes = require("./adminAppointmentRoutes");
 const gdprCleanupWorker = require("../workers/gdprCleanupWorker");
 const gdprService = require("../services/gdprService");
 
@@ -104,7 +104,7 @@ router.get(
  * Montar rutas de gestión de reservas
  * /admin/appointments/* - Sistema completo de gestión de citas
  */
-router.use("/appointments", adminBookingRoutes);
+router.use("/appointments", adminAppointmentRoutes);
 
 /**
  * GET /admin/appointments-legacy

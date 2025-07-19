@@ -36,7 +36,7 @@ class AuthController {
       const isValidUsername = username === adminCredentials.username;
       const isValidPassword = await bcrypt.compare(
         password,
-        await bcrypt.hash(adminCredentials.password, 10),
+        await bcrypt.hash(adminCredentials.password, 10)
       );
 
       if (!isValidUsername || !isValidPassword) {
@@ -62,7 +62,7 @@ class AuthController {
         process.env.JWT_SECRET,
         {
           expiresIn: "8h", // Token válido por 8 horas
-        },
+        }
       );
 
       // Log de login exitoso
@@ -159,6 +159,106 @@ class AuthController {
   }
 
   /**
+   * Registro de nuevos usuarios (placeholder - no implementado por seguridad)
+   */
+  static async register(req, res) {
+    try {
+      // En un sistema de producción, esto requeriría validación adicional
+      // Por ahora, devolvemos un error indicando que no está implementado
+      logger.security("Registration attempt blocked", {
+        ip: req.ip,
+        userAgent: req.headers["user-agent"],
+      });
+
+      res.status(403).json({
+        success: false,
+        error: "Registration is not available. Contact administrator.",
+      });
+    } catch (error) {
+      logger.error("Error in register attempt", error);
+      res.status(500).json({
+        success: false,
+        error: "Registration failed",
+      });
+    }
+  }
+
+  /**
+   * Refrescar token JWT
+   */
+  static async refreshToken(req, res) {
+    try {
+      const token = req.headers.authorization?.split(" ")[1];
+
+      if (!token) {
+        return res.status(401).json({
+          success: false,
+          error: "No token provided",
+        });
+      }
+
+      // Verificar token actual (incluso si está expirado)
+      let decoded;
+      try {
+        decoded = jwt.verify(token, process.env.JWT_SECRET);
+      } catch (error) {
+        if (error.name === "TokenExpiredError") {
+          // Token expirado, pero podemos intentar refrescarlo
+          decoded = jwt.decode(token);
+        } else {
+          throw error;
+        }
+      }
+
+      if (!decoded || !decoded.username) {
+        return res.status(401).json({
+          success: false,
+          error: "Invalid token",
+        });
+      }
+
+      // Generar nuevo token
+      const newToken = jwt.sign(
+        {
+          username: decoded.username,
+          role: decoded.role,
+          loginTime: new Date().toISOString(),
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "8h",
+        }
+      );
+
+      logger.audit("Token refreshed", decoded.username, "token_refresh", {
+        ip: req.ip,
+      });
+
+      res.json({
+        success: true,
+        data: {
+          token: newToken,
+          user: {
+            username: decoded.username,
+            role: decoded.role,
+          },
+          expiresIn: "8h",
+        },
+      });
+    } catch (error) {
+      logger.security("Token refresh failed", {
+        error: error.message,
+        ip: req.ip,
+      });
+
+      res.status(401).json({
+        success: false,
+        error: "Token refresh failed",
+      });
+    }
+  }
+
+  /**
    * Generar token temporal para acceso rápido
    */
   static async generateTempToken(req, res) {
@@ -181,7 +281,7 @@ class AuthController {
         process.env.JWT_SECRET,
         {
           expiresIn: "1h", // Token temporal válido por 1 hora
-        },
+        }
       );
 
       logger.audit(
@@ -190,7 +290,7 @@ class AuthController {
         "temp_token",
         {
           ip: req.ip,
-        },
+        }
       );
 
       res.json({

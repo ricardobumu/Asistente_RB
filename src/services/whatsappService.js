@@ -86,7 +86,7 @@ class WhatsAppService {
 Eres un asistente de belleza profesional. Analiza este mensaje y determina la intención:
 
 Mensaje: "${message}"
-Cliente: ${client.nombre}
+Cliente: ${client.name || client.full_name}
 Contexto previo: ${context.lastIntent || "ninguno"}
 
 Intenciones posibles:
@@ -174,7 +174,7 @@ Responde solo con la intención en mayúsculas.
 
       if (bookingInfo.service && bookingInfo.date) {
         // Intentar crear la reserva
-        const result = await bookingService.createBooking({
+        const result = await appointmentService.createAppointment({
           client_id: client.id_cliente,
           service_id: bookingInfo.service_id,
           date: bookingInfo.date,
@@ -269,11 +269,11 @@ Por favor, dime:
     try {
       // Notificar al administrador
       await notificationService.sendAdminAlert(
-        `Cliente ${client.nombre} (${client.telefono}) quiere hablar contigo:\n\n"${message}"`,
+        `Cliente ${client.name || client.full_name} (${client.phone}) quiere hablar contigo:\n\n"${message}"`,
         "normal"
       );
 
-      return `Perfecto ${client.nombre}, he notificado a Ricardo sobre tu solicitud. Te contactará lo antes posible.
+      return `Perfecto ${client.name || client.full_name}, he notificado a Ricardo sobre tu solicitud. Te contactará lo antes posible.
 
 Mientras tanto, ¿hay algo en lo que pueda ayudarte? Puedo:
 • Mostrarte los servicios disponibles
@@ -296,7 +296,7 @@ Mientras tanto, ¿hay algo en lo que pueda ayudarte? Puedo:
     else if (hour < 18) greeting = "Buenas tardes";
     else greeting = "Buenas noches";
 
-    return `${greeting} ${client.nombre}! 👋
+    return `${greeting} ${client.name || client.full_name}! 👋
 
 Soy el asistente virtual de Ricardo Buriticá. ¿En qué puedo ayudarte hoy?
 
@@ -421,7 +421,7 @@ Puedo ayudarte con:
    * Manejar intención desconocida
    */
   async handleUnknownIntent(message, client) {
-    return `No estoy seguro de cómo ayudarte con eso, ${client.nombre}. 
+    return `No estoy seguro de cómo ayudarte con eso, ${client.name || client.full_name}.
 
 ¿Podrías decirme si quieres:
 • 📅 Agendar una cita

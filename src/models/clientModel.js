@@ -2,6 +2,11 @@
 const supabase = require("../integrations/supabaseClient");
 const logger = require("../utils/logger");
 const Validators = require("../utils/validators");
+const {
+  formatPhoneNumber,
+  validatePhoneNumber,
+  getCountryInfo,
+} = require("../../utils/phoneNumberFormatter");
 
 /**
  * ClientModel - Gestión de clientes para Ricardo Buriticá Beauty Consulting
@@ -29,6 +34,32 @@ class ClientModel {
    */
   async create(clientData) {
     try {
+      // Validar y formatear número de teléfono antes de otras validaciones
+      if (clientData.phone) {
+        const formattedPhone = formatPhoneNumber(clientData.phone);
+        if (!formattedPhone) {
+          return {
+            success: false,
+            error:
+              "Número de teléfono inválido. Formatos soportados: España (+34), Estados Unidos (+1), Colombia (+57), Suiza (+41)",
+          };
+        }
+        clientData.phone = formattedPhone;
+
+        // Agregar información del país para logging
+        const countryInfo = getCountryInfo(formattedPhone);
+        if (countryInfo) {
+          logger.info(
+            `Número de teléfono formateado para ${countryInfo.name}`,
+            {
+              original: clientData.phone,
+              formatted: formattedPhone,
+              country: countryInfo.name,
+            }
+          );
+        }
+      }
+
       // Validar datos de entrada
       const validation = Validators.validateClientData(clientData);
       if (!validation.isValid) {
@@ -110,13 +141,17 @@ class ClientModel {
         return { success: false, error: "Número de teléfono requerido" };
       }
 
-      // Normalizar número de teléfono
-      const normalizedPhone = phone.replace(/\D/g, "");
+      // Formatear número de teléfono para búsqueda consistente
+      const formattedPhone = formatPhoneNumber(phone);
+      if (!formattedPhone) {
+        logger.warn("Número de teléfono inválido para búsqueda", { phone });
+        return { success: true, data: null }; // No encontrado, pero no es error
+      }
 
       const { data, error } = await supabase
         .from(this.tableName)
         .select("*")
-        .eq("phone", normalizedPhone)
+        .eq("phone", formattedPhone)
         .eq("is_active", true)
         .single();
 
@@ -221,6 +256,32 @@ class ClientModel {
     try {
       if (!id) {
         return { success: false, error: "ID de cliente requerido" };
+      }
+
+      // Validar y formatear número de teléfono si se está actualizando
+      if (updateData.phone) {
+        const formattedPhone = formatPhoneNumber(updateData.phone);
+        if (!formattedPhone) {
+          return {
+            success: false,
+            error:
+              "Número de teléfono inválido. Formatos soportados: España (+34), Estados Unidos (+1), Colombia (+57), Suiza (+41)",
+          };
+        }
+        updateData.phone = formattedPhone;
+
+        // Log del cambio
+        const countryInfo = getCountryInfo(formattedPhone);
+        if (countryInfo) {
+          logger.info(
+            `Actualizando número de teléfono para ${countryInfo.name}`,
+            {
+              clientId: id,
+              formatted: formattedPhone,
+              country: countryInfo.name,
+            }
+          );
+        }
       }
 
       // Validar datos de actualización

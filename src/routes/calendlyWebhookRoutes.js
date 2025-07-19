@@ -16,6 +16,12 @@ router.post("/webhook", calendlyWebhookController.handleWebhook);
 router.get("/webhook", calendlyWebhookController.verifyWebhook);
 
 /**
+ * GET /api/calendly/health
+ * Estado de salud del webhook de Calendly
+ */
+router.get("/health", calendlyWebhookController.getHealthStatus);
+
+/**
  * POST /api/calendly/sync
  * Sincronizar eventos de Calendly manualmente
  */

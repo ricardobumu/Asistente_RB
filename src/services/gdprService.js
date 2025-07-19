@@ -7,40 +7,47 @@ const DatabaseAdapter = require("../adapters/databaseAdapter");
 class GDPRService {
   constructor() {
     this.consentTypes = {
-      WHATSAPP: 'whatsapp_communication',
-      MARKETING: 'marketing_communication',
-      ANALYTICS: 'analytics_tracking',
-      SERVICE: 'service_provision',
-      BOOKING: 'booking_management'
+      WHATSAPP: "whatsapp_communication",
+      MARKETING: "marketing_communication",
+      ANALYTICS: "analytics_tracking",
+      SERVICE: "service_provision",
+      APPOINTMENT: "appointment_management",
     };
 
     this.legalBases = {
-      CONSENT: 'consent',
-      CONTRACT: 'contract_performance',
-      LEGAL_OBLIGATION: 'legal_obligation',
-      VITAL_INTERESTS: 'vital_interests',
-      PUBLIC_TASK: 'public_task',
-      LEGITIMATE_INTEREST: 'legitimate_interest'
+      CONSENT: "consent",
+      CONTRACT: "contract_performance",
+      LEGAL_OBLIGATION: "legal_obligation",
+      VITAL_INTERESTS: "vital_interests",
+      PUBLIC_TASK: "public_task",
+      LEGITIMATE_INTEREST: "legitimate_interest",
     };
 
     this.dataRetentionPeriods = {
       CLIENT_DATA: 365 * 3, // 3 años
-      BOOKING_DATA: 365 * 7, // 7 años (obligación fiscal)
+      APPOINTMENT_DATA: 365 * 7, // 7 años (obligación fiscal)
       CONVERSATION_DATA: 365 * 1, // 1 año
       MARKETING_DATA: 365 * 2, // 2 años
-      ANALYTICS_DATA: 365 * 2 // 2 años
+      ANALYTICS_DATA: 365 * 2, // 2 años
     };
 
     logger.info("GDPR Service initialized", {
       consentTypes: Object.keys(this.consentTypes).length,
-      legalBases: Object.keys(this.legalBases).length
+      legalBases: Object.keys(this.legalBases).length,
     });
   }
 
   /**
    * Registrar consentimiento del usuario
    */
-  async recordConsent(clientId, consentType, granted, purpose, method = 'web', ipAddress = null) {
+  async recordConsent(
+    clientId,
+    consentType,
+    granted,
+    purpose,
+    method = "web",
+    ipAddress = null
+  ) {
     try {
       const consentRecord = {
         client_id: clientId,
@@ -51,17 +58,20 @@ class GDPRService {
         ip_address: ipAddress,
         timestamp: new Date().toISOString(),
         withdrawable: true,
-        version: '1.0' // Versión de la política de privacidad
+        version: "1.0", // Versión de la política de privacidad
       };
 
-      const result = await DatabaseAdapter.create('gdpr_consents', consentRecord);
+      const result = await DatabaseAdapter.create(
+        "gdpr_consents",
+        consentRecord
+      );
 
       if (result.success) {
         logger.info("GDPR consent recorded", {
           clientId,
           consentType,
           granted,
-          method
+          method,
         });
 
         // Si se retira el consentimiento, procesar eliminación de datos
@@ -72,22 +82,21 @@ class GDPRService {
         return {
           success: true,
           consentId: result.data.id,
-          data: consentRecord
+          data: consentRecord,
         };
       } else {
         throw new Error(result.error);
       }
-
     } catch (error) {
       logger.error("Error recording GDPR consent", {
         clientId,
         consentType,
-        error: error.message
+        error: error.message,
       });
 
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -97,46 +106,50 @@ class GDPRService {
    */
   async checkConsent(clientId, consentType) {
     try {
-      const result = await DatabaseAdapter.query(`
-        SELECT * FROM gdpr_consents 
-        WHERE client_id = $1 AND consent_type = $2 
-        ORDER BY timestamp DESC 
+      const result = await DatabaseAdapter.query(
+        `
+        SELECT * FROM gdpr_consents
+        WHERE client_id = $1 AND consent_type = $2
+        ORDER BY timestamp DESC
         LIMIT 1
-      `, [clientId, consentType]);
+      `,
+        [clientId, consentType]
+      );
 
       if (result.success && result.data.length > 0) {
         const consent = result.data[0];
-        
+
         // Verificar si el consentimiento no ha expirado
         const consentDate = new Date(consent.timestamp);
-        const expirationDate = new Date(consentDate.getTime() + (365 * 24 * 60 * 60 * 1000)); // 1 año
-        
+        const expirationDate = new Date(
+          consentDate.getTime() + 365 * 24 * 60 * 60 * 1000
+        ); // 1 año
+
         const isValid = consent.granted && new Date() < expirationDate;
 
         return {
           success: true,
           hasConsent: isValid,
           consent: consent,
-          expired: new Date() >= expirationDate
+          expired: new Date() >= expirationDate,
         };
       }
 
       return {
         success: true,
         hasConsent: false,
-        consent: null
+        consent: null,
       };
-
     } catch (error) {
       logger.error("Error checking GDPR consent", {
         clientId,
         consentType,
-        error: error.message
+        error: error.message,
       });
 
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -171,17 +184,16 @@ class GDPRService {
       }
 
       return { success: true };
-
     } catch (error) {
       logger.error("Error processing consent withdrawal", {
         clientId,
         consentType,
-        error: error.message
+        error: error.message,
       });
 
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -189,34 +201,48 @@ class GDPRService {
   /**
    * Exportar datos del usuario (derecho de portabilidad)
    */
-  async exportUserData(clientId, format = 'json') {
+  async exportUserData(clientId, format = "json") {
     try {
       logger.info("Exporting user data", { clientId, format });
 
       // Obtener datos del cliente
-      const clientResult = await DatabaseAdapter.findById('clients', clientId);
+      const clientResult = await DatabaseAdapter.findById("clients", clientId);
       if (!clientResult.success) {
-        throw new Error('Cliente no encontrado');
+        throw new Error("Cliente no encontrado");
       }
 
       // Obtener reservas
-      const bookingsResult = await DatabaseAdapter.query(`
+      const bookingsResult = await DatabaseAdapter.query(
+        `
         SELECT * FROM bookings WHERE client_id = $1
-      `, [clientId]);
+      `,
+        [clientId]
+      );
 
       // Obtener consentimientos
-      const consentsResult = await DatabaseAdapter.query(`
+      const consentsResult = await DatabaseAdapter.query(
+        `
         SELECT * FROM gdpr_consents WHERE client_id = $1
-      `, [clientId]);
+      `,
+        [clientId]
+      );
 
       // Obtener conversaciones de WhatsApp (si hay consentimiento)
       let conversations = [];
-      const whatsappConsent = await this.checkConsent(clientId, this.consentTypes.WHATSAPP);
+      const whatsappConsent = await this.checkConsent(
+        clientId,
+        this.consentTypes.WHATSAPP
+      );
       if (whatsappConsent.hasConsent) {
-        const conversationsResult = await DatabaseAdapter.query(`
+        const conversationsResult = await DatabaseAdapter.query(
+          `
           SELECT * FROM whatsapp_conversations WHERE client_id = $1
-        `, [clientId]);
-        conversations = conversationsResult.success ? conversationsResult.data : [];
+        `,
+          [clientId]
+        );
+        conversations = conversationsResult.success
+          ? conversationsResult.data
+          : [];
       }
 
       const exportData = {
@@ -224,41 +250,40 @@ class GDPRService {
           clientId,
           exportDate: new Date().toISOString(),
           format,
-          dataController: 'Ricardo Buriticá Beauty Consulting',
-          contact: 'info@ricardoburitica.eu'
+          dataController: "Ricardo Buriticá Beauty Consulting",
+          contact: "info@ricardoburitica.eu",
         },
         personalData: {
           client: clientResult.data,
           bookings: bookingsResult.success ? bookingsResult.data : [],
           consents: consentsResult.success ? consentsResult.data : [],
-          conversations: conversations
+          conversations: conversations,
         },
         metadata: {
           totalRecords: {
             bookings: bookingsResult.success ? bookingsResult.data.length : 0,
             consents: consentsResult.success ? consentsResult.data.length : 0,
-            conversations: conversations.length
-          }
-        }
+            conversations: conversations.length,
+          },
+        },
       };
 
       // Registrar la exportación
-      await this.logDataAccess(clientId, 'export', 'data_portability_request');
+      await this.logDataAccess(clientId, "export", "data_portability_request");
 
       return {
         success: true,
-        data: exportData
+        data: exportData,
       };
-
     } catch (error) {
       logger.error("Error exporting user data", {
         clientId,
-        error: error.message
+        error: error.message,
       });
 
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -266,7 +291,7 @@ class GDPRService {
   /**
    * Eliminar datos del usuario (derecho al olvido)
    */
-  async deleteUserData(clientId, reason = 'user_request') {
+  async deleteUserData(clientId, reason = "user_request") {
     try {
       logger.info("Deleting user data", { clientId, reason });
 
@@ -277,52 +302,64 @@ class GDPRService {
       if (legalHold.hasHold) {
         return {
           success: false,
-          error: 'No se pueden eliminar los datos debido a obligaciones legales',
-          legalHold: legalHold.reasons
+          error:
+            "No se pueden eliminar los datos debido a obligaciones legales",
+          legalHold: legalHold.reasons,
         };
       }
 
       // Eliminar conversaciones de WhatsApp
-      const whatsappResult = await DatabaseAdapter.query(`
+      const whatsappResult = await DatabaseAdapter.query(
+        `
         DELETE FROM whatsapp_conversations WHERE client_id = $1
-      `, [clientId]);
-      deletionResults.push({ table: 'whatsapp_conversations', success: whatsappResult.success });
+      `,
+        [clientId]
+      );
+      deletionResults.push({
+        table: "whatsapp_conversations",
+        success: whatsappResult.success,
+      });
 
       // Anonimizar reservas (mantener para estadísticas)
-      const bookingsResult = await DatabaseAdapter.query(`
-        UPDATE bookings SET 
+      const bookingsResult = await DatabaseAdapter.query(
+        `
+        UPDATE bookings SET
           client_name = 'DELETED_USER',
           client_phone = 'DELETED',
           client_email = 'DELETED',
           notes = 'USER_DATA_DELETED'
         WHERE client_id = $1
-      `, [clientId]);
-      deletionResults.push({ table: 'bookings_anonymized', success: bookingsResult.success });
+      `,
+        [clientId]
+      );
+      deletionResults.push({
+        table: "bookings_anonymized",
+        success: bookingsResult.success,
+      });
 
       // Eliminar datos del cliente
-      const clientResult = await DatabaseAdapter.delete('clients', clientId);
-      deletionResults.push({ table: 'clients', success: clientResult.success });
+      const clientResult = await DatabaseAdapter.delete("clients", clientId);
+      deletionResults.push({ table: "clients", success: clientResult.success });
 
       // Registrar la eliminación
       await this.logDataDeletion(clientId, reason);
 
-      const allSuccessful = deletionResults.every(result => result.success);
+      const allSuccessful = deletionResults.every((result) => result.success);
 
       return {
         success: allSuccessful,
         deletionResults,
-        deletedAt: new Date().toISOString()
+        deletedAt: new Date().toISOString(),
       };
-
     } catch (error) {
       logger.error("Error deleting user data", {
         clientId,
-        error: error.message
+        error: error.message,
       });
 
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -335,39 +372,47 @@ class GDPRService {
       const reasons = [];
 
       // Verificar reservas recientes (obligación fiscal - 7 años)
-      const recentBookingsResult = await DatabaseAdapter.query(`
-        SELECT COUNT(*) as count FROM bookings 
+      const recentBookingsResult = await DatabaseAdapter.query(
+        `
+        SELECT COUNT(*) as count FROM bookings
         WHERE client_id = $1 AND created_at > NOW() - INTERVAL '7 years'
-      `, [clientId]);
+      `,
+        [clientId]
+      );
 
-      if (recentBookingsResult.success && recentBookingsResult.data[0].count > 0) {
-        reasons.push('Obligación fiscal - conservación de facturas por 7 años');
+      if (
+        recentBookingsResult.success &&
+        recentBookingsResult.data[0].count > 0
+      ) {
+        reasons.push("Obligación fiscal - conservación de facturas por 7 años");
       }
 
       // Verificar disputas o reclamaciones pendientes
-      const disputesResult = await DatabaseAdapter.query(`
-        SELECT COUNT(*) as count FROM disputes 
+      const disputesResult = await DatabaseAdapter.query(
+        `
+        SELECT COUNT(*) as count FROM disputes
         WHERE client_id = $1 AND status = 'pending'
-      `, [clientId]);
+      `,
+        [clientId]
+      );
 
       if (disputesResult.success && disputesResult.data[0].count > 0) {
-        reasons.push('Disputas o reclamaciones pendientes');
+        reasons.push("Disputas o reclamaciones pendientes");
       }
 
       return {
         hasHold: reasons.length > 0,
-        reasons
+        reasons,
       };
-
     } catch (error) {
       logger.error("Error checking legal hold", {
         clientId,
-        error: error.message
+        error: error.message,
       });
 
       return {
         hasHold: true,
-        reasons: ['Error verificando obligaciones legales']
+        reasons: ["Error verificando obligaciones legales"],
       };
     }
   }
@@ -381,34 +426,49 @@ class GDPRService {
         period: { startDate, endDate },
         generatedAt: new Date().toISOString(),
         summary: {},
-        details: {}
+        details: {},
       };
 
       // Consentimientos registrados
-      const consentsResult = await DatabaseAdapter.query(`
+      const consentsResult = await DatabaseAdapter.query(
+        `
         SELECT consent_type, granted, COUNT(*) as count
-        FROM gdpr_consents 
+        FROM gdpr_consents
         WHERE timestamp BETWEEN $1 AND $2
         GROUP BY consent_type, granted
-      `, [startDate, endDate]);
+      `,
+        [startDate, endDate]
+      );
 
-      report.details.consents = consentsResult.success ? consentsResult.data : [];
+      report.details.consents = consentsResult.success
+        ? consentsResult.data
+        : [];
 
       // Solicitudes de exportación
-      const exportsResult = await DatabaseAdapter.query(`
-        SELECT COUNT(*) as count FROM data_access_logs 
+      const exportsResult = await DatabaseAdapter.query(
+        `
+        SELECT COUNT(*) as count FROM data_access_logs
         WHERE action = 'export' AND timestamp BETWEEN $1 AND $2
-      `, [startDate, endDate]);
+      `,
+        [startDate, endDate]
+      );
 
-      report.summary.dataExports = exportsResult.success ? exportsResult.data[0].count : 0;
+      report.summary.dataExports = exportsResult.success
+        ? exportsResult.data[0].count
+        : 0;
 
       // Solicitudes de eliminación
-      const deletionsResult = await DatabaseAdapter.query(`
-        SELECT COUNT(*) as count FROM data_access_logs 
+      const deletionsResult = await DatabaseAdapter.query(
+        `
+        SELECT COUNT(*) as count FROM data_access_logs
         WHERE action = 'delete' AND timestamp BETWEEN $1 AND $2
-      `, [startDate, endDate]);
+      `,
+        [startDate, endDate]
+      );
 
-      report.summary.dataDeletions = deletionsResult.success ? deletionsResult.data[0].count : 0;
+      report.summary.dataDeletions = deletionsResult.success
+        ? deletionsResult.data[0].count
+        : 0;
 
       // Verificar compliance
       report.compliance = {
@@ -417,22 +477,22 @@ class GDPRService {
         hasRightToErasure: true,
         hasDataProtectionOfficer: true,
         hasPrivacyPolicy: true,
-        dataRetentionPolicies: Object.keys(this.dataRetentionPeriods).length > 0
+        dataRetentionPolicies:
+          Object.keys(this.dataRetentionPeriods).length > 0,
       };
 
       return {
         success: true,
-        report
+        report,
       };
-
     } catch (error) {
       logger.error("Error generating compliance report", {
-        error: error.message
+        error: error.message,
       });
 
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -441,55 +501,67 @@ class GDPRService {
    * Métodos auxiliares privados
    */
   async deleteWhatsAppData(clientId) {
-    return await DatabaseAdapter.query(`
+    return await DatabaseAdapter.query(
+      `
       DELETE FROM whatsapp_conversations WHERE client_id = $1
-    `, [clientId]);
+    `,
+      [clientId]
+    );
   }
 
   async deleteMarketingData(clientId) {
-    return await DatabaseAdapter.query(`
-      UPDATE clients SET 
+    return await DatabaseAdapter.query(
+      `
+      UPDATE clients SET
         marketing_consent = false,
         marketing_preferences = NULL
       WHERE id = $1
-    `, [clientId]);
+    `,
+      [clientId]
+    );
   }
 
   async anonymizeAnalyticsData(clientId) {
-    return await DatabaseAdapter.query(`
-      UPDATE analytics_events SET 
+    return await DatabaseAdapter.query(
+      `
+      UPDATE analytics_events SET
         client_id = NULL,
         ip_address = 'ANONYMIZED'
       WHERE client_id = $1
-    `, [clientId]);
+    `,
+      [clientId]
+    );
   }
 
   async markForDeletion(clientId) {
-    return await DatabaseAdapter.query(`
-      UPDATE clients SET 
+    return await DatabaseAdapter.query(
+      `
+      UPDATE clients SET
         marked_for_deletion = true,
         deletion_date = NOW() + INTERVAL '30 days'
       WHERE id = $1
-    `, [clientId]);
+    `,
+      [clientId]
+    );
   }
 
   async logDataAccess(clientId, action, purpose) {
-    return await DatabaseAdapter.create('data_access_logs', {
+    return await DatabaseAdapter.create("data_access_logs", {
       client_id: clientId,
       action: action,
       purpose: purpose,
       timestamp: new Date().toISOString(),
-      legal_basis: this.legalBases.LEGITIMATE_INTEREST
+      legal_basis: this.legalBases.LEGITIMATE_INTEREST,
     });
   }
 
   async logDataDeletion(clientId, reason) {
-    return await DatabaseAdapter.create('data_access_logs', {
+    return await DatabaseAdapter.create("data_access_logs", {
       client_id: clientId,
-      action: 'delete',
+      action: "delete",
       purpose: reason,
       timestamp: new Date().toISOString(),
-      legal_basis: this.legalBases.CONSENT
+      legal_basis: this.legalBases.CONSENT,
     });
   }
 
@@ -502,40 +574,39 @@ class GDPRService {
 
       // Limpiar conversaciones de WhatsApp antiguas
       const conversationsResult = await DatabaseAdapter.query(`
-        DELETE FROM whatsapp_conversations 
+        DELETE FROM whatsapp_conversations
         WHERE created_at < NOW() - INTERVAL '${this.dataRetentionPeriods.CONVERSATION_DATA} days'
       `);
-      cleanupResults.push({ 
-        type: 'whatsapp_conversations', 
+      cleanupResults.push({
+        type: "whatsapp_conversations",
         success: conversationsResult.success,
-        affected: conversationsResult.rowCount || 0
+        affected: conversationsResult.rowCount || 0,
       });
 
       // Limpiar datos de marketing antiguos
       const marketingResult = await DatabaseAdapter.query(`
-        UPDATE clients SET 
+        UPDATE clients SET
           marketing_consent = false,
           marketing_preferences = NULL
         WHERE marketing_consent_date < NOW() - INTERVAL '${this.dataRetentionPeriods.MARKETING_DATA} days'
       `);
-      cleanupResults.push({ 
-        type: 'marketing_data', 
+      cleanupResults.push({
+        type: "marketing_data",
         success: marketingResult.success,
-        affected: marketingResult.rowCount || 0
+        affected: marketingResult.rowCount || 0,
       });
 
       logger.info("GDPR data cleanup completed", { cleanupResults });
 
       return {
         success: true,
-        cleanupResults
+        cleanupResults,
       };
-
     } catch (error) {
       logger.error("Error in GDPR data cleanup", { error: error.message });
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }

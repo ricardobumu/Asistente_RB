@@ -19,14 +19,14 @@ router.get("/services", bookingWidgetController.getServices);
  */
 router.get(
   "/services/:serviceId/availability",
-  bookingWidgetController.getAvailability,
+  bookingWidgetController.getAvailability
 );
 
 /**
  * POST /api/widget/bookings
  * Crea una nueva reserva desde el widget
  */
-router.post("/bookings", bookingWidgetController.createBooking);
+router.post("/appointments", bookingWidgetController.createAppointment);
 
 /**
  * POST /api/widget/check-availability
@@ -34,7 +34,7 @@ router.post("/bookings", bookingWidgetController.createBooking);
  */
 router.post(
   "/check-availability",
-  bookingWidgetController.checkSlotAvailability,
+  bookingWidgetController.checkSlotAvailability
 );
 
 /**
@@ -55,15 +55,18 @@ router.get("/embed", bookingWidgetController.getEmbedWidget);
  * GET /api/widget/bookings/:email
  * Obtiene reservas de un cliente específico
  */
-router.get("/bookings/:email", bookingWidgetController.getClientBookings);
+router.get(
+  "/appointments/:email",
+  bookingWidgetController.getClientAppointments
+);
 
 /**
  * POST /api/widget/bookings/:bookingId/cancel
  * Cancela una reserva específica
  */
 router.post(
-  "/bookings/:bookingId/cancel",
-  bookingWidgetController.cancelBooking,
+  "/appointments/:appointmentId/cancel",
+  bookingWidgetController.cancelAppointment
 );
 
 module.exports = router;

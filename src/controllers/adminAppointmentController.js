@@ -242,7 +242,8 @@ class AdminAppointmentController {
   static async getCalendarEvents(req, res) {
     try {
       const days = parseInt(req.query.days) || 7;
-      const result = await AdminBookingService.getGoogleCalendarEvents(days);
+      const result =
+        await AdminAppointmentService.getGoogleCalendarEvents(days);
 
       res.status(200).json(result);
     } catch (error) {
@@ -256,9 +257,9 @@ class AdminAppointmentController {
   }
 
   /**
-   * Exportar reservas
+   * Exportar citas
    */
-  static async exportBookings(req, res) {
+  static async exportAppointments(req, res) {
     try {
       const filters = {
         startDate: req.query.startDate,
@@ -268,7 +269,8 @@ class AdminAppointmentController {
         serviceName: req.query.serviceName,
       };
 
-      const result = await AdminBookingService.exportBookingsToCSV(filters);
+      const result =
+        await AdminAppointmentService.exportAppointmentsToCSV(filters);
 
       if (result.success) {
         res.setHeader("Content-Type", "text/csv");
@@ -280,54 +282,54 @@ class AdminAppointmentController {
       } else {
         res.status(500).json({
           success: false,
-          error: result.error || "Error exportando reservas",
+          error: result.error || "Error exportando citas",
         });
       }
     } catch (error) {
-      logger.error("Error in exportBookings:", error);
+      logger.error("Error in exportAppointments:", error);
       res.status(500).json({
         success: false,
-        error: "Error exportando reservas",
+        error: "Error exportando citas",
       });
     }
   }
 
   /**
-   * Reservas de hoy
+   * Citas de hoy
    */
-  static async getTodayBookings(req, res) {
+  static async getTodayAppointments(req, res) {
     try {
-      const result = await BookingService.getTodayBookings();
+      const result = await AppointmentService.getTodayAppointments();
 
       res.status(200).json(result);
     } catch (error) {
-      logger.error("Error in getTodayBookings:", error);
+      logger.error("Error in getTodayAppointments:", error);
       res.status(500).json({
         success: false,
-        error: "Error obteniendo reservas de hoy",
+        error: "Error obteniendo citas de hoy",
         data: [],
       });
     }
   }
 
   /**
-   * Próximas reservas
+   * Próximas citas
    */
-  static async getUpcomingBookings(req, res) {
+  static async getUpcomingAppointments(req, res) {
     try {
       const days = parseInt(req.query.days) || 7;
-      const result = await BookingService.getUpcomingBookings(days);
+      const result = await AppointmentService.getUpcomingAppointments(days);
 
       res.status(200).json(result);
     } catch (error) {
-      logger.error("Error in getUpcomingBookings:", error);
+      logger.error("Error in getUpcomingAppointments:", error);
       res.status(500).json({
         success: false,
-        error: "Error obteniendo próximas reservas",
+        error: "Error obteniendo próximas citas",
         data: [],
       });
     }
   }
 }
 
-module.exports = AdminBookingController;
+module.exports = AdminAppointmentController;

@@ -128,7 +128,7 @@ class MetricsService {
         this.metrics.whatsapp.messagesFailed++;
       }
 
-      if (intent === "booking_request" && success) {
+      if (intent === "appointment_request" && success) {
         this.metrics.whatsapp.bookingsCreated++;
       }
     } catch (error) {

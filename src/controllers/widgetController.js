@@ -518,9 +518,9 @@ class WidgetController {
       const baseUrl = `${req.protocol}://${req.get("host")}`;
 
       const embedCode = `<!-- Widget de Citas - Ricardo Buriticá Beauty Consulting -->
-<iframe 
+<iframe
   src="${baseUrl}/widget/appointment"
-  width="${width}" 
+  width="${width}"
   height="${height}"
   frameborder="0"
   style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);"
@@ -548,7 +548,7 @@ window.addEventListener('message', function(event) {
         success: true,
         data: {
           embed_code: embedCode,
-          widget_url: `${baseUrl}/widget/booking`,
+          widget_url: `${baseUrl}/widget/appointment`,
           configuration: {
             width,
             height,

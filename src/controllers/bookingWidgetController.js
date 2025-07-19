@@ -1,16 +1,16 @@
-// src/controllers/bookingWidgetController.js
-// Controlador para widget de reservas embebido en ricardoburitica.eu
+// src/controllers/appointmentWidgetController.js
+// Controlador para widget de citas embebido en ricardoburitica.eu
 
-const bookingWidgetService = require("../services/bookingWidgetService");
+const appointmentWidgetService = require("../services/appointmentWidgetService");
 const logger = require("../utils/logger");
 
-class BookingWidgetController {
+class AppointmentWidgetController {
   /**
    * Obtiene servicios disponibles para el widget
    */
   async getServices(req, res) {
     try {
-      const services = await bookingWidgetService.getAvailableServices();
+      const services = await appointmentWidgetService.getAvailableServices();
 
       res.json({
         success: true,
@@ -49,7 +49,7 @@ class BookingWidgetController {
       const availability = await bookingWidgetService.getServiceAvailability(
         serviceId,
         startDate,
-        endDate,
+        endDate
       );
 
       res.json({
@@ -73,7 +73,7 @@ class BookingWidgetController {
   /**
    * Crea una nueva reserva desde el widget
    */
-  async createBooking(req, res) {
+  async createAppointment(req, res) {
     try {
       const bookingData = req.body;
 
@@ -96,18 +96,19 @@ class BookingWidgetController {
         });
       }
 
-      // Crear reserva usando el servicio
-      const result = await bookingWidgetService.createWebBooking(bookingData);
+      // Crear cita usando el servicio
+      const result =
+        await appointmentWidgetService.createWebAppointment(bookingData);
 
-      logger.info("Booking created via widget", {
-        bookingId: result.booking.id,
-        service: result.booking.service,
+      logger.info("Appointment created via widget", {
+        appointmentId: result.appointment.id,
+        service: result.appointment.service,
         client: result.client.email,
       });
 
       res.status(201).json({
         success: true,
-        message: "Booking created successfully",
+        message: "Appointment created successfully",
         data: result,
       });
     } catch (error) {
@@ -160,7 +161,7 @@ class BookingWidgetController {
 
       const isAvailable = await bookingWidgetService.verifySlotAvailability(
         serviceId,
-        datetime,
+        datetime
       );
 
       res.json({
@@ -211,7 +212,7 @@ class BookingWidgetController {
   /**
    * Obtiene reservas de un cliente
    */
-  async getClientBookings(req, res) {
+  async getClientAppointments(req, res) {
     try {
       const { email } = req.params;
 
@@ -222,7 +223,8 @@ class BookingWidgetController {
         });
       }
 
-      const result = await bookingWidgetService.getClientBookings(email);
+      const result =
+        await appointmentWidgetService.getClientAppointments(email);
 
       res.json({
         success: true,
@@ -245,9 +247,9 @@ class BookingWidgetController {
   /**
    * Cancela una reserva
    */
-  async cancelBooking(req, res) {
+  async cancelAppointment(req, res) {
     try {
-      const { bookingId } = req.params;
+      const { appointmentId } = req.params;
       const { email, reason } = req.body;
 
       if (!email) {
@@ -257,14 +259,14 @@ class BookingWidgetController {
         });
       }
 
-      const result = await bookingWidgetService.cancelBooking(
-        bookingId,
+      const result = await appointmentWidgetService.cancelAppointment(
+        appointmentId,
         email,
-        reason,
+        reason
       );
 
-      logger.info("Booking cancelled via widget", {
-        bookingId,
+      logger.info("Appointment cancelled via widget", {
+        appointmentId,
         email,
         reason,
       });
@@ -376,7 +378,7 @@ class BookingWidgetController {
                 </span>
             </div>
         </div>
-        
+
         <div id="widget-content">
             <div class="text-center py-12">
                 <div class="loading-spinner"></div>
@@ -405,7 +407,7 @@ class BookingWidgetController {
             async loadServices() {
                 const response = await fetch(\`\${this.apiBase}/services\`);
                 const data = await response.json();
-                
+
                 if (data.success) {
                     this.renderServices(data.data);
                 } else {
@@ -445,14 +447,14 @@ class BookingWidgetController {
                                 </div>
                             \`).join('')}
                         </div>
-                        
+
                         <div class="mt-8 p-4 bg-blue-50 rounded-lg">
                             <div class="flex items-center space-x-2">
                                 <span class="text-blue-600">💬</span>
                                 <p class="text-blue-800 font-medium">¿Prefieres reservar por WhatsApp?</p>
                             </div>
                             <p class="text-blue-700 mt-1">Envía un mensaje a nuestro asistente IA y te ayudará automáticamente.</p>
-                            <a href="https://wa.me/34XXXXXXXXX?text=Hola, quiero reservar una cita" 
+                            <a href="https://wa.me/34XXXXXXXXX?text=Hola, quiero reservar una cita"
                                class="inline-block mt-3 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
                                 Abrir WhatsApp
                             </a>
@@ -463,7 +465,7 @@ class BookingWidgetController {
 
             async selectService(serviceId) {
                 this.selectedService = serviceId;
-                
+
                 try {
                     await this.loadAvailability(serviceId);
                 } catch (error) {
@@ -483,7 +485,7 @@ class BookingWidgetController {
                 const today = new Date().toISOString().split('T')[0];
                 const response = await fetch(\`\${this.apiBase}/services/\${serviceId}/availability?startDate=\${today}\`);
                 const data = await response.json();
-                
+
                 if (data.success) {
                     this.renderAvailability(data.data);
                 } else {
@@ -493,7 +495,7 @@ class BookingWidgetController {
 
             renderAvailability(availabilityData) {
                 const { service, availability } = availabilityData;
-                
+
                 // Agrupar slots por fecha
                 const slotsByDate = {};
                 availability.forEach(slot => {
@@ -512,7 +514,7 @@ class BookingWidgetController {
                                 ← Cambiar servicio
                             </button>
                         </div>
-                        
+
                         \${Object.keys(slotsByDate).length === 0 ? \`
                             <div class="text-center py-8">
                                 <p class="text-gray-500 mb-4">No hay disponibilidad en los próximos días</p>
@@ -525,16 +527,16 @@ class BookingWidgetController {
                                 \${Object.entries(slotsByDate).map(([date, slots]) => \`
                                     <div>
                                         <h4 class="font-medium text-gray-800 mb-3">
-                                            \${new Date(date + 'T00:00:00').toLocaleDateString('es-ES', { 
-                                                weekday: 'long', 
-                                                year: 'numeric', 
-                                                month: 'long', 
-                                                day: 'numeric' 
+                                            \${new Date(date + 'T00:00:00').toLocaleDateString('es-ES', {
+                                                weekday: 'long',
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
                                             })}
                                         </h4>
                                         <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">
                                             \${slots.map(slot => \`
-                                                <button onclick="widget.selectSlot('\${slot.datetime}')" 
+                                                <button onclick="widget.selectSlot('\${slot.datetime}')"
                                                         class="p-3 border border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors">
                                                     \${slot.time}
                                                 </button>
@@ -556,7 +558,7 @@ class BookingWidgetController {
             renderBookingForm() {
                 const content = document.getElementById('widget-content');
                 const slotDate = new Date(this.selectedSlot);
-                
+
                 content.innerHTML = \`
                     <div>
                         <div class="flex items-center justify-between mb-6">
@@ -565,41 +567,41 @@ class BookingWidgetController {
                                 ← Cambiar horario
                             </button>
                         </div>
-                        
+
                         <div class="bg-blue-50 p-4 rounded-lg mb-6">
                             <h4 class="font-medium text-blue-800">Resumen de tu reserva:</h4>
                             <p class="text-blue-700 mt-1">
                                 📅 \${slotDate.toLocaleDateString('es-ES')} a las \${slotDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
                             </p>
                         </div>
-                        
+
                         <form id="booking-form" class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Nombre completo *</label>
-                                <input type="text" id="client-name" required 
+                                <input type="text" id="client-name" required
                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             </div>
-                            
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
-                                <input type="email" id="client-email" required 
+                                <input type="email" id="client-email" required
                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             </div>
-                            
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono (WhatsApp)</label>
-                                <input type="tel" id="client-phone" 
+                                <input type="tel" id="client-phone"
                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                        placeholder="+34 XXX XXX XXX">
                             </div>
-                            
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Notas adicionales</label>
-                                <textarea id="booking-notes" rows="3" 
+                                <textarea id="booking-notes" rows="3"
                                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                           placeholder="Alguna preferencia o información adicional..."></textarea>
                             </div>
-                            
+
                             <div class="bg-green-50 p-4 rounded-lg">
                                 <div class="flex items-center space-x-2">
                                     <span class="text-green-600">✅</span>
@@ -607,14 +609,14 @@ class BookingWidgetController {
                                 </div>
                                 <p class="text-green-700 mt-1">Recibirás confirmación inmediata y recordatorios automáticos por WhatsApp.</p>
                             </div>
-                            
+
                             <button type="submit" class="w-full py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
                                 Confirmar Reserva
                             </button>
                         </form>
                     </div>
                 \`;
-                
+
                 document.getElementById('booking-form').addEventListener('submit', (e) => {
                     e.preventDefault();
                     this.submitBooking();
@@ -648,7 +650,7 @@ class BookingWidgetController {
                     });
 
                     const data = await response.json();
-                    
+
                     if (data.success) {
                         this.showSuccess(data.data);
                     } else {
@@ -665,7 +667,7 @@ class BookingWidgetController {
                     <div class="text-center py-8">
                         <div class="text-6xl mb-4">🎉</div>
                         <h3 class="text-2xl font-bold text-green-600 mb-4">¡Reserva Confirmada!</h3>
-                        
+
                         <div class="bg-green-50 p-6 rounded-lg mb-6">
                             <h4 class="font-semibold text-green-800 mb-2">Detalles de tu cita:</h4>
                             <div class="text-green-700 space-y-1">
@@ -675,16 +677,16 @@ class BookingWidgetController {
                                 <p>💰 Precio: €\${bookingData.booking.price}</p>
                             </div>
                         </div>
-                        
+
                         <div class="bg-blue-50 p-4 rounded-lg mb-6">
                             <p class="text-blue-800">
-                                \${bookingData.client.phone ? 
+                                \${bookingData.client.phone ?
                                     '📱 Te hemos enviado la confirmación por WhatsApp y recibirás recordatorios automáticos.' :
                                     '📧 Te hemos enviado la confirmación por email.'
                                 }
                             </p>
                         </div>
-                        
+
                         <button onclick="widget.init()" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                             Hacer otra reserva
                         </button>
@@ -722,4 +724,4 @@ class BookingWidgetController {
   }
 }
 
-module.exports = new BookingWidgetController();
+module.exports = new AppointmentWidgetController();

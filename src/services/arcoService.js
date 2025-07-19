@@ -20,7 +20,7 @@ class ArcoService {
   initializeEmailTransporter() {
     if (!process.env.SMTP_HOST) {
       logger.warn(
-        "SMTP no configurado, notificaciones ARCO por email deshabilitadas",
+        "SMTP no configurado, notificaciones ARCO por email deshabilitadas"
       );
       return null;
     }
@@ -53,7 +53,7 @@ class ArcoService {
       // Buscar cliente
       const client = await this.findClientByIdentifier(
         identifier,
-        identifierType,
+        identifierType
       );
       if (!client) {
         return {
@@ -82,7 +82,7 @@ class ArcoService {
 
       if (arcoError) {
         throw new Error(
-          `Error registrando solicitud ARCO: ${arcoError.message}`,
+          `Error registrando solicitud ARCO: ${arcoError.message}`
         );
       }
 
@@ -116,7 +116,7 @@ class ArcoService {
     identifier,
     identifierType,
     dataToCorrect,
-    newData,
+    newData
   ) {
     try {
       logger.info("Solicitud de rectificación ARCO", {
@@ -127,7 +127,7 @@ class ArcoService {
 
       const client = await this.findClientByIdentifier(
         identifier,
-        identifierType,
+        identifierType
       );
       if (!client) {
         return {
@@ -149,14 +149,14 @@ class ArcoService {
       ];
 
       const invalidFields = Object.keys(dataToCorrect).filter(
-        (field) => !allowedFields.includes(field),
+        (field) => !allowedFields.includes(field)
       );
 
       if (invalidFields.length > 0) {
         return {
           success: false,
           error: `Campos no permitidos para rectificación: ${invalidFields.join(
-            ", ",
+            ", "
           )}`,
           code: "INVALID_FIELDS",
         };
@@ -189,14 +189,14 @@ class ArcoService {
 
       if (arcoError) {
         throw new Error(
-          `Error registrando solicitud ARCO: ${arcoError.message}`,
+          `Error registrando solicitud ARCO: ${arcoError.message}`
         );
       }
 
       await this.sendVerificationEmail(
         client,
         verificationToken,
-        "RECTIFICATION",
+        "RECTIFICATION"
       );
 
       return {
@@ -232,7 +232,7 @@ class ArcoService {
 
       const client = await this.findClientByIdentifier(
         identifier,
-        identifierType,
+        identifierType
       );
       if (!client) {
         return {
@@ -255,7 +255,7 @@ class ArcoService {
           success: false,
           error:
             "No se pueden eliminar datos con reservas activas. Cancela primero tus reservas.",
-          code: "ACTIVE_BOOKINGS_EXIST",
+          code: "ACTIVE_APPOINTMENTS_EXIST",
           activeBookings: activeBookings.length,
         };
       }
@@ -286,7 +286,7 @@ class ArcoService {
 
       if (arcoError) {
         throw new Error(
-          `Error registrando solicitud ARCO: ${arcoError.message}`,
+          `Error registrando solicitud ARCO: ${arcoError.message}`
         );
       }
 
@@ -319,7 +319,7 @@ class ArcoService {
     identifier,
     identifierType,
     oppositionType,
-    reason,
+    reason
   ) {
     try {
       logger.info("Solicitud de oposición ARCO", {
@@ -331,7 +331,7 @@ class ArcoService {
 
       const client = await this.findClientByIdentifier(
         identifier,
-        identifierType,
+        identifierType
       );
       if (!client) {
         return {
@@ -382,7 +382,7 @@ class ArcoService {
 
       if (arcoError) {
         throw new Error(
-          `Error registrando solicitud ARCO: ${arcoError.message}`,
+          `Error registrando solicitud ARCO: ${arcoError.message}`
         );
       }
 
@@ -422,7 +422,7 @@ class ArcoService {
           clients (
             id, first_name, last_name, email, phone, created_at
           )
-        `,
+        `
         )
         .eq("verification_token", token)
         .eq("status", "PENDING_VERIFICATION")
@@ -454,7 +454,7 @@ class ArcoService {
           break;
         default:
           throw new Error(
-            `Tipo de solicitud no válido: ${request.request_type}`,
+            `Tipo de solicitud no válido: ${request.request_type}`
           );
       }
 
@@ -522,7 +522,7 @@ class ArcoService {
         dataCategories: Object.keys(clientData),
         totalRecords: Object.values(clientData).reduce(
           (sum, arr) => sum + (Array.isArray(arr) ? arr.length : 1),
-          0,
+          0
         ),
       };
     } catch (error) {
@@ -578,7 +578,7 @@ class ArcoService {
           `
           *,
           services (name, category, price)
-        `,
+        `
         )
         .eq("client_id", clientId);
 
@@ -620,7 +620,7 @@ class ArcoService {
   async sendVerificationEmail(client, token, requestType) {
     if (!this.emailTransporter) {
       logger.warn(
-        "Email transporter no disponible, saltando envío de verificación",
+        "Email transporter no disponible, saltando envío de verificación"
       );
       return;
     }

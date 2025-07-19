@@ -1,12 +1,8 @@
-// src/services/bookingWidgetService.js
-// Servicio para widget de reservas embebido en ricardoburitica.eu
+// ARCHIVO ELIMINADO - FUNCIONALIDAD CONSOLIDADA EN appointmentWidgetService.js
+// Este archivo ha sido eliminado para evitar duplicaciones
+// Toda la funcionalidad se encuentra ahora en appointmentWidgetService.js
 
-const { calendlyClient } = require("../integrations/calendlyClient");
-const autonomousAssistant = require("./autonomousAssistant");
-const AppointmentModel = require("../models/appointmentModel");
-const ClientModel = require("../models/clientModel");
-const ServiceModel = require("../models/serviceModel");
-const logger = require("../utils/logger");
+module.exports = require("./appointmentWidgetService");
 
 class BookingWidgetService {
   constructor() {
@@ -274,7 +270,7 @@ class BookingWidgetService {
 
 🔔 **Recordatorios automáticos:**
 • 24 horas antes
-• 2 horas antes  
+• 2 horas antes
 • 30 minutos antes
 
 Para cambios, responde a este WhatsApp con al menos 24h de antelación.

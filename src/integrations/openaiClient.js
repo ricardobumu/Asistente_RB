@@ -17,7 +17,7 @@ class OpenAIClient {
    */
   async analyzeMessageWithFunctions(message, context = {}) {
     try {
-      const functions = this.getBookingFunctions();
+      const functions = this.getAppointmentFunctions();
 
       const response = await this.client.chat.completions.create({
         model: this.model,
@@ -29,7 +29,7 @@ class OpenAIClient {
           {
             role: "user",
             content: `Contexto previo: ${JSON.stringify(
-              context,
+              context
             )}\n\nMensaje: ${message}`,
           },
         ],
@@ -73,10 +73,10 @@ class OpenAIClient {
           {
             role: "system",
             content: `Eres un analizador de intenciones para un sistema de reservas de belleza.
-            
+
 ANALIZA el mensaje y devuelve SOLO un JSON válido con esta estructura:
 {
-  "intent": "booking_request|availability_inquiry|booking_modification|service_information|greeting|general_inquiry",
+  "intent": "appointment_request|availability_inquiry|appointment_modification|service_information|greeting|general_inquiry",
   "confidence": 0.0-1.0,
   "entities": {
     "service": "nombre del servicio mencionado",
@@ -93,7 +93,7 @@ ANALIZA el mensaje y devuelve SOLO un JSON válido con esta estructura:
           {
             role: "user",
             content: `Contexto: ${JSON.stringify(
-              context,
+              context
             )}\nMensaje: ${message}`,
           },
         ],
@@ -130,7 +130,7 @@ ANALIZA el mensaje y devuelve SOLO un JSON válido con esta estructura:
           {
             role: "user",
             content: `Contexto: ${JSON.stringify(
-              context,
+              context
             )}\n\nGenera respuesta para: ${prompt}`,
           },
         ],
@@ -148,7 +148,7 @@ ANALIZA el mensaje y devuelve SOLO un JSON válido con esta estructura:
   /**
    * Define las funciones disponibles para el bot
    */
-  getBookingFunctions() {
+  getAppointmentFunctions() {
     return [
       {
         name: "check_availability",
@@ -253,7 +253,7 @@ OBJETIVO: Gestionar reservas automáticamente usando las funciones disponibles.
 
 SERVICIOS DISPONIBLES:
 - Corte de Cabello (45 min, €25)
-- Peinado (60 min, €35) 
+- Peinado (60 min, €35)
 - Tratamiento Capilar (90 min, €45)
 - Manicura (30 min, €20)
 - Pedicura (45 min, €25)
@@ -287,7 +287,7 @@ PERSONALIDAD:
 SERVICIOS:
 - Corte de Cabello (45 min, €25)
 - Peinado (60 min, €35)
-- Tratamiento Capilar (90 min, €45) 
+- Tratamiento Capilar (90 min, €45)
 - Manicura (30 min, €20)
 - Pedicura (45 min, €25)
 

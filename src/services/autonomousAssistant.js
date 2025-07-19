@@ -323,8 +323,8 @@ Si no puedes resolver algo automáticamente, indica: "Te conectaré con Ricardo 
       // Procesar según el análisis
       let response;
       switch (analysis.intent) {
-        case "booking_request":
-          response = await this.handleBookingRequest(
+        case "appointment_request":
+          response = await this.handleAppointmentRequest(
             phoneNumber,
             analysis,
             context
@@ -333,8 +333,8 @@ Si no puedes resolver algo automáticamente, indica: "Te conectaré con Ricardo 
         case "availability_inquiry":
           response = await this.handleAvailabilityInquiry(analysis);
           break;
-        case "booking_modification":
-          response = await this.handleBookingModification(
+        case "appointment_modification":
+          response = await this.handleAppointmentModification(
             phoneNumber,
             analysis,
             context
@@ -458,7 +458,7 @@ CONTEXTO PREVIO: ${JSON.stringify(context.extractedData || {})}
 
 Responde SOLO con un objeto JSON válido:
 {
-  "intent": "booking_request|availability_inquiry|booking_modification|service_information|greeting|general_inquiry",
+  "intent": "appointment_request|availability_inquiry|appointment_modification|service_information|greeting|general_inquiry",
   "confidence": 0.0-1.0,
   "entities": {
     "service": "corte|coloracion|tratamiento|manicura|pedicura|null",
@@ -550,7 +550,7 @@ Responde SOLO con un objeto JSON válido:
 
         case "create_booking":
           return {
-            intent: "booking_request",
+            intent: "appointment_request",
             confidence: 0.95,
             entities: args,
             missing_info: [],
@@ -630,7 +630,7 @@ Responde SOLO con un objeto JSON válido:
     // Detectar solicitudes de reserva
     if (/reserva|cita|appointment|booking|agendar/.test(lowerMessage)) {
       return {
-        intent: "booking_request",
+        intent: "appointment_request",
         confidence: 0.8,
         entities: this.extractBasicEntities(message),
         missing_info: this.getMissingBookingInfo(
@@ -1040,7 +1040,7 @@ Responde SOLO con un objeto JSON válido:
 
 🔔 **Recordatorios automáticos:**
 • 24 horas antes
-• 2 horas antes  
+• 2 horas antes
 • 30 minutos antes
 
 Para cambios, escríbeme con al menos 24h de antelación.
@@ -1169,7 +1169,7 @@ ${servicesMenu}`;
   /**
    * Maneja modificaciones de reservas
    */
-  async handleBookingModification(phoneNumber, analysis, context) {
+  async handleAppointmentModification(phoneNumber, analysis, context) {
     try {
       // Buscar reservas activas del cliente
       const clientResult = await ClientService.findByPhone(phoneNumber);
@@ -1317,6 +1317,126 @@ ${servicesMenu}`;
         timestamp: new Date().toISOString(),
       });
       throw error;
+    }
+  }
+
+  /**
+   * Procesa la creación de una nueva cita proveniente de Calendly.
+   * @param {object} appointmentData - Datos de la cita extraídos del webhook de Calendly.
+   * @returns {Promise<object>} - Resultado del procesamiento.
+   */
+  async processCalendlyAppointment(appointmentData) {
+    try {
+      const {
+        clientName,
+        clientEmail,
+        clientPhone,
+        scheduledAt,
+        endTime,
+        eventTypeUri,
+        calendlyEventUri,
+      } = appointmentData;
+
+      logger.info("Procesando cita de Calendly en AutonomousAssistant...", {
+        client_name: clientName,
+        client_phone: this.sanitizePhoneForLog(clientPhone),
+        scheduled_at: scheduledAt,
+        service_uri: eventTypeUri,
+      });
+
+      // Buscar o crear cliente
+      const clientResult = await ClientService.findOrCreateByPhone(
+        clientPhone,
+        {
+          full_name: clientName,
+          email: clientEmail,
+        }
+      );
+
+      if (!clientResult.success) {
+        throw new Error(`Error al gestionar el cliente: ${clientResult.error}`);
+      }
+      const client = clientResult.data;
+
+      // Buscar servicio por Calendly URL
+      const serviceResult = await this.findServiceByCalendlyUrl(eventTypeUri);
+      if (!serviceResult.success || !serviceResult.data) {
+        throw new Error(
+          `Servicio con URI de Calendly "${eventTypeUri}" no encontrado en la base de datos.`
+        );
+      }
+      const service = serviceResult.data;
+
+      // Crear los datos de la cita
+      const newAppointmentData = {
+        client_id: client.id,
+        service_id: service.id,
+        scheduled_at: scheduledAt,
+        end_time: endTime,
+        status: "confirmed",
+        source: "calendly_webhook",
+        calendly_event_uri: calendlyEventUri,
+        notes: `Cita creada automáticamente vía Calendly para ${clientName}.`,
+      };
+
+      // Guardar la cita en la BD
+      const createResult = await DatabaseAdapter.insert(
+        "appointments",
+        newAppointmentData
+      );
+      if (!createResult.success) {
+        throw new Error(
+          `Error al guardar la cita en la base de datos: ${createResult.error}`
+        );
+      }
+
+      logger.info("✅ Nueva cita creada y guardada en la base de datos.", {
+        appointment_id: createResult.data.id,
+        client_id: client.id,
+        service_id: service.id,
+      });
+
+      return createResult;
+    } catch (error) {
+      logger.error(
+        "Error al procesar la creación de cita de Calendly en el asistente autónomo",
+        {
+          error: error.message,
+          stack: error.stack,
+          appointmentData,
+        }
+      );
+      throw error;
+    }
+  }
+
+  /**
+   * Encuentra un servicio por la URL de Calendly.
+   * @param {string} calendlyEventUri - La URL del evento de Calendly.
+   * @returns {Promise<object>} - El resultado de la búsqueda del servicio.
+   */
+  async findServiceByCalendlyUrl(calendlyEventUri) {
+    try {
+      // Implementar la lógica para buscar el servicio por la URL de Calendly en la base de datos.
+      // Utiliza this.serviceModel para interactuar con la base de datos.
+      const serviceResult =
+        await ServiceModel.findByCalendlyUrl(calendlyEventUri);
+      if (!serviceResult.success) {
+        logger.warn(
+          `Servicio no encontrado para la URL de Calendly: ${calendlyEventUri}`
+        );
+        return { success: false, error: "Servicio no encontrado" };
+      }
+      return { success: true, data: serviceResult.data };
+    } catch (error) {
+      logger.error(
+        `Error al buscar el servicio por la URL de Calendly: ${calendlyEventUri}`,
+        { error: error.message }
+      );
+      return {
+        success: false,
+        error: "Error al buscar el servicio por la URL de Calendly",
+      };
     }
   }
 

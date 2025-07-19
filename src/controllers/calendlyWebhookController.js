@@ -1,9 +1,6 @@
 // src/controllers/calendlyWebhookController.js
-const AppointmentService = require("../services/appointmentService");
-const ClientService = require("../services/clientService");
-const ServiceService = require("../services/serviceService");
-const DatabaseAdapter = require("../adapters/databaseAdapter");
-const calendlyClient = require("../integrations/calendlyClient");
+const integrationOrchestrator = require("../services/integrationOrchestrator");
+const pipedreamService = require("../services/pipedreamService");
 const logger = require("../utils/logger");
 
 class CalendlyWebhookController {
@@ -14,262 +11,106 @@ class CalendlyWebhookController {
     try {
       const { event, payload } = req.body;
 
-      logger.info("Calendly webhook received:", {
+      logger.info("📅 Calendly webhook recibido:", {
         event: event,
         payloadKeys: Object.keys(payload || {}),
+        timestamp: new Date().toISOString(),
       });
 
-      switch (event) {
-        case "invitee.created":
-          await CalendlyWebhookController.handleInviteeCreated(payload);
-          break;
-
-        case "invitee.canceled":
-          await CalendlyWebhookController.handleInviteeCanceled(payload);
-          break;
-
-        case "invitee_no_show.created":
-          await CalendlyWebhookController.handleInviteeNoShow(payload);
-          break;
-
-        default:
-          logger.info("Unhandled Calendly event:", event);
+      // Validar estructura del webhook
+      if (!event || !payload) {
+        logger.warn("❌ Payload de webhook de Calendly inválido:", req.body);
+        return res.status(400).json({
+          success: false,
+          error: "Invalid webhook payload",
+        });
       }
+
+      // 1. Procesar evento localmente usando Integration Orchestrator
+      const localResult = await integrationOrchestrator.processCalendlyEvent(
+        event,
+        payload
+      );
+
+      // 2. Enviar evento a Pipedream independientemente del resultado local
+      const pipedreamResult =
+        await pipedreamService.sendCalendlyEventToPipedream(event, payload);
+
+      // Log de resultados
+      logger.info("📊 Resultados del procesamiento de Calendly:", {
+        event,
+        localProcessing: localResult.success,
+        pipedreamDispatch: pipedreamResult.success,
+      });
+
+      if (localResult.success) {
+        logger.info("✅ Evento de Calendly procesado exitosamente:", {
+          event,
+          localData: localResult.data,
+          pipedreamSent: pipedreamResult.success,
+        });
+
+        res.status(200).json({
+          success: true,
+          message: "Webhook processed successfully",
+          event: event,
+          data: {
+            local_processing: localResult.data,
+            pipedream_dispatch: {
+              success: pipedreamResult.success,
+              sent_at: new Date().toISOString(),
+            },
+          },
+        });
+      } else {
+        logger.error(
+          "❌ Error procesando evento de Calendly localmente:",
+          localResult.error
+        );
+
+        // Aún así, intentamos enviar a Pipedream
+        res.status(200).json({
+          success: false,
+          message:
+            "Local event processing failed, but Pipedream dispatch attempted",
+          event: event,
+          error: localResult.error,
+          pipedream_dispatch: {
+            success: pipedreamResult.success,
+            sent_at: new Date().toISOString(),
+          },
+        });
+      }
+    } catch (error) {
+      logger.error("❌ Error crítico procesando webhook de Calendly:", error);
+
+      res.status(500).json({
+        success: false,
+        error: "Internal server error",
+        message: error.message,
+      });
+    }
+  }
+
+  /**
+   * Obtener estado de salud del webhook
+   */
+  static async getHealthStatus(req, res) {
+    try {
+      const healthCheck = await integrationOrchestrator.performHealthChecks();
 
       res.status(200).json({
         success: true,
-        message: "Webhook processed successfully",
+        message: "Calendly webhook health status",
+        health: healthCheck,
+        timestamp: new Date().toISOString(),
       });
     } catch (error) {
-      logger.error("Error processing Calendly webhook:", error);
+      logger.error("Error checking webhook health:", error);
       res.status(500).json({
         success: false,
-        error: "Error processing webhook",
+        error: "Error checking health status",
       });
-    }
-  }
-
-  /**
-   * Manejar creación de invitado (nueva reserva)
-   */
-  static async handleInviteeCreated(payload) {
-    try {
-      const { email, name, event: eventData, scheduled_event } = payload;
-
-      // Extraer información del evento
-      const startTime = scheduled_event?.start_time;
-      const endTime = scheduled_event?.end_time;
-      const eventTypeUri = eventData?.event_type;
-
-      if (!startTime || !email) {
-        logger.warn("Incomplete Calendly invitee data:", payload);
-        return;
-      }
-
-      // Buscar o crear cliente
-      let clientResult = await ClientService.findByEmail(email);
-
-      if (!clientResult.success || !clientResult.data) {
-        // Crear nuevo cliente
-        const [firstName, ...lastNameParts] = (name || email).split(" ");
-        const lastName = lastNameParts.join(" ") || "";
-
-        const newClientData = {
-          first_name: firstName,
-          last_name: lastName,
-          email: email,
-          phone: "", // Se puede actualizar después
-          source: "calendly",
-        };
-
-        clientResult = await ClientService.createClient(newClientData);
-
-        if (!clientResult.success) {
-          logger.error(
-            "Error creating client from Calendly:",
-            clientResult.error
-          );
-          return;
-        }
-      }
-
-      // Determinar el servicio basado en el tipo de evento
-      const serviceResult =
-        await CalendlyWebhookController.mapEventTypeToService(eventTypeUri);
-
-      if (!serviceResult.success) {
-        logger.warn(
-          "Could not map Calendly event type to service:",
-          eventTypeUri
-        );
-        return;
-      }
-
-      // Crear cita
-      const appointmentData = {
-        client_id: clientResult.data.id,
-        service_id: serviceResult.data.id,
-        scheduled_at: startTime,
-        status: "confirmed",
-        calendly_event_uri: scheduled_event?.uri,
-        notes: `Cita creada desde Calendly - Evento: ${
-          eventData?.name || "N/A"
-        }`,
-        source: "calendly_webhook",
-      };
-
-      const appointmentResult =
-        await AppointmentService.createAppointment(appointmentData);
-
-      if (appointmentResult.success) {
-        logger.info("Appointment created from Calendly webhook:", {
-          appointmentId: appointmentResult.data.id,
-          clientEmail: email,
-          scheduledAt: startTime,
-        });
-      } else {
-        logger.error(
-          "Error creating appointment from Calendly:",
-          appointmentResult.error
-        );
-      }
-    } catch (error) {
-      logger.error("Error handling Calendly invitee created:", error);
-    }
-  }
-
-  /**
-   * Manejar cancelación de invitado
-   */
-  static async handleInviteeCanceled(payload) {
-    try {
-      const { email, scheduled_event } = payload;
-      const eventUri = scheduled_event?.uri;
-
-      if (!eventUri) {
-        logger.warn("No event URI in Calendly cancellation:", payload);
-        return;
-      }
-
-      // Buscar reserva por URL de Calendly
-      const { data: bookings, error } = await DatabaseAdapter.select(
-        "bookings",
-        "*",
-        {
-          booking_url: eventUri,
-        }
-      );
-
-      if (error || !bookings || bookings.length === 0) {
-        logger.warn("No booking found for cancelled Calendly event:", eventUri);
-        return;
-      }
-
-      const booking = bookings[0];
-
-      // Cancelar reserva
-      const cancelResult = await BookingService.cancelBooking(
-        booking.id,
-        "Cancelada desde Calendly"
-      );
-
-      if (cancelResult.success) {
-        logger.info("Booking cancelled from Calendly webhook:", {
-          bookingId: booking.id,
-          clientEmail: email,
-        });
-      } else {
-        logger.error(
-          "Error cancelling booking from Calendly:",
-          cancelResult.error
-        );
-      }
-    } catch (error) {
-      logger.error("Error handling Calendly invitee canceled:", error);
-    }
-  }
-
-  /**
-   * Manejar no-show de invitado
-   */
-  static async handleInviteeNoShow(payload) {
-    try {
-      const { email, scheduled_event } = payload;
-      const eventUri = scheduled_event?.uri;
-
-      if (!eventUri) {
-        logger.warn("No event URI in Calendly no-show:", payload);
-        return;
-      }
-
-      // Buscar reserva por URL de Calendly
-      const { data: bookings, error } = await DatabaseAdapter.select(
-        "bookings",
-        "*",
-        {
-          booking_url: eventUri,
-        }
-      );
-
-      if (error || !bookings || bookings.length === 0) {
-        logger.warn("No booking found for no-show Calendly event:", eventUri);
-        return;
-      }
-
-      const booking = bookings[0];
-
-      // Marcar como no-show
-      const updateResult = await BookingService.updateBookingStatus(
-        booking.id,
-        "no_show",
-        "Cliente no se presentó (marcado desde Calendly)"
-      );
-
-      if (updateResult.success) {
-        logger.info("Booking marked as no-show from Calendly webhook:", {
-          bookingId: booking.id,
-          clientEmail: email,
-        });
-      } else {
-        logger.error(
-          "Error marking booking as no-show from Calendly:",
-          updateResult.error
-        );
-      }
-    } catch (error) {
-      logger.error("Error handling Calendly invitee no-show:", error);
-    }
-  }
-
-  /**
-   * Mapear tipo de evento de Calendly a servicio interno
-   */
-  static async mapEventTypeToService(eventTypeUri) {
-    try {
-      // Obtener todos los servicios activos
-      const servicesResult = await ServiceService.getActiveServices();
-
-      if (!servicesResult.success || !servicesResult.data.length) {
-        return {
-          success: false,
-          error: "No active services found",
-        };
-      }
-
-      // Por ahora, usar el primer servicio activo
-      // En el futuro, se puede implementar un mapeo más sofisticado
-      const defaultService = servicesResult.data[0];
-
-      return {
-        success: true,
-        data: defaultService,
-      };
-    } catch (error) {
-      logger.error("Error mapping event type to service:", error);
-      return {
-        success: false,
-        error: error.message,
-      };
     }
   }
 

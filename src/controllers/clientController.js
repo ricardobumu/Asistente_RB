@@ -597,6 +597,177 @@ class ClientController {
       });
     }
   }
+
+  /**
+   * Actualizar cliente
+   * PUT /api/clients/:id
+   */
+  async updateClient(req, res) {
+    try {
+      const { id } = req.params;
+      const updateData = req.body;
+
+      logger.info("📝 Actualizando cliente", {
+        clientId: id,
+        updateData,
+        ip: req.ip,
+      });
+
+      // Validar que el cliente existe
+      const existingClient = await clientModel.getById(id);
+      if (!existingClient.success) {
+        return res.status(404).json({
+          success: false,
+          error: "Cliente no encontrado",
+        });
+      }
+
+      // Validar datos de entrada si se proporcionan
+      if (updateData.email && !validateEmail(updateData.email)) {
+        return res.status(400).json({
+          success: false,
+          error: "Email inválido",
+        });
+      }
+
+      if (updateData.telefono && !validatePhone(updateData.telefono)) {
+        return res.status(400).json({
+          success: false,
+          error: "Teléfono inválido",
+        });
+      }
+
+      // Verificar duplicados si se actualiza email o teléfono
+      if (
+        updateData.telefono &&
+        updateData.telefono !== existingClient.data.telefono
+      ) {
+        const existingByPhone = await clientModel.findByPhone(
+          updateData.telefono
+        );
+        if (
+          existingByPhone.success &&
+          existingByPhone.data &&
+          existingByPhone.data.id_cliente !== parseInt(id)
+        ) {
+          return res.status(409).json({
+            success: false,
+            error: "Ya existe un cliente con este teléfono",
+          });
+        }
+      }
+
+      if (updateData.email && updateData.email !== existingClient.data.email) {
+        const existingByEmail = await clientModel.findByEmail(updateData.email);
+        if (
+          existingByEmail.success &&
+          existingByEmail.data &&
+          existingByEmail.data.id_cliente !== parseInt(id)
+        ) {
+          return res.status(409).json({
+            success: false,
+            error: "Ya existe un cliente con este email",
+          });
+        }
+      }
+
+      const result = await clientModel.update(id, updateData);
+
+      if (result.success) {
+        logger.info("✅ Cliente actualizado", {
+          clientId: id,
+          changes: Object.keys(updateData),
+        });
+
+        res.json({
+          success: true,
+          data: result.data,
+          message: "Cliente actualizado exitosamente",
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          error: result.error,
+        });
+      }
+    } catch (error) {
+      logger.error("❌ Error actualizando cliente:", error);
+      res.status(500).json({
+        success: false,
+        error: "Error interno del servidor",
+        message: error.message,
+      });
+    }
+  }
+
+  /**
+   * Eliminar cliente
+   * DELETE /api/clients/:id
+   */
+  async deleteClient(req, res) {
+    try {
+      const { id } = req.params;
+
+      logger.info("🗑️ Eliminando cliente", {
+        clientId: id,
+        ip: req.ip,
+      });
+
+      // Verificar que el cliente existe
+      const existingClient = await clientModel.getById(id);
+      if (!existingClient.success) {
+        return res.status(404).json({
+          success: false,
+          error: "Cliente no encontrado",
+        });
+      }
+
+      // Verificar si el cliente tiene citas activas
+      const clientAppointments =
+        await appointmentService.getAppointmentsByClient(id);
+      if (clientAppointments.success && clientAppointments.data.length > 0) {
+        const activeAppointments = clientAppointments.data.filter(
+          (appointment) =>
+            appointment.status === "confirmada" ||
+            appointment.status === "pendiente"
+        );
+
+        if (activeAppointments.length > 0) {
+          return res.status(400).json({
+            success: false,
+            error: "No se puede eliminar el cliente porque tiene citas activas",
+            details: `El cliente tiene ${activeAppointments.length} cita(s) activa(s)`,
+          });
+        }
+      }
+
+      const result = await clientModel.delete(id);
+
+      if (result.success) {
+        logger.info("✅ Cliente eliminado", {
+          clientId: id,
+          clientName: existingClient.data.nombre,
+        });
+
+        res.json({
+          success: true,
+          message: "Cliente eliminado exitosamente",
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          error: result.error,
+        });
+      }
+    } catch (error) {
+      logger.error("❌ Error eliminando cliente:", error);
+      res.status(500).json({
+        success: false,
+        error: "Error interno del servidor",
+        message: error.message,
+      });
+    }
+  }
 }
 
 module.exports = new ClientController();

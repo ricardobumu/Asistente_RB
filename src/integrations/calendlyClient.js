@@ -38,7 +38,7 @@ class CalendlyClient {
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(
-          `Calendly API error: ${response.status} - ${errorText}`,
+          `Calendly API error: ${response.status} - ${errorText}`
         );
       }
 
@@ -59,7 +59,7 @@ class CalendlyClient {
   async getEventTypes() {
     try {
       const response = await this.makeRequest(
-        `/event_types?user=${this.userUri}`,
+        `/event_types?user=${this.userUri}`
       );
       return {
         success: true,
@@ -96,7 +96,7 @@ class CalendlyClient {
       });
 
       const response = await this.makeRequest(
-        `/event_type_available_times?${queryParams}`,
+        `/event_type_available_times?${queryParams}`
       );
 
       return {
@@ -134,7 +134,7 @@ class CalendlyClient {
       const eventType = eventTypesResult.data.find(
         (et) =>
           et.name.toLowerCase().includes(serviceName.toLowerCase()) ||
-          et.slug.toLowerCase().includes(serviceName.toLowerCase()),
+          et.slug.toLowerCase().includes(serviceName.toLowerCase())
       );
 
       if (!eventType) {
@@ -184,7 +184,7 @@ class CalendlyClient {
   /**
    * Crear una reserva en Calendly
    */
-  async createBooking(bookingData) {
+  async createAppointment(appointmentData) {
     try {
       const {
         event_type_uri,
@@ -193,11 +193,11 @@ class CalendlyClient {
         invitee_email,
         invitee_phone,
         additional_info,
-      } = bookingData;
+      } = appointmentData;
 
       if (!event_type_uri || !start_time || !invitee_email) {
         throw new Error(
-          "Missing required booking data: event_type_uri, start_time, invitee_email",
+          "Missing required booking data: event_type_uri, start_time, invitee_email"
         );
       }
 
@@ -267,7 +267,7 @@ class CalendlyClient {
       });
 
       const response = await this.makeRequest(
-        `/scheduled_events?${queryParams}`,
+        `/scheduled_events?${queryParams}`
       );
 
       return {
@@ -300,7 +300,7 @@ class CalendlyClient {
           body: JSON.stringify({
             reason: reason,
           }),
-        },
+        }
       );
 
       return {

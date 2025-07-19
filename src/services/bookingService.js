@@ -1,41 +1,8 @@
-// src/services/bookingService.js
-const DatabaseAdapter = require("../adapters/databaseAdapter");
-const ClientService = require("./clientService");
-const ServiceService = require("./serviceService");
-const googleCalendarClient = require("../integrations/googleCalendarClient");
-const calendlyClient = require("../integrations/calendlyClient");
-const logger = require("../utils/logger");
-const {
-  validateBookingData,
-  sanitizeBookingData,
-} = require("../utils/validators");
+// ARCHIVO ELIMINADO - FUNCIONALIDAD CONSOLIDADA EN appointmentService.js
+// Este archivo ha sido eliminado para evitar duplicaciones
+// Toda la funcionalidad se encuentra ahora en appointmentService.js
 
-class BookingService {
-  /**
-   * Generar número de reserva único
-   */
-  static async generateBookingNumber() {
-    const prefix = "BK";
-    const timestamp = Date.now().toString().slice(-8);
-    const random = Math.floor(Math.random() * 1000)
-      .toString()
-      .padStart(3, "0");
-    return `${prefix}${timestamp}${random}`;
-  }
-
-  /**
-   * Generar código de confirmación
-   */
-  static generateConfirmationCode() {
-    return Math.random().toString(36).substring(2, 8).toUpperCase();
-  }
-  /**
-   * Crear nueva reserva con validaciones completas
-   */
-  static async createBooking(bookingData) {
-    try {
-      // Validar datos de entrada
-      const validation = validateBookingData(bookingData);
+module.exports = require('./appointmentService');
       if (!validation.isValid) {
         throw new Error(`Validation failed: ${validation.errors.join(", ")}`);
       }
@@ -309,7 +276,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
       } = options;
 
       let query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -391,7 +358,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
       } = options;
 
       let query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -565,7 +532,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
       const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000);
 
       const query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -615,7 +582,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
       futureDate.setDate(today.getDate() + days);
 
       const query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -756,7 +723,7 @@ ${booking.notes ? `Notas: ${booking.notes}` : ""}
     try {
       // Obtener la reserva actual con datos del cliente y servicio
       const query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -897,7 +864,7 @@ ${reason ? `Reprogramada: ${reason}` : "Cita reprogramada"}`,
 
       // Obtener reservas sin evento de calendario
       const query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes, s.description
@@ -1014,7 +981,7 @@ ${booking.description || ""}
       }
 
       const query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -1063,7 +1030,7 @@ ${booking.description || ""}
       }
 
       const query = `
-        SELECT 
+        SELECT
           b.*,
           c.first_name, c.last_name, c.email, c.phone,
           s.name as service_name, s.price as service_price, s.duration_minutes
@@ -1116,7 +1083,7 @@ ${booking.description || ""}
       }
 
       const query = `
-        SELECT 
+        SELECT
           COUNT(*) as total_bookings,
           COUNT(CASE WHEN b.status = 'pending' THEN 1 END) as pending_bookings,
           COUNT(CASE WHEN b.status = 'confirmed' THEN 1 END) as confirmed_bookings,
